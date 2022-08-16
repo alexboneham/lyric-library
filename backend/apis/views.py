@@ -9,12 +9,20 @@ def index(request):
 def library(request):
     return HttpResponse('Returns list of all songs in the library')
 
-def login_view(request):
-    return HttpResponse('Made it to login view')
 
-def logout_view(request):
-    return HttpResponse('Made it to logout view')
 
-def register(request):
-    return HttpResponse('Made it to register view')
+
+
+
+
+
+
+# def login_view(request):
+#     return HttpResponse('Made it to login view')
+
+# def logout_view(request):
+#     return HttpResponse('Made it to logout view')
+
+# def register(request):
+#     return HttpResponse('Made it to register view')
 
