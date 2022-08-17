@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Song
 
 # Create your views here.
 
@@ -7,13 +8,11 @@ def index(request):
     return HttpResponse('Made it to api index route!')
 
 def library(request):
-    return HttpResponse('Returns list of all songs in the library')
-
-
-
-
-
-
+    # Returns a list of all songs in the song libary
+    songs = Song.objects.all()
+    return render(request, 'index.html', {
+        'songs': songs
+    })
 
 
 
