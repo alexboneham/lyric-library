@@ -1,6 +1,8 @@
+from turtle import title
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Song
+from .data import seed_data
 
 # Create your views here.
 
@@ -14,6 +16,25 @@ def library(request):
         'songs': songs
     })
 
+def song(request, song_id):
+    song = Song.objects.get(id=song_id)
+    return render(request, 'song.html', {
+        'song': song
+    })
+
+def new_song(request):
+    return HttpResponse('New song response')
+
+
+def seed_library(seed_data):
+    print('Running data seeding...')
+    for song in seed_data:
+        # Populate database
+        s = Song(title=song['title'], composer=song['composer'], lyrics=song['lyrics'])
+        s.save()
+        print('song saved!')
+    print('Finished seeding...')
+    return
 
 
 # def login_view(request):
