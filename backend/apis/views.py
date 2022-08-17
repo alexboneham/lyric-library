@@ -1,21 +1,21 @@
-from turtle import title
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Song
+from .utils import song_to_dict
 
 
 def index(request):
     # Returns a list of all songs in the song libary
-    songs = Song.objects.all()
-    return render(request, 'index.html', {
-        'songs': songs
-    })    
+    songs_querySet = Song.objects.all()
+    songs = {}
+    for song in songs_querySet:
+        songs[song.id] = song_to_dict(song)
+    return JsonResponse(songs)    
 
 def song(request, song_id):
     song = Song.objects.get(id=song_id)
-    return render(request, 'song.html', {
-        'song': song
-    })
+    return JsonResponse(song_to_dict(song))
+
 
 
 

@@ -11,3 +11,12 @@ def seed_library():
         print('song saved!')
     print('Finished seeding...')
     return
+
+
+def song_to_dict(song):   
+    song_dict = {
+        'title': song.title,
+        'composer': song.composer,
+        'lyrics': song.lyrics,
+    }
+    return song_dict
