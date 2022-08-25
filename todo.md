@@ -11,7 +11,7 @@
 
 **TODO**
 - connect Genius API
-- edit song function
+- edit song function **done**
 - delete song function
 - add to setlists function
 - edit/remove from setlist 
