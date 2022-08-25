@@ -14,9 +14,32 @@ def index(request):
 
 def song(request, song_id):
     song = Song.objects.get(id=song_id)
-    return JsonResponse(song_to_dict(song))
+
+    return render(request, 'song.html', {
+        'song': song,
+    })
+
+    # return JsonResponse(song_to_dict(song))
 
 
+def edit_song(request, song_id):
+    song = Song.objects.get(pk=song_id)
+
+    if request.method == 'POST':
+        # Get edited lyrics
+        new_lyrics = request.POST['lyrics']
+
+        # Save to database
+        song.lyrics = new_lyrics
+        song.save()
+
+        # Return JSON response to React
+        return JsonResponse({'lyrics': new_lyrics}, status=200)
+
+
+    return render(request, 'edit.html', {
+            'song': song,
+        })
 
 
 # def login_view(request):

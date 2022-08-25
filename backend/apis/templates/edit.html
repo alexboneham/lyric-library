@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ song.title }}</title>
+    <title>Edit {{song.title}}</title>
 </head>
 <body>
     <h2>{{ song.title }}</h2>
     <h3>{{ song.composer }}</h3>
-    <p>{{ song.lyrics }}</p>
-    <a href="{% url 'edit' song.id%}">Edit</a>
+    <form action="{% url 'edit' song.id%}" method='POST'>
+        {% csrf_token %}
+        <textarea name="lyrics" id="lyrics" cols="30" rows="10">{{song.lyrics}}</textarea>
+        <button type="submit">Save</button>
+    </form>
     <hr>
     <a href={% url 'index' %}>Back to library</a>
+
 </body>
 </html>
