@@ -8,11 +8,12 @@
 - set up index view function with JSON response
 - set up song view function with JSON response
 - populate DB with seed data
+- edit song function
 
 **TODO**
 - connect Genius API
-- edit song function **done**
 - delete song function
+- add song
 - add to setlists function
 - edit/remove from setlist 
 - add user auth!

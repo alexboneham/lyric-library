@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import Song
 from .utils import song_to_dict
 
@@ -10,16 +11,25 @@ def index(request):
     songs = {}
     for song in songs_querySet:
         songs[song.id] = song_to_dict(song)
-    return JsonResponse(songs)    
-
-def song(request, song_id):
-    song = Song.objects.get(id=song_id)
-
-    return render(request, 'song.html', {
-        'song': song,
+    # return JsonResponse(songs)    
+    return render(request, 'index.html', {
+        'songs': songs_querySet
     })
 
+
+def song(request, song_id):
+    try:
+        song = Song.objects.get(id=song_id)
+        return render(request, 'song.html', {
+            'song': song,
+        })
+    except:
+        return HttpResponse('Song does not exist')
+
     # return JsonResponse(song_to_dict(song))
+
+def new_song(request):
+    return HttpResponse('Made it to new song view')
 
 
 def edit_song(request, song_id):
@@ -34,7 +44,8 @@ def edit_song(request, song_id):
         song.save()
 
         # Return JSON response to React
-        return JsonResponse({'lyrics': new_lyrics}, status=200)
+        # return JsonResponse({'lyrics': new_lyrics}, status=200)
+        return HttpResponseRedirect(reverse('song', args=[song_id]))
 
 
     return render(request, 'edit.html', {
