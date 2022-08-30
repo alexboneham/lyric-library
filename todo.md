@@ -10,10 +10,10 @@
 - populate DB with seed data
 - edit song function
 - add song
+- delete song function
 
 **TODO**
 - connect Genius API
-- delete song function
 - use API to add lyrics to new song
 - add to setlists function
 - edit/remove from setlist 

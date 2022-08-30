@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+import lyricsgenius
 from .models import Song
 from .utils import song_to_dict
 from .forms.new_song_form import NewSongForm
+from .keys import CLIENT_ACCESS_TOKEN as TOKEN
 
+genius = lyricsgenius.Genius(TOKEN)
 
 def index(request):
     # Returns a list of all songs in the song libary
@@ -34,7 +37,7 @@ def show_song(request, song_id):
                 res = song.delete()
                 print(f'Song deleted. Result: {res}')
                 return HttpResponseRedirect(reverse('index'))
-                
+
             return HttpResponse('Not a valid song')
 
         return HttpResponse('Form submit rest method not valid.')
@@ -56,8 +59,12 @@ def new_song(request):
         if form.is_valid():
             new_title = form.cleaned_data['title']
             # Send song title to Genius API
-            # TODO
-            return HttpResponse(f'Made it to new song POST view with "{new_title}"')
+            song = genius.search_song(new_title)
+            
+            s = Song(title=song.title, artist=song.artist, lyrics=song.lyrics)
+            s.save()
+
+            return HttpResponseRedirect(reverse('song', args=[s.id]))
         else:
             return HttpResponse('Form not valid')
         

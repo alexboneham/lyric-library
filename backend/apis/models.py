@@ -8,7 +8,7 @@ from django.db import models
 
 class Song(models.Model):
     title = models.CharField(max_length=64)
-    composer = models.CharField(max_length=64)
+    artist = models.CharField(max_length=64)
     lyrics = models.TextField()
     edited = models.BooleanField(default=False)
 
