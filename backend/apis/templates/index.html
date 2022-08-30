@@ -13,5 +13,6 @@
         <li><a href={% url 'song' song.id %}>{{song}}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'new' %}">Add a song</a>
 </body>
 </html>

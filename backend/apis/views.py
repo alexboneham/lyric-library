@@ -19,8 +19,29 @@ def index(request):
 
 
 def show_song(request, song_id):
+    if request.method == 'POST':
+        rest_method = request.POST.get('rest-method')
+        if not rest_method:
+            return HttpResponse('No valid rest method')
+
+        if rest_method == 'PUT':
+            # Not currently in use
+            return HttpResponse('Made it to PUT route')
+        
+        elif rest_method == 'DELETE':
+            song = Song.objects.get(pk=song_id)
+            if song:
+                res = song.delete()
+                print(f'Song deleted. Result: {res}')
+                return HttpResponseRedirect(reverse('index'))
+                
+            return HttpResponse('Not a valid song')
+
+        return HttpResponse('Form submit rest method not valid.')
+
+    # Request method is GET
     try:
-        song = Song.objects.get(id=song_id)
+        song = Song.objects.get(pk=song_id)
         return render(request, 'song.html', {
             'song': song,
         })
@@ -36,7 +57,7 @@ def new_song(request):
             new_title = form.cleaned_data['title']
             # Send song title to Genius API
             # TODO
-            return HttpResponse(f'Made it to new song POST view with {new_title}')
+            return HttpResponse(f'Made it to new song POST view with "{new_title}"')
         else:
             return HttpResponse('Form not valid')
         

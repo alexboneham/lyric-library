@@ -10,7 +10,11 @@
     <h2>{{ song.title }}</h2>
     <h3>{{ song.composer }}</h3>
     <p>{{ song.lyrics }}</p>
-    <a href="{% url 'edit' song.id%}">Edit</a>
+    <a href="{% url 'edit' song.id %}">Edit</a>
+    <form action="{% url 'song' song.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="rest-method" value="DELETE">Delete</button>
+    </form>
     <hr>
     <a href={% url 'index' %}>Back to library</a>
 </body>
