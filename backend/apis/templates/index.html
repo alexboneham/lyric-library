@@ -7,12 +7,7 @@
     <title>Lyric Library</title>
 </head>
 <body>
-    <h1>Lyric Library</h1>
-    <ul>
-        {% for song in songs %}
-        <li><a href={% url 'song' song.id %}>{{song}}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'new' %}">Add a song</a>
+    <h1>Welcome to Lyric Library!</h1>
+    <p>The purpose of this application is to serve as a single platform for searching song lyrics - via a call to the Genius API, saving lyrics to your library, making edits and ultimately grouping song lyrics into setlists for performances and/or practice.</p>
 </body>
 </html>

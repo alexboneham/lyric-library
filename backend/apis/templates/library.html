@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>Your Library</title>
 </head>
 <body>
-    <h1>Matched songs</h1>
+    <h1>Your Library</h1>
     <ul>
-        {% for hit in hits %}
-        <li><a href="{% url '' %}"><b>{{ hit.title }}</b> by {{ hit.artist }}</a></li>
+        {% for song in songs %}
+        <li><a href={% url 'song' song.id %}>{{song}}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'new' %}">Add a song</a>
 </body>
 </html>
