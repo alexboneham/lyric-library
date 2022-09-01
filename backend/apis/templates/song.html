@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ song.title }}</title>
-</head>
-<body>
-    <h2>{{ song.title }}</h2>
-    <h3>{{ song.composer }}</h3>
-    <p>{{ song.lyrics }}</p>
-    <a href="{% url 'edit' song.id %}">Edit</a>
-    <form action="{% url 'song' song.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" name="rest-method" value="DELETE">Delete</button>
-    </form>
-    <hr>
-    <a href={% url 'index' %}>Back to library</a>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}{{ song.title }}{% endblock title %}
+
+{% block body %}
+<h2>{{ song.title }}</h2>
+<h3>{{ song.composer }}</h3>
+<p>{{ song.lyrics }}</p>
+<a href="{% url 'edit' song.id %}">Edit</a>
+<form action="{% url 'song' song.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="rest-method" value="DELETE">Delete</button>
+</form>
+<hr>
+<a href={% url 'index' %}>Back to library</a>
+{% endblock body %}

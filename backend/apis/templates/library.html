@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Library</title>
-</head>
-<body>
-    <h1>Your Library</h1>
-    <ul>
-        {% for song in songs %}
-        <li><a href={% url 'song' song.id %}>{{song}}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'new' %}">Add a song</a>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block title %}Your Library{% endblock  %}
+
+{% block body %}
+<h1>Your Library</h1>
+<ul>
+    {% for song in songs %}
+    <li><a href={% url 'song' song.id %}>{{song}}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'search' %}">Search for a song</a>
+{% endblock body %}
