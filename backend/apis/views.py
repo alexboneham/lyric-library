@@ -1,15 +1,20 @@
+from fileinput import filename
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
-import lyricsgenius
 from .models import Song
-from .utils import song_to_dict
+from .utils.helper_funcs import song_to_dict
 from .forms.new_song_form import NewSongForm
-from .keys import CLIENT_ACCESS_TOKEN as TOKEN
+from .utils.lyrics_genius_utils import genius_search_song
 
-genius = lyricsgenius.Genius(TOKEN)
+""" Search Genius API for song lyrics """
 
-def index(request):
+def search(request):
+    return
+
+""" Interact with database - save song, read, edit, delete """
+
+def load_library(request):
     # Returns a list of all songs in the song libary
     songs_querySet = Song.objects.all()
     # songs = {}
@@ -19,6 +24,7 @@ def index(request):
     return render(request, 'index.html', {
         'songs': songs_querySet
     })
+
 
 
 def show_song(request, song_id):
@@ -55,16 +61,28 @@ def show_song(request, song_id):
 
 def new_song(request):
     if request.method == 'POST':
-        form = NewSongForm(request.POST)
+        form = NewSongForm(request.POST)    
         if form.is_valid():
-            new_title = form.cleaned_data['title']
-            # Send song title to Genius API
-            song = genius.search_song(new_title)
-            
-            s = Song(title=song.title, artist=song.artist, lyrics=song.lyrics)
-            s.save()
+            title_from_form = form.cleaned_data['title']
 
-            return HttpResponseRedirect(reverse('song', args=[s.id]))
+            # Send song title to Genius API
+            found_songs = genius_search_song(title_from_form)
+            hits = []
+
+            if found_songs:
+                for hit in found_songs['hits']:
+                    hit_info = {
+                        'title': hit['result']['title'],
+                        'artist': hit['result']['primary_artist']['name'],
+                        'id': hit['result']['id'],
+                    }
+                    hits.append(hit_info)                  
+            else:
+                print('Song could not be found')
+
+            return render(request, 'results.html', {
+                'hits': hits,
+            })
         else:
             return HttpResponse('Form not valid')
         

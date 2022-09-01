@@ -1,5 +1,5 @@
-from .models import Song
-from .data import seed_data
+from ..models import Song
+from ..data import seed_data
 
 def seed_library():
     data = seed_data.SEED_SONG_LIBRARY

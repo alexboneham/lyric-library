@@ -11,10 +11,10 @@
 - edit song function
 - add song
 - delete song function
-
-**TODO**
 - connect Genius API
 - use API to add lyrics to new song
+
+**TODO**
 - add to setlists function
 - edit/remove from setlist 
 - add user auth!

@@ -130,3 +130,5 @@ dmypy.json
 
 # Genius API
 /backend/apis/keys.py
+
+/tmp_to_delete
