@@ -98,10 +98,11 @@ def add_song_to_library(request):
     form = NewSongForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
-        print(f'data is: {data}')
-        s = Song(title=data['title'], artist=data['artist'], lyrics=data['lyrics'], genius_id=data['genius_id'])
-        print(f'song is: {s}')
-        s.save()
+        if Song.objects.filter(title=data['title']).exists():
+            print('Song already exists in database')
+        else:    
+            s = Song(title=data['title'], artist=data['artist'], lyrics=data['lyrics'], genius_id=data['genius_id'])
+            s.save()
         return HttpResponseRedirect(reverse('library'))
     else:
         print('form is not valid')
