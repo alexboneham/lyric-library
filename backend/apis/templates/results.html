@@ -8,4 +8,5 @@
     <li><a href="{% url 'search_by_id' hit.id %}"><b>{{ hit.title }}</b> by {{ hit.artist }}</a></li>
     {% endfor %}
 </ul>
+<a href="{% url 'search' %}">New search</a>
 {% endblock body %}

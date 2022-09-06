@@ -1,11 +1,9 @@
-from curses.ascii import HT
-from fileinput import filename
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Song
+from .forms import NewSongForm
 from .utils.helper_funcs import song_to_dict
-from .forms.new_song_form import NewSongForm
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
 
@@ -93,6 +91,22 @@ def show_song(request, song_id):
 
     # return JsonResponse(song_to_dict(song))
 
+def add_song_to_library(request):
+    if request.method != 'POST':
+        return HttpResponse('Sorry, incorrect request method')
+    
+    form = NewSongForm(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data
+        print(f'data is: {data}')
+        s = Song(title=data['title'], artist=data['artist'], lyrics=data['lyrics'], genius_id=data['genius_id'])
+        print(f'song is: {s}')
+        s.save()
+        return HttpResponseRedirect(reverse('library'))
+    else:
+        print('form is not valid')
+    
+    return HttpResponseRedirect(reverse('library'))
 
 def edit_song(request, song_id):
     song = Song.objects.get(pk=song_id)

@@ -11,6 +11,7 @@ class Song(models.Model):
     artist = models.CharField(max_length=64)
     lyrics = models.TextField()
     edited = models.BooleanField(default=False)
+    genius_id = models.IntegerField(blank=True)
 
     def __str__(self):
         return self.title
