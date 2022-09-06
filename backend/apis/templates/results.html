@@ -5,7 +5,7 @@
 <h1>Matched songs</h1>
 <ul>
     {% for hit in hits %}
-    <li><a href="#"><b>{{ hit.title }}</b> by {{ hit.artist }}</a></li>
+    <li><a href="{% url 'search_by_id' hit.id %}"><b>{{ hit.title }}</b> by {{ hit.artist }}</a></li>
     {% endfor %}
 </ul>
 {% endblock body %}

@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{song.title}}{% endblock title %}
+
+{% block body %}
+<h2>{{song.title}}</h2>
+<h3>{{song.artist}}</h3>
+<p style="white-space: pre-wrap;">{{ song.lyrics }}</p>
+<hr>
+<a href="">Add to library</a>
+{% endblock body %}

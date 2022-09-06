@@ -6,7 +6,7 @@ from django.urls import reverse
 from .models import Song
 from .utils.helper_funcs import song_to_dict
 from .forms.new_song_form import NewSongForm
-from .utils.lyrics_genius_utils import genius_search_song
+from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
 
 def index(request):
@@ -16,15 +16,14 @@ def index(request):
 
 def search_genius(request):
     if request.method == 'POST':
-        form = NewSongForm(request.POST)    
-        if form.is_valid():
-            title_from_form = form.cleaned_data['title']
+        return HttpResponse('POST route')
 
-            # Send song title to Genius API
-            found_songs = genius_search_song(title_from_form)
-            hits = []
+    search_term = request.GET.get('q')
+    if search_term:
+        found_songs = genius_search_songs(search_term)
+        hits = []
 
-            if found_songs:
+        if found_songs:
                 for hit in found_songs['hits']:
                     hit_info = {
                         'title': hit['result']['title'],
@@ -32,16 +31,20 @@ def search_genius(request):
                         'id': hit['result']['id'],
                     }
                     hits.append(hit_info)                  
-            else:
-                print('Could not find a match')
-
-            return render(request, 'results.html', {
-                'hits': hits,
-            })
         else:
-            return HttpResponse('Form not valid')
-    
-    return render(request, 'search.html', {})
+            print('Could not find a match')
+
+        return render(request, 'results.html', {
+            'hits': hits,
+        })
+    else:
+        return render(request, 'search.html', {})
+
+def search_genius_by_id(request, id):
+    song = genius_search_song_by_id(id)
+    return render(request, 'song-result.html', {
+        'song': song,
+    })
 
 
 """ Interact with database - save song, read, edit, delete """

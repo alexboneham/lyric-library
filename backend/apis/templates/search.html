@@ -5,10 +5,9 @@
 {% block body %}
 <h1>Search Genius API for a song</h1>
 
-<form action="{% url 'search' %}" method="POST">
-    {% csrf_token %}
-    <label for="search_title">Find song</label>
-    <input type="text" name="title" placeholder="Song name" required>
+<form action="{% url 'search' %}" method="GET">
+    <label for="q">Find a song</label>
+    <input type="text" name="q" placeholder="Song name" required>
     <button type="submit">Search for song</button>
 </form>
 {% endblock body %}
