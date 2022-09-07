@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Song
 from .forms import NewSongForm
-from .utils.helper_funcs import song_to_dict
+from .utils.helper_funcs import song_to_dict, clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
 
@@ -40,8 +40,10 @@ def search_genius(request):
 
 def search_genius_by_id(request, id):
     song = genius_search_song_by_id(id)
+    cleaned_song = clean_lyrics(song)
+
     return render(request, 'song.html', {
-        'song': song,
+        'song': cleaned_song,
         'in_library': False,
     })
 

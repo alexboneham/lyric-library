@@ -21,3 +21,9 @@ def song_to_dict(song):
     }
     return song_dict
 
+def clean_lyrics(song):
+    begin_idx = len(song.title) + 7
+    new_lyrics = song.lyrics[begin_idx:]
+    song.lyrics = new_lyrics
+
+    return song
