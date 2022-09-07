@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}Setlists{% endblock title %}
+
+{% block body %}
+<h1>Setlists</h1>
+<ul>
+    {% for setlist in setlists %}
+    <li><a href="{% url 'setlist' setlist.id %}">{{setlist}}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock body %}

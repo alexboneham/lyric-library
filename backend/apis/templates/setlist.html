@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{setlist.name}}{% endblock title %}
+
+{% block body %}
+<h1>{{setlist.name}}</h1>
+<ul>
+    {% for song in songs %}
+    <li><a href="{% url 'song' song.id %}">{{song}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock body %}

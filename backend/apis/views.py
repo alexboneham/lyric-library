@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import Song
+from .models import Song, Setlist
 from .forms import NewSongForm
 from .utils.helper_funcs import song_to_dict, clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
@@ -135,6 +135,24 @@ def edit_song(request, song_id):
     return render(request, 'edit.html', {
             'song': song,
         })
+
+def setlists(request):
+    if request.method == 'GET':
+        setlists = Setlist.objects.all()
+
+        return render(request, 'setlists.html', {
+            'setlists': setlists
+        })
+
+def show_setlist(request, id):
+    setlist = Setlist.objects.get(pk=id)
+    songs_queryset = Song.objects.filter(setlists=setlist)
+    print(songs_queryset)
+
+    return render(request, 'setlist.html', {
+        'setlist': setlist,
+        'songs': songs_queryset
+    })
 
 
 # def login_view(request):

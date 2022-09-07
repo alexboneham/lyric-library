@@ -19,3 +19,8 @@ class Song(models.Model):
 class Setlist(models.Model):
     name = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
+    songs = models.ManyToManyField(Song, related_name='setlists')
+
+    def __str__(self):
+        return self.name
+    
