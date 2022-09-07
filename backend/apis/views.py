@@ -39,9 +39,13 @@ def search_genius(request):
         return render(request, 'search.html', {})
 
 def search_genius_by_id(request, id):
-    song = genius_search_song_by_id(id)
-    cleaned_song = clean_lyrics(song)
-    
+    try:
+        song = genius_search_song_by_id(id)
+        cleaned_song = clean_lyrics(song)
+    except Exception as e:
+        print(e)
+        return HttpResponseRedirect(reverse('search'))
+
     return render(request, 'song.html', {
         'song': cleaned_song,
         'in_library': False,
