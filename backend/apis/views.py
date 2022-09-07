@@ -40,8 +40,9 @@ def search_genius(request):
 
 def search_genius_by_id(request, id):
     song = genius_search_song_by_id(id)
-    return render(request, 'song-result.html', {
+    return render(request, 'song.html', {
         'song': song,
+        'in_library': False,
     })
 
 
@@ -85,6 +86,7 @@ def show_song(request, song_id):
         song = Song.objects.get(pk=song_id)
         return render(request, 'song.html', {
             'song': song,
+            'in_library': True,
         })
     except Exception as e:
         return HttpResponse(e)
@@ -123,8 +125,7 @@ def edit_song(request, song_id):
         # Return JSON response to React
         # return JsonResponse({'lyrics': new_lyrics}, status=200)
         return HttpResponseRedirect(reverse('song', args=[song_id]))
-
-
+        
     return render(request, 'edit.html', {
             'song': song,
         })

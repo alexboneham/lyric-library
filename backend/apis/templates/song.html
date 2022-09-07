@@ -4,13 +4,25 @@
 
 {% block body %}
 <h2>{{ song.title }}</h2>
-<h3>{{ song.composer }}</h3>
+<h3>{{ song.artist }}</h3>
 <p style="white-space: pre-wrap;">{{ song.lyrics }}</p>
+
+{% if in_library %}
 <a href="{% url 'edit' song.id %}">Edit</a>
 <form action="{% url 'song' song.id %}" method="POST">
     {% csrf_token %}
     <button type="submit" name="rest-method" value="DELETE">Delete</button>
 </form>
+{% else %}
+<form action="{% url 'add_to_library' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="title" value="{{song.title}}">
+    <input type="hidden" name="artist" value="{{song.artist}}">
+    <input type="hidden" name="genius_id" value={{song.id}}>
+    <input type="hidden" name="lyrics" value="{{song.lyrics}}">
+    <button type="submit">Add to library</button>
+</form>
+{% endif %}
 <hr>
 <a href={% url 'library' %}>Back to library</a>
 {% endblock body %}
