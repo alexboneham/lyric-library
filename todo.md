@@ -13,12 +13,12 @@
 - delete song function
 - connect Genius API
 - use API to add lyrics to new song
+- reorganize views and url paths to make more sense
 
 **TODO**
 - add to setlists function
 - edit/remove from setlist 
 - add user auth!
-- reorganize views and url paths to make more sense
 
 ## Frontend
 
