@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Song, Setlist
-from .forms import NewSongForm
+from .forms import NewSongForm, NewSetListForm
 from .utils.helper_funcs import song_to_dict, clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
@@ -137,12 +137,18 @@ def edit_song(request, song_id):
         })
 
 def setlists(request):
-    if request.method == 'GET':
-        setlists = Setlist.objects.all()
+    if request.method == 'POST':
+        form = NewSetListForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            s = Setlist(name=data['name'])
+            s.save()
+            return HttpResponseRedirect(reverse('setlist', args=[s.id]))
 
-        return render(request, 'setlists.html', {
-            'setlists': setlists
-        })
+    setlists = Setlist.objects.all()
+    return render(request, 'setlists.html', {
+        'setlists': setlists
+    })
 
 def show_setlist(request, id):
     setlist = Setlist.objects.get(pk=id)

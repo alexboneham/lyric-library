@@ -6,3 +6,6 @@ class NewSongForm(forms.Form):
     lyrics = forms.CharField(widget=forms.Textarea)
     genius_id = forms.IntegerField()
 
+
+class NewSetListForm(forms.Form):
+    name = forms.CharField(max_length=64)
