@@ -42,7 +42,6 @@ def search_genius_by_id(request, id):
     song = genius_search_song_by_id(id)
     cleaned_song = clean_lyrics(song)
     
-
     return render(request, 'song.html', {
         'song': cleaned_song,
         'in_library': False,
