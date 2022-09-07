@@ -40,10 +40,11 @@ def search_genius(request):
 
 def search_genius_by_id(request, id):
     song = genius_search_song_by_id(id)
-    cleaned_song = clean_lyrics(song)
+    cleaned_lyrics = clean_lyrics(song.title, song.lyrics)
+    song.lyrics = cleaned_lyrics
 
     return render(request, 'song.html', {
-        'song': cleaned_song,
+        'song': song,
         'in_library': False,
     })
 
@@ -104,7 +105,7 @@ def add_song_to_library(request):
         data = form.cleaned_data
         if Song.objects.filter(title=data['title']).exists():
             print('Song already exists in database')
-        else:    
+        else:
             s = Song(title=data['title'], artist=data['artist'], lyrics=data['lyrics'], genius_id=data['genius_id'])
             s.save()
         return HttpResponseRedirect(reverse('library'))
