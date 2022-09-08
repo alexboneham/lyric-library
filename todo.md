@@ -16,12 +16,14 @@
 - reorganize views and url paths to make more sense
 - create setlist
 - change genius api endpoiint responses to Json
+- change database endpoints responses to json
+
 
 **TODO**
 - add to setlists function
 - edit/remove from setlist 
 - add user auth!
-- change database endpoints responses to json
+- add conditional checks from request body before updating/deleting a song (would have to send from React too then...)
 
 ## Frontend
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, QueryDict
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist
-from .forms import NewSongForm, NewSetListForm
+from .forms import NewSetListForm
 from .utils.helper_funcs import clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
@@ -83,12 +83,22 @@ def library(request):
         return JsonResponse({'error': 'Invalid request method'})
 
 
+@csrf_exempt
 def song(request, song_id):
 
-    if request.method == 'PUT':
-        return JsonResponse({'route': 'PUT'})
+    try:
+        song = Song.objects.get(pk=song_id)
+    except Exception as e:
+        return JsonResponse({'error': f'{e}'})
 
-    if request.method == 'DELETE':
+    if request.method == 'POST':
+        # Must use POST route to edit/update a song because Django doesn't accept PUT requests
+        new_lyrics = request.POST['lyrics']
+        song.lyrics = new_lyrics
+        song.save()
+        return JsonResponse({'new_lyrics': f'{new_lyrics}'})
+
+    elif request.method == 'DELETE':
         song = Song.objects.get(pk=song_id)
         if song:
             res = song.delete()
@@ -97,32 +107,9 @@ def song(request, song_id):
         else:
             return JsonResponse({'error': 'Could not find a song to delete'})
 
-    # Request method is GET
-    try:
-        song = Song.objects.get(pk=song_id)
+    else:
+        # Request method is GET
         return JsonResponse(song.db_song_to_dict())
-    except Exception as e:
-        return JsonResponse({'error': f'{e}'})
-
-
-def edit_song(request, song_id):
-    song = Song.objects.get(pk=song_id)
-
-    if request.method == 'POST':
-        # Get edited lyrics
-        new_lyrics = request.POST['lyrics']
-
-        # Save to database
-        song.lyrics = new_lyrics
-        song.save()
-
-        # Return JSON response to React
-        # return JsonResponse({'lyrics': new_lyrics}, status=200)
-        return HttpResponseRedirect(reverse('song', args=[song_id]))
-
-    return render(request, 'edit.html', {
-        'song': song,
-    })
 
 
 def setlists(request):
