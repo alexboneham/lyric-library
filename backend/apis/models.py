@@ -20,6 +20,7 @@ class Song(models.Model):
             'artist': self.artist,
             'lyrics': self.lyrics,
             'edited': self.edited,
+            'id': self.id,
             'genius_id': self.genius_id
         }
 

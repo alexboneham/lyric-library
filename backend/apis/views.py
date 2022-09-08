@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import Song, Setlist
 from .forms import NewSongForm, NewSetListForm
 from .utils.helper_funcs import clean_lyrics
@@ -23,9 +25,9 @@ def search_genius(request):
     if request.method != 'GET':
         return JsonResponse({'error': 'Request method should be GET'})
 
-    search_term = request.GET.get('q')
-    if search_term:
-        found_songs = genius_search_songs(search_term)  # returns a dict
+    if 'q' in request.GET:
+        found_songs = genius_search_songs(
+            request.GET.get('q'))  # returns a dict
         if found_songs:
             return JsonResponse(found_songs)
         else:
@@ -50,35 +52,50 @@ def search_genius_by_id(request, id):
 """ Interact with database - save song, read, edit, delete """
 
 
+@csrf_exempt
 def load_library(request):
-    songs_querySet = Song.objects.all()
-    songs = []
-    for song in songs_querySet:
-        songs.append(song.db_song_to_dict())  # using built-in model method
 
-    return JsonResponse({'songs': songs})
+    if request.method == 'POST':
+        # adds song to library
+        data = request.POST  # returns a QueryDict
+
+        if Song.objects.filter(title=data['title']).exists():
+            return JsonResponse({'error': 'Song already exists in database'})
+        else:
+            try:
+                s = Song(title=data['title'], artist=data['artist'],
+                        lyrics=data['lyrics'], genius_id=data['genius_id'])
+                s.save()
+                return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
+            except Exception as e:
+                print(e)
+                return JsonResponse({'error': f'{e}'})
+
+    elif request.method == 'GET':
+        songs_querySet = Song.objects.all()
+        songs = []
+        for song in songs_querySet:
+            songs.append(song.db_song_to_dict())  # using built-in model method
+
+        return JsonResponse({'songs': songs})
+
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
 
 
 def show_song(request, song_id):
-    if request.method == 'POST':
-        rest_method = request.POST.get('rest-method')
-        if not rest_method:
-            return HttpResponse('No valid rest method')
 
-        if rest_method == 'PUT':
-            # Not currently in use
-            return HttpResponse('Made it to PUT route')
+    if request.method == 'PUT':
+        return JsonResponse({'route': 'PUT'})
 
-        elif rest_method == 'DELETE':
-            song = Song.objects.get(pk=song_id)
-            if song:
-                res = song.delete()
-                print(f'Song deleted. Result: {res}')
-                return HttpResponseRedirect(reverse('library'))
-
-            return HttpResponse('Not a valid song')
-
-        return HttpResponse('Form submit rest method not valid.')
+    if request.method == 'DELETE':
+        song = Song.objects.get(pk=song_id)
+        if song:
+            res = song.delete()
+            print(f'Song deleted. Result: {res}')
+            return JsonResponse({'success': f'Song deleted. Result: {res}'})
+        else:
+            return JsonResponse({'error': 'Could not find a song to delete'})
 
     # Request method is GET
     try:
