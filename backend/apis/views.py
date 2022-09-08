@@ -19,22 +19,22 @@ def search_genius(request):
     search_term = request.GET.get('q')
     if search_term:
         found_songs = genius_search_songs(search_term)
-        hits = []
+        hits = {}
 
         if found_songs:
-                for hit in found_songs['hits']:
-                    hit_info = {
-                        'title': hit['result']['title'],
-                        'artist': hit['result']['primary_artist']['name'],
-                        'id': hit['result']['id'],
-                    }
-                    hits.append(hit_info)                  
+            count = 0
+            for hit in found_songs['hits']:
+                hits[count] = {
+                    'title': hit['result']['title'],
+                    'artist': hit['result']['primary_artist']['name'],
+                    'id': hit['result']['id'],
+                }
+                count += 1
+
         else:
             print('Could not find a match')
 
-        return render(request, 'results.html', {
-            'hits': hits,
-        })
+        return JsonResponse(hits)
     else:
         return render(request, 'search.html', {})
 
@@ -44,7 +44,9 @@ def search_genius_by_id(request, id):
         cleaned_song = clean_lyrics(song)
     except Exception as e:
         print(e)
-        return HttpResponseRedirect(reverse('search'))
+        return HttpResponse(e)
+
+    return JsonResponse(song.to_dict())
 
     return render(request, 'song.html', {
         'song': cleaned_song,
