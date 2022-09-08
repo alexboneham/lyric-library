@@ -14,11 +14,14 @@
 - connect Genius API
 - use API to add lyrics to new song
 - reorganize views and url paths to make more sense
+- create setlist
+- change genius api endpoiint responses to Json
 
 **TODO**
 - add to setlists function
 - edit/remove from setlist 
 - add user auth!
+- change database endpoints responses to json
 
 ## Frontend
 

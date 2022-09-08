@@ -46,12 +46,12 @@ def search_genius_by_id(request, id):
 """ Interact with database - save song, read, edit, delete """
 
 def load_library(request):
-    # Returns a list of all songs in the song libary
     songs_querySet = Song.objects.all()
-    songs = {}
+    songs = []
     for song in songs_querySet:
-        songs[song.id] = song_to_dict(song)
-    return JsonResponse(songs)
+        songs.append(song.db_song_to_dict()) # using built-in model method
+
+    return JsonResponse({'songs': songs})
 
 
 def show_song(request, song_id):
@@ -78,9 +78,10 @@ def show_song(request, song_id):
     # Request method is GET
     try:
         song = Song.objects.get(pk=song_id)
-        return JsonResponse(song_to_dict(song))
+        print(song.db_song_to_dict())
+        return JsonResponse({'test': 'test'})
     except Exception as e:
-        return HttpResponse(e)
+        return JsonResponse({'error': e})
 
 
 def add_song_to_library(request):

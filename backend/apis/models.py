@@ -16,6 +16,15 @@ class Song(models.Model):
     def __str__(self):
         return self.title
 
+    def db_song_to_dict(self):
+        return {
+            'title': self.title,
+            'artist': self.artist,
+            'lyrics': self.lyrics,
+            'edited': self.edited,
+            'genius_id': self.genius_id
+        }
+
 class Setlist(models.Model):
     name = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
