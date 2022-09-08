@@ -53,7 +53,7 @@ def search_genius_by_id(request, id):
 
 
 @csrf_exempt
-def load_library(request):
+def library(request):
 
     if request.method == 'POST':
         # adds song to library
@@ -64,7 +64,7 @@ def load_library(request):
         else:
             try:
                 s = Song(title=data['title'], artist=data['artist'],
-                        lyrics=data['lyrics'], genius_id=data['genius_id'])
+                         lyrics=data['lyrics'], genius_id=data['genius_id'])
                 s.save()
                 return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
             except Exception as e:
@@ -83,7 +83,7 @@ def load_library(request):
         return JsonResponse({'error': 'Invalid request method'})
 
 
-def show_song(request, song_id):
+def song(request, song_id):
 
     if request.method == 'PUT':
         return JsonResponse({'route': 'PUT'})
@@ -103,26 +103,6 @@ def show_song(request, song_id):
         return JsonResponse(song.db_song_to_dict())
     except Exception as e:
         return JsonResponse({'error': f'{e}'})
-
-
-def add_song_to_library(request):
-    if request.method != 'POST':
-        return HttpResponse('Sorry, incorrect request method')
-
-    form = NewSongForm(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        if Song.objects.filter(title=data['title']).exists():
-            print('Song already exists in database')
-        else:
-            s = Song(title=data['title'], artist=data['artist'],
-                     lyrics=data['lyrics'], genius_id=data['genius_id'])
-            s.save()
-        return HttpResponseRedirect(reverse('library'))
-    else:
-        print('form is not valid')
-
-    return HttpResponseRedirect(reverse('library'))
 
 
 def edit_song(request, song_id):
