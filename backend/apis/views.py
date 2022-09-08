@@ -57,13 +57,10 @@ def search_genius_by_id(request, id):
 def load_library(request):
     # Returns a list of all songs in the song libary
     songs_querySet = Song.objects.all()
-    # songs = {}
-    # for song in songs_querySet:
-    #     songs[song.id] = song_to_dict(song)
-    # return JsonResponse(songs)    
-    return render(request, 'library.html', {
-        'songs': songs_querySet
-    })
+    songs = {}
+    for song in songs_querySet:
+        songs[song.id] = song_to_dict(song)
+    return JsonResponse(songs)
 
 
 def show_song(request, song_id):
@@ -90,14 +87,10 @@ def show_song(request, song_id):
     # Request method is GET
     try:
         song = Song.objects.get(pk=song_id)
-        return render(request, 'song.html', {
-            'song': song,
-            'in_library': True,
-        })
+        return JsonResponse(song_to_dict(song))
     except Exception as e:
         return HttpResponse(e)
 
-    # return JsonResponse(song_to_dict(song))
 
 def add_song_to_library(request):
     if request.method != 'POST':
