@@ -3,8 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-# class User(AbstractUser):
-#     pass
 
 class Song(models.Model):
     title = models.CharField(max_length=64)
@@ -25,6 +23,7 @@ class Song(models.Model):
             'genius_id': self.genius_id
         }
 
+
 class Setlist(models.Model):
     name = models.CharField(max_length=64)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,4 +31,3 @@ class Setlist(models.Model):
 
     def __str__(self):
         return self.name
-    

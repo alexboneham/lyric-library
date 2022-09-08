@@ -1,34 +1,16 @@
-from cmath import nan
-from ..models import Song
-from ..data import seed_data
+""" Helper functions for views.py """
 
-def seed_library():
-    data = seed_data.SEED_SONG_LIBRARY
-    print('Running data seeding...')
-    for song in data:
-        # Populate database
-        s = Song(title=song['title'], composer=song['composer'], lyrics=song['lyrics'])
-        s.save()
-        print('song saved!')
-    print('Finished seeding...')
-    return
-
-
-def song_to_dict(song):   
-    song_dict = {
-        'title': song.title,
-        'composer': song.composer,
-        'lyrics': song.lyrics,
-    }
-    return song_dict
 
 def clean_lyrics(song):
-   
+    """ 
+    Takes in a Song type from lyrics-genius API. Would also work with any dict/json with relevant fields.
+    The function removes redundant characters found at the beginning and end of the responses from the API in the lyrics field.
+     """
     if song.lyrics[:len(song.title)] == song.title:
         begin_idx = len(song.title) + 7
     else:
         begin_idx = 7
-    
+
     if song.lyrics[-5:] == 'Embed':
         if song.pyongs_count:
             end_idx = len(str(song.pyongs_count)) + 5

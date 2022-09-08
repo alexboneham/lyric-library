@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Song, Setlist
 from .forms import NewSongForm, NewSetListForm
-from .utils.helper_funcs import song_to_dict, clean_lyrics
+from .utils.helper_funcs import clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
 
 
@@ -15,7 +15,9 @@ def index(request):
     }
     return JsonResponse(res)
 
+
 """ Search Genius API for song lyrics """
+
 
 def search_genius(request):
     if request.method != 'GET':
@@ -23,7 +25,7 @@ def search_genius(request):
 
     search_term = request.GET.get('q')
     if search_term:
-        found_songs = genius_search_songs(search_term) # returns a dict
+        found_songs = genius_search_songs(search_term)  # returns a dict
         if found_songs:
             return JsonResponse(found_songs)
         else:
@@ -31,6 +33,7 @@ def search_genius(request):
 
     else:
         return JsonResponse({'error': 'Must include a search term query string'})
+
 
 def search_genius_by_id(request, id):
     try:
@@ -40,16 +43,18 @@ def search_genius_by_id(request, id):
         print(e)
         return HttpResponse(e)
 
-    return JsonResponse(cleaned_song.to_dict()) # uses to_dict() method on type Song from lyrics-genius
+    # uses to_dict() method on type Song from lyrics-genius
+    return JsonResponse(cleaned_song.to_dict())
 
 
 """ Interact with database - save song, read, edit, delete """
+
 
 def load_library(request):
     songs_querySet = Song.objects.all()
     songs = []
     for song in songs_querySet:
-        songs.append(song.db_song_to_dict()) # using built-in model method
+        songs.append(song.db_song_to_dict())  # using built-in model method
 
     return JsonResponse({'songs': songs})
 
@@ -63,7 +68,7 @@ def show_song(request, song_id):
         if rest_method == 'PUT':
             # Not currently in use
             return HttpResponse('Made it to PUT route')
-        
+
         elif rest_method == 'DELETE':
             song = Song.objects.get(pk=song_id)
             if song:
@@ -78,29 +83,30 @@ def show_song(request, song_id):
     # Request method is GET
     try:
         song = Song.objects.get(pk=song_id)
-        print(song.db_song_to_dict())
-        return JsonResponse({'test': 'test'})
+        return JsonResponse(song.db_song_to_dict())
     except Exception as e:
-        return JsonResponse({'error': e})
+        return JsonResponse({'error': f'{e}'})
 
 
 def add_song_to_library(request):
     if request.method != 'POST':
         return HttpResponse('Sorry, incorrect request method')
-    
+
     form = NewSongForm(request.POST)
     if form.is_valid():
         data = form.cleaned_data
         if Song.objects.filter(title=data['title']).exists():
             print('Song already exists in database')
         else:
-            s = Song(title=data['title'], artist=data['artist'], lyrics=data['lyrics'], genius_id=data['genius_id'])
+            s = Song(title=data['title'], artist=data['artist'],
+                     lyrics=data['lyrics'], genius_id=data['genius_id'])
             s.save()
         return HttpResponseRedirect(reverse('library'))
     else:
         print('form is not valid')
-    
+
     return HttpResponseRedirect(reverse('library'))
+
 
 def edit_song(request, song_id):
     song = Song.objects.get(pk=song_id)
@@ -116,10 +122,11 @@ def edit_song(request, song_id):
         # Return JSON response to React
         # return JsonResponse({'lyrics': new_lyrics}, status=200)
         return HttpResponseRedirect(reverse('song', args=[song_id]))
-        
+
     return render(request, 'edit.html', {
-            'song': song,
-        })
+        'song': song,
+    })
+
 
 def setlists(request):
     if request.method == 'POST':
@@ -134,6 +141,7 @@ def setlists(request):
     return render(request, 'setlists.html', {
         'setlists': setlists
     })
+
 
 def show_setlist(request, id):
     setlist = Setlist.objects.get(pk=id)
@@ -154,4 +162,3 @@ def show_setlist(request, id):
 
 # def register(request):
 #     return HttpResponse('Made it to register view')
-
