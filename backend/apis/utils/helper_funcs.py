@@ -1,3 +1,4 @@
+from cmath import nan
 from ..models import Song
 from ..data import seed_data
 
@@ -22,11 +23,17 @@ def song_to_dict(song):
     return song_dict
 
 def clean_lyrics(song):
-    begin_idx = len(song.title) + 7
-    if song.pyongs_count:
-        end_idx = len(str(song.pyongs_count)) + 5
+   
+    if song.lyrics[:len(song.title)] == song.title:
+        begin_idx = len(song.title) + 7
     else:
-        end_idx = 5
+        begin_idx = 7
+    
+    if song.lyrics[-5:] == 'Embed':
+        if song.pyongs_count:
+            end_idx = len(str(song.pyongs_count)) + 5
+        else:
+            end_idx = 5
 
     song.lyrics = song.lyrics[begin_idx:-end_idx]
 

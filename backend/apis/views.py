@@ -8,35 +8,29 @@ from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_b
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    res = {
+        'app': 'lyric-library',
+        'heading': 'Welcome to Lyric Library!',
+        'message': 'The purpose of this application is to serve as a single platform for searching song lyrics - via a call to the Genius API, saving lyrics to your library, making edits and ultimately grouping song lyrics into setlists for performances and/or practice.'
+    }
+    return JsonResponse(res)
 
 """ Search Genius API for song lyrics """
 
 def search_genius(request):
-    if request.method == 'POST':
-        return HttpResponse('POST route')
+    if request.method != 'GET':
+        return JsonResponse({'error': 'Request method should be GET'})
 
     search_term = request.GET.get('q')
     if search_term:
-        found_songs = genius_search_songs(search_term)
-        hits = {}
-
+        found_songs = genius_search_songs(search_term) # returns a dict
         if found_songs:
-            count = 0
-            for hit in found_songs['hits']:
-                hits[count] = {
-                    'title': hit['result']['title'],
-                    'artist': hit['result']['primary_artist']['name'],
-                    'id': hit['result']['id'],
-                }
-                count += 1
-
+            return JsonResponse(found_songs)
         else:
-            print('Could not find a match')
+            return JsonResponse({'error': 'Search did not return a valid response'})
 
-        return JsonResponse(hits)
     else:
-        return render(request, 'search.html', {})
+        return JsonResponse({'error': 'Must include a search term query string'})
 
 def search_genius_by_id(request, id):
     try:
@@ -46,12 +40,7 @@ def search_genius_by_id(request, id):
         print(e)
         return HttpResponse(e)
 
-    return JsonResponse(song.to_dict())
-
-    return render(request, 'song.html', {
-        'song': cleaned_song,
-        'in_library': False,
-    })
+    return JsonResponse(cleaned_song.to_dict()) # uses to_dict() method on type Song from lyrics-genius
 
 
 """ Interact with database - save song, read, edit, delete """
