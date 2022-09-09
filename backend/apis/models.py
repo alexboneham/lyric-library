@@ -41,6 +41,7 @@ class Song(models.Model):
             'genius_id': self.genius_id,
             'full_title': self.full_title,
             'description': self.description,
+            'thumbnail_url': self.thumbnail_url,
         }
 
 

@@ -58,13 +58,16 @@ def library(request):
     if request.method == 'POST':
         # adds song to library
         data = request.POST  # returns a QueryDict
+        # see Github Gist for explanation of request data structure
 
         if Song.objects.filter(title=data['title']).exists():
             return JsonResponse({'error': 'Song already exists in database'})
         else:
             try:
-                s = Song(title=data['title'], artist=data['artist'],
-                         lyrics=data['lyrics'], genius_id=data['genius_id'])
+                s = Song(title=data['title'], artist_name=data['artist'],
+                         lyrics=data['lyrics'], genius_id=data['id'], full_title=data['full_title'], 
+                         description=data['description']['plain'], thumbnail_url=data['song_art_image_thumbnail_url'], 
+                         )
                 s.save()
                 return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
             except Exception as e:
@@ -75,7 +78,8 @@ def library(request):
         songs_querySet = Song.objects.all()
         songs = []
         for song in songs_querySet:
-            songs.append(song.db_song_to_dict())  # using built-in model method
+            # using built-in method on Song model
+            songs.append(song.db_song_to_dict())
 
         return JsonResponse({'songs': songs})
 
@@ -96,16 +100,13 @@ def song(request, song_id):
         new_lyrics = request.POST['lyrics']
         song.lyrics = new_lyrics
         song.save()
-        return JsonResponse({'new_lyrics': f'{new_lyrics}'})
+        return JsonResponse(song.db_song_to_dict())
 
     elif request.method == 'DELETE':
-        song = Song.objects.get(pk=song_id)
-        if song:
-            res = song.delete()
-            print(f'Song deleted. Result: {res}')
-            return JsonResponse({'success': f'Song deleted. Result: {res}'})
-        else:
-            return JsonResponse({'error': 'Could not find a song to delete'})
+
+        res = song.delete()
+        print(f'Song deleted. Result: {res}')
+        return JsonResponse({'success': f'Song deleted. Result: {res}'})
 
     else:
         # Request method is GET
