@@ -10,6 +10,9 @@ class Song(models.Model):
     lyrics = models.TextField()
     edited = models.BooleanField(default=False)
     genius_id = models.IntegerField(blank=True)
+    full_title = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    thumbnail_url = models.URLField(blank=True)
 
     def __str__(self):
         return self.title
