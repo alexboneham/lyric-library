@@ -3,6 +3,17 @@ from django.db import models
 
 # Create your models here.
 
+class Artist(models.Model):
+    name = models.CharField(max_length=200)
+    genius_id = models.IntegerField()
+    image_url = models.URLField()
+
+
+class Album(models.Model):
+    name = models.CharField(max_length=128)
+    full_title = models.CharField(max_length=200)
+    genius_id = models.IntegerField()
+
 
 class Song(models.Model):
     title = models.CharField(max_length=64)
@@ -26,11 +37,6 @@ class Song(models.Model):
             'id': self.id,
             'genius_id': self.genius_id
         }
-
-class Album(models.Model):
-    name = models.CharField(max_length=128)
-    full_title = models.CharField(max_length=200)
-    genius_id = models.IntegerField()
 
 
 class Setlist(models.Model):
