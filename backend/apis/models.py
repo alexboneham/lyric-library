@@ -27,6 +27,11 @@ class Song(models.Model):
             'genius_id': self.genius_id
         }
 
+class Album(models.Model):
+    name = models.CharField(max_length=128)
+    full_title = models.CharField(max_length=200)
+    genius_id = models.IntegerField()
+
 
 class Setlist(models.Model):
     name = models.CharField(max_length=64)
