@@ -18,7 +18,7 @@ def index(request):
     return JsonResponse(res)
 
 
-""" Search Genius API for song lyrics """
+""" Genius API views """
 
 
 def search_genius(request):
@@ -49,7 +49,7 @@ def search_genius_by_id(request, id):
     return JsonResponse(cleaned_song.to_dict())
 
 
-""" Interact with database - save song, read, edit, delete """
+""" Django databse CRUD views """
 
 
 @csrf_exempt
@@ -86,9 +86,9 @@ def library(request):
                     print(f'All albumns: {Album.objects.all()}')
                 else:
                     alb = Album.objects.get(name=data['album']['name'])
-                
+
                 s.album = alb
-                
+
                 s.save()
                 return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
             except Exception as e:
