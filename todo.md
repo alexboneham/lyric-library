@@ -24,6 +24,7 @@
 - edit/remove from setlist 
 - add user auth!
 - add conditional checks from request body before updating/deleting a song (would have to send from React too then...)
+- Add foreign key links to Artist and Album when creating a Song in the database.
 
 ## Frontend
 

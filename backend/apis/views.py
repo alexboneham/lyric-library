@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, QueryDict
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -57,17 +57,18 @@ def library(request):
 
     if request.method == 'POST':
         # adds song to library
-        data = request.POST  # returns a QueryDict
         # see Github Gist for explanation of request data structure
+        data = request.POST  # returns a QueryDict
 
         if Song.objects.filter(title=data['title']).exists():
             return JsonResponse({'error': 'Song already exists in database'})
         else:
             try:
                 s = Song(title=data['title'], artist_name=data['artist'],
-                         lyrics=data['lyrics'], genius_id=data['id'], full_title=data['full_title'], 
-                         description=data['description']['plain'], thumbnail_url=data['song_art_image_thumbnail_url'], 
+                         lyrics=data['lyrics'], genius_id=data['id'], full_title=data['full_title'],
+                         description=data['description']['plain'], thumbnail_url=data['song_art_image_thumbnail_url'],
                          )
+                # search database for artist and album. If not present, create and link with foreign key.
                 s.save()
                 return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
             except Exception as e:
