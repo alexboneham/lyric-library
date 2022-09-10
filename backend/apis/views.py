@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Song, Setlist
+from .models import Song, Setlist, Artist, Album
 from .forms import NewSetListForm
 from .utils.helper_funcs import clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
@@ -69,6 +69,26 @@ def library(request):
                          description=data['description']['plain'], thumbnail_url=data['song_art_image_thumbnail_url'],
                          )
                 # search database for artist and album. If not present, create and link with foreign key.
+                if not Artist.objects.filter(name=data['artist']).exists():
+                    art = Artist.objects.create(
+                        name=data['artist'], genius_id=data['primary_artist']['id'], image_url=data['primary_artist']['image_url'])
+                    print(f'Created artist: {art}')
+                    print(f'All artists in db: {Artist.objects.all()}')
+                else:
+                    art = Artist.objects.get(name=data['artist'])
+
+                s.artist = art
+
+                if not Album.objects.filter(name=data['album']['name']).exists():
+                    alb = Album.objects.create(
+                        name=data['album']['name'], full_title=data['album']['full_title'], genius_id=data['album']['id'])
+                    print(f'Created album: {alb}')
+                    print(f'All albumns: {Album.objects.all()}')
+                else:
+                    alb = Album.objects.get(name=data['album']['name'])
+                
+                s.album = alb
+                
                 s.save()
                 return JsonResponse({'success': f'Successfully added {s.title} to your library!'})
             except Exception as e:

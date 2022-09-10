@@ -9,11 +9,20 @@ class Artist(models.Model):
     genius_id = models.IntegerField()
     image_url = models.URLField()
 
+    def __str__(self):
+        return self.name
+    
+
 
 class Album(models.Model):
-    name = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='albums')
+    name = models.CharField(max_length=200)
     full_title = models.CharField(max_length=200)
     genius_id = models.IntegerField()
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='albums', null=True)
+
+    def __str__(self):
+        return self.full_title
+    
 
 
 class Song(models.Model):
