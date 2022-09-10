@@ -136,28 +136,33 @@ def song(request, song_id):
 
 def setlists(request):
     if request.method == 'POST':
-        form = NewSetListForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            s = Setlist(name=data['name'])
-            s.save()
-            return HttpResponseRedirect(reverse('setlist', args=[s.id]))
+        print('Make new setlist')
+        # TODO
+        return JsonResponse({'success': 'Made it to POST route'})
 
-    setlists = Setlist.objects.all()
-    return render(request, 'setlists.html', {
-        'setlists': setlists
-    })
+    elif request.method == 'GET':
+        setlists_queryset = Setlist.objects.all()
+        setlists = []
+        for setlist in setlists_queryset:
+            setlists.append(setlist.to_dict())
+
+        return JsonResponse({'setlists': setlists})
+
+    else:
+        return JsonResponse({'error': 'Request method must be POST or GET'})
 
 
 def show_setlist(request, id):
     setlist = Setlist.objects.get(pk=id)
     songs_queryset = Song.objects.filter(setlists=setlist)
-    print(songs_queryset)
+    setlist = setlist.to_dict()
+    songs = []
+    for song in songs_queryset:
+        songs.append(song.db_song_to_dict())
 
-    return render(request, 'setlist.html', {
-        'setlist': setlist,
-        'songs': songs_queryset
-    })
+    setlist['songs'] = songs
+
+    return JsonResponse(setlist)
 
 
 # def login_view(request):

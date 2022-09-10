@@ -61,3 +61,10 @@ class Setlist(models.Model):
 
     def __str__(self):
         return self.name
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'created_at': self.created_at,
+            'id': self.id
+        }
