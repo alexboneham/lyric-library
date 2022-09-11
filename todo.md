@@ -20,17 +20,19 @@
 - add to setlists function
 - edit/remove from setlist 
 - Add foreign key links to Artist and Album when creating a Song in the database.
+- convert edit functions to PUT routes, using json.loads to access data from request.body
 
 **TODO**
 - add user auth!
 - add conditional checks from request body before updating/deleting a song (would have to send from React too then...)
-- convert edit functions to PUT routes, using json.loads to access data from request.body
 
 ## Frontend
 
 **TODO**
 - create-react-app
+- consider which method to connect Django and React
 - build UI for index/library
 - build UI for song view
 - build UI for set list view
 - make fetch calls to API for server data
+- consider auth options
