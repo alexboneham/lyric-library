@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Song, Setlist, Artist, Album
 from .forms import NewSetListForm
 from .utils.helper_funcs import clean_lyrics
-from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id
+from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id, genius_search_song_and_artist
 
 
 def index(request):
@@ -27,6 +27,16 @@ def index(request):
 def search_genius(request):
     if request.method != 'GET':
         return JsonResponse({'error': 'Request method should be GET'})
+
+    if ('q' in request.GET) and ('artist' in request.GET):
+        song = genius_search_song_and_artist(
+            request.GET.get('q'), request.GET.get('artist'))
+        print(song)
+        if song:
+            res = clean_lyrics(song).to_dict()
+        else:
+            res = {'error': 'No song was found with those terms'}
+        return JsonResponse(res)
 
     if 'q' in request.GET:
         found_songs = genius_search_songs(
@@ -61,7 +71,10 @@ def library(request):
     if request.method == 'POST':
         # adds song to library
         # see Github Gist for explanation of request data structure
-        data = request.POST  # returns a QueryDict
+        try:
+            data = json.loads(request.body)  # returns a python object
+        except Exception as e:
+            return JsonResponse({'error': f'{e}'})
 
         if Song.objects.filter(title=data['title']).exists():
             return JsonResponse({'error': 'Song already exists in database'})
