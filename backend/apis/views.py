@@ -1,13 +1,10 @@
 import json
-from typing import Set
 
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
-from .forms import NewSetListForm
 from .utils.helper_funcs import clean_lyrics
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id, genius_search_song_and_artist
 
@@ -153,25 +150,25 @@ def song(request, song_id):
 @csrf_exempt
 def setlists(request):
     if request.method == 'POST':
+        # Create a new setlist
         data = json.loads(request.body)
+
         # Check for existing setlist with same name
         if not Setlist.objects.filter(name=data['name']).exists():
             s = Setlist.objects.create(name=data['name'])
+            s.songs.set(data['new_songs'])
         else:
             return JsonResponse({'error': 'Name already in use'})
 
         return JsonResponse(s.to_dict())
 
-    elif request.method == 'GET':
-        setlists_queryset = Setlist.objects.all()
-        setlists = []
-        for setlist in setlists_queryset:
-            setlists.append(setlist.to_dict())
 
-        return JsonResponse({'setlists': setlists})
+    setlists_queryset = Setlist.objects.all()
+    setlists = []
+    for setlist in setlists_queryset:
+        setlists.append(setlist.to_dict())
 
-    else:
-        return JsonResponse({'error': 'Request method must be POST or GET'})
+    return JsonResponse({'setlists': setlists})
 
 
 @csrf_exempt
