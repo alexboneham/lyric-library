@@ -1,3 +1,6 @@
+import json
+from typing import Set
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -133,12 +136,17 @@ def song(request, song_id):
         # Request method is GET
         return JsonResponse(song.db_song_to_dict())
 
-
+@csrf_exempt
 def setlists(request):
     if request.method == 'POST':
-        print('Make new setlist')
+        data = json.loads(request.body)
+        # Check for existing setlist with same name
+        if not Setlist.objects.filter(name=data['name']).exists():
+            s = Setlist.objects.create(name=data['name'])
+        else:
+            return JsonResponse({'error': 'Name already in use'})
         
-        return JsonResponse({'success': 'Made it to POST route'})
+        return JsonResponse(s.to_dict())
 
     elif request.method == 'GET':
         setlists_queryset = Setlist.objects.all()
@@ -168,4 +176,3 @@ def setlist(request, id):
     setlist['songs'] = songs
 
     return JsonResponse(setlist)
-
