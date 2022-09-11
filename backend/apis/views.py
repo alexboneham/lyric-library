@@ -125,9 +125,8 @@ def song(request, song_id):
     except Exception as e:
         return JsonResponse({'error': f'{e}'})
 
-    if request.method == 'POST':
-        # Must use POST route to edit/update a song because Django doesn't accept PUT requests
-        new_lyrics = request.POST['lyrics']
+    if request.method == 'PUT':
+        new_lyrics = json.loads(request.body)['lyrics']
         song.lyrics = new_lyrics
         song.save()
         return JsonResponse(song.db_song_to_dict())
@@ -173,11 +172,11 @@ def setlist(request, id):
         print(e)
         return JsonResponse({'error': f'{e}'})
 
-    if request.method == 'POST':
-        # Edit setlist
+    if request.method == 'PUT':
         data = json.loads(request.body)
-        # clears old setlist songs and replaces with songs whose pk is in new_songs array
-        setlist.songs.set(data['new_songs'], clear=True)
+        setlist.name = data['name']
+        # clear old setlist songs and replace with songs whose pk is in new songs array
+        setlist.songs.set(data['songs'], clear=True)
 
     songs_queryset = Song.objects.filter(setlists=setlist)
     setlist = setlist.to_dict()
