@@ -136,6 +136,7 @@ def song(request, song_id):
         # Request method is GET
         return JsonResponse(song.db_song_to_dict())
 
+
 @csrf_exempt
 def setlists(request):
     if request.method == 'POST':
@@ -145,7 +146,7 @@ def setlists(request):
             s = Setlist.objects.create(name=data['name'])
         else:
             return JsonResponse({'error': 'Name already in use'})
-        
+
         return JsonResponse(s.to_dict())
 
     elif request.method == 'GET':
@@ -160,12 +161,19 @@ def setlists(request):
         return JsonResponse({'error': 'Request method must be POST or GET'})
 
 
+@csrf_exempt
 def setlist(request, id):
     try:
         setlist = Setlist.objects.get(pk=id)
     except Exception as e:
         print(e)
         return JsonResponse({'error': f'{e}'})
+
+    if request.method == 'POST':
+        # Edit setlist
+        data = json.loads(request.body)
+        # clears old setlist songs and replaces with songs whose pk is in new_songs array
+        setlist.songs.set(data['new_songs'], clear=True)
 
     songs_queryset = Song.objects.filter(setlists=setlist)
     setlist = setlist.to_dict()
