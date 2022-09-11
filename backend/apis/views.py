@@ -137,7 +137,7 @@ def song(request, song_id):
 def setlists(request):
     if request.method == 'POST':
         print('Make new setlist')
-        # TODO
+        
         return JsonResponse({'success': 'Made it to POST route'})
 
     elif request.method == 'GET':
@@ -153,7 +153,12 @@ def setlists(request):
 
 
 def show_setlist(request, id):
-    setlist = Setlist.objects.get(pk=id)
+    try:
+        setlist = Setlist.objects.get(pk=id)
+    except Exception as e:
+        print(e)
+        return JsonResponse({'error': f'{e}'})
+
     songs_queryset = Song.objects.filter(setlists=setlist)
     setlist = setlist.to_dict()
     songs = []
@@ -164,12 +169,3 @@ def show_setlist(request, id):
 
     return JsonResponse(setlist)
 
-
-# def login_view(request):
-#     return HttpResponse('Made it to login view')
-
-# def logout_view(request):
-#     return HttpResponse('Made it to logout view')
-
-# def register(request):
-#     return HttpResponse('Made it to register view')
