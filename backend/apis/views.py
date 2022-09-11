@@ -44,7 +44,7 @@ def search_genius(request):
             return JsonResponse({'error': 'Search did not return a valid response'})
 
     else:
-        return JsonResponse({'error': 'Must include a search term query string'})
+        return JsonResponse({'error': 'Must include a query string with "q", and optionally "artist", parameters'})
 
 
 def search_genius_by_id(request, id):
@@ -108,17 +108,13 @@ def library(request):
                 print(e)
                 return JsonResponse({'error': f'{e}'})
 
-    elif request.method == 'GET':
-        songs_querySet = Song.objects.all()
-        songs = []
-        for song in songs_querySet:
-            # using built-in method on Song model
-            songs.append(song.db_song_to_dict())
+    songs_querySet = Song.objects.all()
+    songs = []
+    for song in songs_querySet:
+        # using built-in method on Song model
+        songs.append(song.db_song_to_dict())
 
-        return JsonResponse({'songs': songs})
-
-    else:
-        return JsonResponse({'error': 'Invalid request method'})
+    return JsonResponse({'songs': songs})
 
 
 @csrf_exempt
@@ -142,9 +138,8 @@ def song(request, song_id):
         print(f'Song deleted. Result: {res}')
         return JsonResponse({'success': f'Song deleted. Result: {res}'})
 
-    else:
-        # Request method is GET
-        return JsonResponse(song.db_song_to_dict())
+
+    return JsonResponse(song.db_song_to_dict())
 
 
 @csrf_exempt
@@ -161,7 +156,6 @@ def setlists(request):
             return JsonResponse({'error': 'Name already in use'})
 
         return JsonResponse(s.to_dict())
-
 
     setlists_queryset = Setlist.objects.all()
     setlists = []

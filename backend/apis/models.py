@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Artist(models.Model):
     name = models.CharField(max_length=200)
     genius_id = models.IntegerField()
@@ -11,18 +12,17 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name
-    
 
 
 class Album(models.Model):
     name = models.CharField(max_length=200)
     full_title = models.CharField(max_length=200)
     genius_id = models.IntegerField()
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='albums', null=True)
+    artist = models.ForeignKey(
+        Artist, on_delete=models.CASCADE, related_name='albums', null=True)
 
     def __str__(self):
         return self.full_title
-    
 
 
 class Song(models.Model):
@@ -34,8 +34,10 @@ class Song(models.Model):
     full_title = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
     thumbnail_url = models.URLField(blank=True)
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='songs', null=True)
-    album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs', null=True)
+    artist = models.ForeignKey(
+        Artist, on_delete=models.CASCADE, related_name='songs', null=True)
+    album = models.ForeignKey(
+        Album, on_delete=models.CASCADE, related_name='songs', null=True)
 
     def __str__(self):
         return self.title

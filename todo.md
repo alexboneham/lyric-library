@@ -17,14 +17,14 @@
 - create setlist
 - change genius api endpoiint responses to Json
 - change database endpoints responses to json
-
-
-**TODO**
 - add to setlists function
 - edit/remove from setlist 
+- Add foreign key links to Artist and Album when creating a Song in the database.
+
+**TODO**
 - add user auth!
 - add conditional checks from request body before updating/deleting a song (would have to send from React too then...)
-- Add foreign key links to Artist and Album when creating a Song in the database.
+- convert edit functions to PUT routes, using json.loads to access data from request.body
 
 ## Frontend
 
