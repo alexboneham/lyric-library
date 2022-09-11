@@ -152,7 +152,7 @@ def setlists(request):
         return JsonResponse({'error': 'Request method must be POST or GET'})
 
 
-def show_setlist(request, id):
+def setlist(request, id):
     try:
         setlist = Setlist.objects.get(pk=id)
     except Exception as e:
