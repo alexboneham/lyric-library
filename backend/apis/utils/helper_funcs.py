@@ -1,5 +1,6 @@
 """ Helper functions for views.py """
 
+MESSAGE = 'The purpose of this application is to serve as a single platform for searching song lyrics - via a call to the Genius API, saving lyrics to your library, making edits and ultimately grouping song lyrics into setlists for performances and/or practice.'
 
 def clean_lyrics(song):
     """ 

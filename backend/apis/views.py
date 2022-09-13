@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
-from .utils.helper_funcs import clean_lyrics
+from .utils.helper_funcs import clean_lyrics, MESSAGE
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id, genius_search_song_and_artist
 
 
@@ -12,7 +12,7 @@ def index(request):
     res = {
         'app': 'lyric-library',
         'heading': 'Welcome to Lyric Library!',
-        'message': 'The purpose of this application is to serve as a single platform for searching song lyrics - via a call to the Genius API, saving lyrics to your library, making edits and ultimately grouping song lyrics into setlists for performances and/or practice.'
+        'message': MESSAGE
     }
     return JsonResponse(res, status=200)
 
@@ -129,7 +129,7 @@ def song(request, song_id):
     elif request.method == 'DELETE':
         res = song.delete()
         return JsonResponse({'success': f'Song deleted. Result: {res}'}, status=200)
-    
+
     elif request.method == 'GET':
         return JsonResponse(song.serialize(), status=200)
 
@@ -153,11 +153,11 @@ def setlists(request):
             return JsonResponse({'error': 'Name already in use'}, status=403)
 
         return JsonResponse(s.serialize(), status=200)
-    
+
     elif request.method == 'GET':
         setlists = [setlist.serialize() for setlist in Setlist.objects.all()]
         return JsonResponse({'setlists': setlists}, status=200)
-    
+
     else:
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
@@ -175,9 +175,9 @@ def setlist(request, id):
         # May need to call save()...
         # clear old setlist songs and replace with songs whose pk is in new songs array
         setlist.songs.set(data['songs'], clear=True)
-    
+
     elif request.method == 'GET':
         return JsonResponse(setlist.serialize(), status=200)
-    
+
     else:
         return JsonResponse({'error': 'Request method must be GET or PUT'}, status=405)
