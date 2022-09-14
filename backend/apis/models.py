@@ -36,6 +36,7 @@ class Song(models.Model):
     thumbnail_url = models.URLField(blank=True)
     album = models.ForeignKey(
         Album, on_delete=models.CASCADE, related_name="songs", null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.title
@@ -52,6 +53,7 @@ class Song(models.Model):
             "genius_id": self.genius_id,
             "thumbnail_url": self.thumbnail_url,
             "album": self.album.name,
+            "timestamp": self.timestamp.strftime("%c"),
         }
 
 

@@ -24,15 +24,13 @@
 
 **TODO**
 - add user auth!
-- add conditional checks from request body before updating/deleting a song (would have to send from React too then...)
 
 ## Frontend
 
 **TODO**
-- create-react-app
 - consider which method to connect Django and React
-- build UI for index/library
-- build UI for song view
-- build UI for set list view
-- make fetch calls to API for server data
+- create-react-app
+- build UI
+- package json data to send in fetch calls
+- make fetch calls to API
 - consider auth options

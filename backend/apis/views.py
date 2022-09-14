@@ -106,7 +106,7 @@ def library(request):
 
     elif request.method == 'GET':
         # Use list comprehension to create list of all songs in library
-        songs = [song.serialize() for song in Song.objects.all()]
+        songs = [song.serialize() for song in Song.objects.all().order_by('-timestamp')]
         return JsonResponse({'songs': songs}, status=200)
 
     else:
