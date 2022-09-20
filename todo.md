@@ -28,9 +28,11 @@
 ## Frontend
 
 **TODO**
-- consider which method to connect Django and React
-- create-react-app
 - build UI
 - package json data to send in fetch calls
 - make fetch calls to API
 - consider auth options
+
+**DONE**
+- consider which method to connect Django and React
+- create-react-app
