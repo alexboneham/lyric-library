@@ -1,50 +1,31 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Layout from './routes/layout/layout.component';
+import Home from './routes/home/home.component';
+import Library from './routes/library/library.component';
+import Search from './routes/search/search.component';
+import Setlists from './routes/setlists/setlists.component';
+
 
 import SearchBox from './components/search-box/search-box.component';
 import SongList from './components/song-list/song-list.component';
 
-import './App.css';
+import './App.scss';
 
 const App = () => {
-  const [songs, setSongs] = useState([]);
-  const [searchField, setSearchField] = useState('');
-
-  useEffect(() => {
-    fetch("http://localhost:8000/library")
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.error){
-        return console.log(data.error)
-      }
-      setSongs(data.songs)
-    })
-  }, [])
-
-
-  const buttonSubmitHandler = () => {
-
-    const queryString = `q=`
-
-    fetch(`http://localhost:8000/search?${queryString}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.error){
-        console.log(data.error)
-      }
-      else {
-        console.log(data)
-      }
-    })
-    return
-  }
-
   return (
-    <div className="App">
-      <h1 className="app-title">Lyric Library</h1>
-      <SearchBox onSubmitHandler={buttonSubmitHandler}/>
-      <SongList songs={songs} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='library' element={<Library />} />
+          <Route path='search' element={<Search />} />
+          <Route path='setlists' element={<Setlists />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
