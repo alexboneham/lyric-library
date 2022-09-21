@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from './routes/layout/layout.component';
@@ -9,7 +8,6 @@ import Setlists from './routes/setlists/setlists.component';
 
 
 import SearchBox from './components/search-box/search-box.component';
-import SongList from './components/song-list/song-list.component';
 
 import './App.scss';
 

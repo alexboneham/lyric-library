@@ -1,10 +1,17 @@
 import './search-box.styles.scss';
 
-const SearchBox = ({onSubmitHandler}) => (
-  <div className='search-container'>
-    <input className="library-search" placeholder="Find a song" type="search" name="q"/>
-    <button type="submit" onSubmit={onSubmitHandler}>Search</button>
-  </div>
-);
+const SearchBox = ({submitHandler}) => {
+
+  return (
+    <div className="search-container">
+      <form>
+        <input className="search-input" placeholder="Find a song" type="search" name="q" required />
+        <button type="submit" onSubmit={submitHandler}>
+          Search
+        </button>
+      </form>
+    </div>
+  );
+};
 
 export default SearchBox;

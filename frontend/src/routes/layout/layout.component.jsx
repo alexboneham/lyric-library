@@ -8,7 +8,7 @@ import './layout.styles.scss';
 const Layout = () => {
   return (
     <Fragment>
-      <div className="navigation">
+      <nav className="navigation">
         <div className="logo-container">
           <Link className="nav-link" to="/">
             <img src={logo} alt="logo" />
@@ -25,7 +25,7 @@ const Layout = () => {
             Setlists
           </Link>
         </div>
-      </div>
+      </nav>
       <Outlet />
     </Fragment>
   );

@@ -28,9 +28,12 @@
 ## Frontend
 
 **TODO**
-- build UI
-- package json data to send in fetch calls
-- make fetch calls to API
+- plan site architecture
+- plan design of major components/routes
+- add submit handler and subsequent fetch call to search form
+- set up context for handling song library information
+- set up basic setlists route and fetch call
+- useParams() for nested routes with ids
 - consider auth options
 
 **DONE**

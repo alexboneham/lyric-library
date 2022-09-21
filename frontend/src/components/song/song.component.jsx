@@ -1,12 +1,7 @@
 import './song.styles.scss';
 
 const Song = ({ song }) => {
-  const {full_title, thumbnail_url, artist}  = song;
-
-  const onClickHandler = () => {
-    
-    return 
-  }
+  const { full_title } = song;
 
   return (
     <div>
