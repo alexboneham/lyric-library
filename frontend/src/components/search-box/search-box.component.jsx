@@ -1,14 +1,13 @@
 import './search-box.styles.scss';
 
-const SearchBox = ({submitHandler}) => {
-
+const SearchBox = (props) => {
+  const { handleChange, handleSubmit, value, placeholder, label } = props;
   return (
     <div className="search-container">
-      <form>
-        <input className="search-input" placeholder="Find a song" type="search" name="q" required />
-        <button type="submit" onSubmit={submitHandler}>
-          Search
-        </button>
+      <form onSubmit={handleSubmit}>
+        <label>{label}</label>
+        <input placeholder={placeholder} type="search" name="q" value={value} required onChange={handleChange} />
+        <button type="submit">Search</button>
       </form>
     </div>
   );

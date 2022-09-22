@@ -6,9 +6,6 @@ import Library from './routes/library/library.component';
 import Search from './routes/search/search.component';
 import Setlists from './routes/setlists/setlists.component';
 
-
-import SearchBox from './components/search-box/search-box.component';
-
 import './App.scss';
 
 const App = () => {
@@ -17,9 +14,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path='library' element={<Library />} />
-          <Route path='search' element={<Search />} />
-          <Route path='setlists' element={<Setlists />} />
+          <Route path="library" element={<Library />} />
+          <Route path="search" element={<Search />} />
+          <Route path="setlists" element={<Setlists />} />
         </Route>
       </Routes>
     </BrowserRouter>
