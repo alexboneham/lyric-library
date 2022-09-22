@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import SearchBox from '../../components/search-box/search-box.component';
 import SearchResults from '../../components/search-results/search-results.component';
@@ -14,6 +15,9 @@ const Search = () => {
     setSearchValue(event.target.value);
   };
 
+  // let location = useLocation();
+  // const queryString = location.search;
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -22,9 +26,7 @@ const Search = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          setErrors(data.error);
-          console.log(errors);
-          return;
+          return console.log(errors);
         } else {
           setSearchResults(data.hits);
         }
@@ -33,9 +35,6 @@ const Search = () => {
     setSearchValue('');
   };
 
-  useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults])
 
   return (
     <div className="search-container">

@@ -18,12 +18,12 @@ const Library = () => {
         } else {
           setSongs(data.songs);
         }
-      });
+      })
+      .catch((error) => console.error(error))
   }, []);
 
   return (
     <div className="library-container">
-      <h2 className="library-title">Library</h2>
       {errors === true && <h2>Could not load any songs</h2>}
       <SongList songs={songs} />
     </div>

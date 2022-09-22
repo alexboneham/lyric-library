@@ -4,7 +4,7 @@ const SearchBox = (props) => {
   const { handleChange, handleSubmit, value, placeholder, label } = props;
   return (
     <div className="search-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} method='GET' action='/search'>
         <label>{label}</label>
         <input placeholder={placeholder} type="search" name="q" value={value} required onChange={handleChange} />
         <button type="submit">Search</button>

@@ -5,10 +5,17 @@ import Home from './routes/home/home.component';
 import Library from './routes/library/library.component';
 import Search from './routes/search/search.component';
 import Setlists from './routes/setlists/setlists.component';
+import Song from './components/song/song.component';
 
 import './App.scss';
+import { useEffect } from 'react';
 
 const App = () => {
+
+  useEffect(() => {
+    document.title = "Lyric Library"
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
