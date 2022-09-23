@@ -14,7 +14,6 @@ const App = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    console.log('fetching homepage info')
     fetch('http://localhost:8000')
       .then((res) => res.json())
       .then((data) => {
