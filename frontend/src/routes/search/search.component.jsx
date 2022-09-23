@@ -47,7 +47,7 @@ const Search = () => {
   return (
     <div className="search-container">
       <form onSubmit={handleSubmit}>
-        <input id="query" name="q" value={query} placeholder="Search for a song" required onChange={handleChange} />
+        <input id="query" name="q" value={query} placeholder="Search for a song" required onChange={handleChange} autoComplete="off"/>
         <button type="submit">Search</button>
       </form>
       {results.length > 0 && <ResultList songs={results} />}
