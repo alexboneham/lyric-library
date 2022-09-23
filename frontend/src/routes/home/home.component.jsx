@@ -1,9 +1,11 @@
 import './home.styles.scss';
 
-const Home = () => {
+const Home = ({title, message}) => {
+
   return (
-    <div className="container">
-      <h1>Homepage</h1>
+    <div className="homepage-container">
+      <h1>{title}</h1>
+      <p>{message}</p>
     </div>
   );
 };

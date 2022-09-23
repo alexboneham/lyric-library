@@ -1,29 +1,31 @@
 import { Fragment } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 
 import './layout.styles.scss';
 
 const Layout = () => {
+  const activeStyle = { textDecoration: 'underline' };
+
   return (
     <Fragment>
       <nav className="navigation">
         <div className="logo-container">
-          <Link className="nav-link" to="/">
+          <NavLink className="nav-link" to="/">
             <img src={logo} alt="logo" />
-          </Link>
+          </NavLink>
         </div>
         <div className="nav-links-container">
-          <Link className="nav-link" to="/library">
-            Library
-          </Link>
-          <Link className="nav-link" to="/search">
+          <NavLink className="nav-link" to="/search" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
             Search
-          </Link>
-          <Link className="nav-link" to="/setlists">
+          </NavLink>
+          <NavLink className="nav-link" to="/library" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            Library
+          </NavLink>
+          <NavLink className="nav-link" to="/setlists" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
             Setlists
-          </Link>
+          </NavLink>
         </div>
       </nav>
       <Outlet />
