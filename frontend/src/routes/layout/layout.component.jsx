@@ -9,11 +9,11 @@ const Layout = () => {
   const activeStyle = { textDecoration: 'underline' };
 
   return (
-    <Fragment>
+    <div className="layout-container">
       <nav className="navigation">
         <div className="logo-container">
           <NavLink className="nav-link" to="/">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="lyric-library"/>
           </NavLink>
         </div>
         <div className="nav-links-container">
@@ -28,8 +28,10 @@ const Layout = () => {
           </NavLink>
         </div>
       </nav>
-      <Outlet />
-    </Fragment>
+      <div className="body-container">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

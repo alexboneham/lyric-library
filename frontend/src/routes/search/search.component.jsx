@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Outlet } from 'react-router-dom';
 
 import SearchResults from '../../components/search-results.component';
 import Loading from '../../components/loading/loading.component';
