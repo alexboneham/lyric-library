@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import LibraryList from '../../components/library-list.component';
+import LibraryList from '../../components/library-list/library-list.component'; 
 
 import './library.styles.scss';
 

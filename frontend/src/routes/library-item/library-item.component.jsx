@@ -8,13 +8,13 @@ const LibraryItem = () => {
   const [song, setSong] = useState({});
 
   useEffect(() => {
-    console.log('Inside fetch useEffect...')
+    console.log('Inside library item fetch useEffect...')
     const fetchSong = async () => {
       const res = await (await fetch(`http://localhost:8000/library/${id}`)).json();
       setSong(res);
     };
     fetchSong()
-  }, []);
+  }, [id]);
 
   return (
     <div className='library-item-container'>
