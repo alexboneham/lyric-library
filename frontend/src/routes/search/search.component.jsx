@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import SearchResults from '../../components/search-results.component';
-import Loading from '../../components/loading.component';
+import Loading from '../../components/loading/loading.component';
 
 import './search.styles.scss';
 
@@ -15,6 +15,7 @@ const Search = () => {
   const [initialParam, setInitialParam] = useState(searchParams.get('q') || '');
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleChange = (e) => {
     const newQuery = e.target.value;
@@ -48,6 +49,10 @@ const Search = () => {
       .then((data) => {
         setResults(data.hits);
         setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsError(true)
       });
   };
 
@@ -65,6 +70,7 @@ const Search = () => {
         />
         <button type="submit">Search</button>
       </form>
+      {isError && <div>An Error has occurred</div>}
       {isLoading ? <Loading /> : <SearchResults songs={results} />}
     </div>
   );
