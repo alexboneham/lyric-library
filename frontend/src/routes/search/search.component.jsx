@@ -35,7 +35,6 @@ const Search = () => {
 
   useEffect(() => {
     // Run fetch on initial render if url alreay has params
-    console.log('useEffect running...');
     if (initialParam) {
       fetchFunction(initialParam);
     }
@@ -43,7 +42,6 @@ const Search = () => {
   }, [initialParam]);
 
   const fetchFunction = (searchQuery) => {
-    console.log('Fetch function running...');
     setIsLoading(true);
     fetch(`http://localhost:8000/search?q=${searchQuery}`)
       .then((res) => res.json())

@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 const ResultList = ({ songs }) => {
+
   return (
     <Fragment>
         <ul style={{listStyleType: 'none'}}>

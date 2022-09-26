@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './routes/layout/layout.component';
 import Home from './routes/home/home.component';
 import Library from './routes/library/library.component';
+import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists/setlists.component';
 import SearchRouter from './routes/search-router/search-router.component';
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route index element={<Home title={title} message={message}/>} />
           <Route path="search/*" element={<SearchRouter />} />
           <Route path="library" element={<Library />} />
+          <Route path="library/:id" element={<LibraryItem />} />
           <Route path="setlists" element={<Setlists />} />
         </Route>
       </Routes>
