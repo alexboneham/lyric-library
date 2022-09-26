@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import ResultList from '../../components/result-list.component';
+import Loading from '../../components/loading.component';
 
 import './search.styles.scss';
 
@@ -11,6 +12,9 @@ const Search = () => {
   const [query, setQuery] = useState(searchParams.get('q') || '');
   // const page = searchParams.get('page') || 0;
   const [results, setResults] = useState([]);
+  const [initialParam, setInitialParam] = useState(searchParams.get('q') || '');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const newQuery = e.target.value;
@@ -30,27 +34,40 @@ const Search = () => {
   };
 
   useEffect(() => {
-    // Run fetch on initial render if url has search params already defined
-    if (query) {
-      fetchFunction(query);
+    // Run fetch on initial render if url alreay has params
+    console.log('useEffect running...');
+    if (initialParam) {
+      fetchFunction(initialParam);
     }
-  }, []);
+    setInitialParam('');
+  }, [initialParam]);
 
   const fetchFunction = (searchQuery) => {
+    console.log('Fetch function running...');
+    setIsLoading(true);
     fetch(`http://localhost:8000/search?q=${searchQuery}`)
       .then((res) => res.json())
       .then((data) => {
         setResults(data.hits);
+        setIsLoading(false);
       });
   };
 
   return (
     <div className="search-container">
       <form onSubmit={handleSubmit}>
-        <input id="query" name="q" value={query} placeholder="Search for a song" required onChange={handleChange} autoComplete="off"/>
+        <input
+          id="query"
+          name="q"
+          value={query}
+          placeholder="Search for a song"
+          required
+          onChange={handleChange}
+          autoComplete="off"
+        />
         <button type="submit">Search</button>
       </form>
-      {results.length > 0 && <ResultList songs={results} />}
+      {isLoading ? <Loading /> : <ResultList songs={results} />}
     </div>
   );
 };

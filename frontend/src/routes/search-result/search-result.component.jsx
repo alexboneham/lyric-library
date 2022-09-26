@@ -15,7 +15,7 @@ const SearchResult = () => {
         setSong(data);
         console.log('useEffect run')
       });
-  }, []);
+  }, [id]);
 
 
   return (
