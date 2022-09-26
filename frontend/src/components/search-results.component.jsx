@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const ResultList = ({ songs }) => {
+const SearchResults = ({ songs }) => {
 
   return (
     <Fragment>
@@ -18,4 +18,4 @@ const ResultList = ({ songs }) => {
   );
 };
 
-export default ResultList;
+export default SearchResults;

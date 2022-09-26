@@ -6,7 +6,8 @@ import Home from './routes/home/home.component';
 import Library from './routes/library/library.component';
 import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists/setlists.component';
-import SearchRouter from './routes/search-router/search-router.component';
+import Search from './routes/search/search.component'
+import SearchResult from './routes/search-result/search-result.component';
 
 import './App.scss';
 
@@ -29,7 +30,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home title={title} message={message}/>} />
-          <Route path="search/*" element={<SearchRouter />} />
+          <Route path="search" element={<Search />} />
+          <Route path="search/:id" element={<SearchResult />} />
           <Route path="library" element={<Library />} />
           <Route path="library/:id" element={<LibraryItem />} />
           <Route path="setlists" element={<Setlists />} />

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
 
 import LibraryList from '../../components/library-list.component';
 
@@ -26,7 +25,6 @@ const Libary = () => {
       <div className="songs-container">
         {allSongs && <LibraryList songs={allSongs} />}
       </div>
-      <Outlet />
     </div>
   );
 };

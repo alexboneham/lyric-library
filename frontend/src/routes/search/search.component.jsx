@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import ResultList from '../../components/result-list.component';
+import SearchResults from '../../components/search-results.component';
 import Loading from '../../components/loading.component';
 
 import './search.styles.scss';
@@ -65,7 +65,7 @@ const Search = () => {
         />
         <button type="submit">Search</button>
       </form>
-      {isLoading ? <Loading /> : <ResultList songs={results} />}
+      {isLoading ? <Loading /> : <SearchResults songs={results} />}
     </div>
   );
 };
