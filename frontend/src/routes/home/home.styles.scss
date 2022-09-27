@@ -1,5 +1,15 @@
 .homepage-container {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.usage-container {
+  .list {
+    list-style: square;
+
+    .list-item {
+      margin-top: 8px;
+    }
+  }
 }

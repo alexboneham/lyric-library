@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSearchParams, Outlet } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import SearchResults from '../../components/search-results.component';
 import Loading from '../../components/loading/loading.component';
@@ -58,12 +58,13 @@ const Search = () => {
 
   return (
     <div className="search-container">
+      <h1>Search for a song</h1>
       <form onSubmit={handleSubmit}>
         <input
           id="query"
           name="q"
           value={query}
-          placeholder="Search for a song"
+          placeholder="song title..."
           required
           onChange={handleChange}
           autoComplete="off"
