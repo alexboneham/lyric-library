@@ -1,9 +1,31 @@
 .library-item-container {
-    width: 70%;
-    margin: 0 auto;
-    text-align: center;
+    display: flex;
+    justify-content: space-around;
 
-    .lyrics {
-        white-space: pre-line;
+    .song-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 400px;
+
+        img {
+            height: 250px;
+        }
+
+        .description {
+            font-style: italic;
+        }
     }
+
+
+    .lyrics-container {
+        text-align: center;
+
+        .lyrics {
+            white-space: pre-line;
+            font-size: large;
+        }
+
+    }
+    
 }
