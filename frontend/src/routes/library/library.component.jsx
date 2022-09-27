@@ -20,7 +20,7 @@ const Libary = () => {
 
   useEffect(() => {
     const newFilteredSongs = allSongs.filter((song) => {
-      return song.title.toLowerCase().includes(searchValue);
+      return song.title.toLowerCase().includes(searchValue) || song.artist.toLowerCase().includes(searchValue);
     })
     setFilteredSongs(newFilteredSongs);
   }, [searchValue, allSongs])

@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
+import SearchBar from '../../components/search-bar.component';
 
 import './layout.styles.scss';
 
@@ -13,13 +14,13 @@ const Layout = () => {
       <nav className="navigation">
         <div className="logo-container">
           <NavLink className="nav-link" to="/">
-            <img src={logo} alt="lyric-library"/>
+            <img src={logo} alt="lyric-library" />
           </NavLink>
         </div>
+        <div className="nav-search-container">
+          <SearchBar />
+        </div>
         <div className="nav-links-container">
-          <NavLink className="nav-link" to="/search" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            Search
-          </NavLink>
           <NavLink className="nav-link" to="/library" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
             Library
           </NavLink>

@@ -3,21 +3,26 @@
   .navigation {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     width: 100%;
 
     .logo-container {
-
+      width: 15%;
       img {
         height: 100px;
       }
+    }
+
+    .nav-search-container {
+      width: 30%;
+      margin-left: 0;
     }
 
     .nav-links-container {
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 30%;
+      width: 55%;
       justify-content: space-evenly;
 
       .nav-link {
