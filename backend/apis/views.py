@@ -107,7 +107,8 @@ def library(request):
 
     elif request.method == 'GET':
         # Use list comprehension to create list of all songs in library
-        songs = [song.serialize() for song in Song.objects.all().order_by('-timestamp')]
+        songs = [song.serialize()
+                 for song in Song.objects.all().order_by('-timestamp')]
         return JsonResponse({'songs': songs}, status=200)
 
     else:
@@ -147,7 +148,9 @@ def setlists(request):
         if not Setlist.objects.filter(name=data['name']).exists():
             try:
                 s = Setlist.objects.create(name=data['name'])
-                s.songs.set(data['new_songs'])
+                songs = Song.objects.filter(
+                    pk__in=[int(i) for i in data['new_songs']])
+                s.songs.set(songs)
             except Exception as e:
                 return JsonResponse({'error': f'{e}'}, status=404)
         else:
