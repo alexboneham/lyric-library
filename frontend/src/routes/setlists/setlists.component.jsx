@@ -24,8 +24,7 @@ const Setlists = () => {
   const submitHandler = (e) => {
     // Create a setlist and save to database
     e.preventDefault();
-    makeNewSetlist();
-    // add checkboxes for songs to add
+    newSetlist();
     setSetlistName('');
     setFormOpen(false);
   };
@@ -35,20 +34,25 @@ const Setlists = () => {
     setSetlistName(e.target.value);
   };
 
-  const makeNewSetlist = async () => {
-    // POST request to API to create a new setlist
-    const res = await fetch('http://localhost:8000/setlists', {
+  const newSetlist = () => {
+    fetch('http://localhost:8000/setlists', {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: setlistName,
         new_songs: [],
       }),
-    });
-    const data = await res.json();
-    setSetlists([...setlists, data]);    
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setSetlists([...setlists, data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -68,7 +72,7 @@ const Setlists = () => {
             className="form-input"
             onChange={changeHandler}
             required
-            autoComplete='off'
+            autoComplete="off"
           />
           <button type="submit" className="form-button">
             Create setlist
