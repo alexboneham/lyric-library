@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
+
 const Setlists = () => {
   const [setlists, setSetlists] = useState([]);
   const [formOpen, setFormOpen] = useState(false);
@@ -45,7 +47,7 @@ const Setlists = () => {
         new_songs: [],
       }),
     })
-      .then((res) => res.json())
+      .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
         setSetlists([...setlists, data]);
