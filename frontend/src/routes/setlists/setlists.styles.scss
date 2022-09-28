@@ -1,5 +1,17 @@
 .setlists-container {
-    width: 70%;
-    margin: 50px auto;
-    text-align: center;
+  width: 70%;
+  margin: 50px auto;
+  text-align: center;
+
+  .setlists {
+    margin: 10px auto;
+  }
+
+  .new-setlist-form {
+    margin-top: 10px;
+
+    .form-button {
+      margin-left: 8px;
+    }
+  }
 }
