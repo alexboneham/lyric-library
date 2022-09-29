@@ -5,7 +5,7 @@ import { isResponseOk } from '../utils/helper-functions';
 export const LibraryContext = createContext({
   librarySongs: [],
   setLibrarySongs: () => null,
-  isSongInLibrary: false,
+  isSongInLibrary: () => null,
 });
 
 export const LibraryProvider = ({ children }) => {

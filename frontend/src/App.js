@@ -15,11 +15,10 @@ import './App.scss';
 const App = () => {
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
-  const [librarySongs, setLibrarySongs] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8000')
-      .then((res) => res.json())
+      .then((res) => isResponseOk(res))
       .then((data) => {
         document.title = data.app;
         setTitle(data.heading);
@@ -33,8 +32,8 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home title={title} message={message} />} />
           <Route path="search" element={<Search />} />
-          <Route path="search/:id" element={<SearchResult librarySongs={librarySongs}/>} />
-          <Route path="library" element={<Library librarySongs={librarySongs}/>} />
+          <Route path="search/:id" element={<SearchResult />} />
+          <Route path="library" element={<Library />} />
           <Route path="library/:id" element={<LibraryItem />} />
           <Route path="setlists" element={<Setlists />} />
         </Route>

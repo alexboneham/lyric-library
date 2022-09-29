@@ -18,20 +18,21 @@ const SearchResult = () => {
   useEffect(() => {
     setIsLoading(true);
     // API call for song details
-    try {
-      fetch(`http://localhost:8000/search/${id}`)
-        .then((res) => isResponseOk(res))
-        .then((data) => {
-          setSong(data);
-          setIsLoading(false);
-          setInLibrary(isSongInLibrary(data));
-        });
-    } catch (e) {
-      console.log(`Error: ${e}`);
-      setIsError(true);
-      setIsLoading(false);
-    }
-  }, [id]);
+    fetch(`http://localhost:8000/search/${id}`)
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        setIsLoading(false);
+        setSong(data);
+        if (isSongInLibrary(data)) {
+          setInLibrary(true)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, [id, isSongInLibrary]);
 
   const clickHandler = () => {
     fetch('http://localhost:8000/library', {
