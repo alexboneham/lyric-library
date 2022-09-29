@@ -1,43 +1,31 @@
 import { useState, useEffect } from 'react';
 
-import LibraryList from '../../components/library-list/library-list.component'; 
+import LibraryList from '../../components/library-list/library-list.component';
 
 import './library.styles.scss';
 
-const Libary = () => {
-  const [allSongs, setAllSongs] = useState([]);
+const Libary = ({ librarySongs }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [filteredSongs, setFilteredSongs] = useState(allSongs);
+  const [filteredSongs, setFilteredSongs] = useState(librarySongs);
 
   useEffect(() => {
-    const makeFetch = async () => {
-        const res = await fetch('http://localhost:8000/library');
-        const data = await res.json();
-        setAllSongs(data.songs)
-    }
-    makeFetch();
-  }, [])
-
-  useEffect(() => {
-    const newFilteredSongs = allSongs.filter((song) => {
+    const newFilteredSongs = librarySongs.filter((song) => {
       return song.title.toLowerCase().includes(searchValue) || song.artist.toLowerCase().includes(searchValue);
-    })
+    });
     setFilteredSongs(newFilteredSongs);
-  }, [searchValue, allSongs])
+  }, [searchValue, librarySongs]);
 
   const changeHandler = (e) => {
-    setSearchValue(e.target.value.toLowerCase())
-  }
+    setSearchValue(e.target.value.toLowerCase());
+  };
 
   return (
     <div className="library-container">
       <h1>Your Library</h1>
       <form>
-        <input placeholder="search library" name="search-value" onChange={changeHandler}/>
+        <input placeholder="search library" name="search-value" onChange={changeHandler} autoComplete={'off'} />
       </form>
-      <div className="songs-container">
-        {filteredSongs && <LibraryList songs={filteredSongs} />}
-      </div>
+      <div className="songs-container">{filteredSongs && <LibraryList songs={filteredSongs} />}</div>
     </div>
   );
 };

@@ -9,11 +9,13 @@ import Setlists from './routes/setlists/setlists.component';
 import Search from './routes/search/search.component';
 import SearchResult from './routes/search-result/search-result.component';
 
+import { isResponseOk } from './utils/helper-functions';
 import './App.scss';
 
 const App = () => {
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
+  const [librarySongs, setLibrarySongs] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8000')
@@ -25,14 +27,23 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    fetch('http://localhost:8000/library')
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        setLibrarySongs(data.songs);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home title={title} message={message} />} />
           <Route path="search" element={<Search />} />
-          <Route path="search/:id" element={<SearchResult />} />
-          <Route path="library" element={<Library />} />
+          <Route path="search/:id" element={<SearchResult librarySongs={librarySongs}/>} />
+          <Route path="library" element={<Library librarySongs={librarySongs}/>} />
           <Route path="library/:id" element={<LibraryItem />} />
           <Route path="setlists" element={<Setlists />} />
         </Route>

@@ -54,7 +54,6 @@ def search_genius_by_id(request, id):
         cleaned_song = clean_lyrics(song)
     except Exception as e:
         print(e)
-        return HttpResponse(e)
         return JsonResponse({'error': f'{e}'}, status=e.errno)
 
     # uses to_dict() method on type Song from lyrics-genius
