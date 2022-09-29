@@ -9,7 +9,7 @@ import './search-result.styles.scss';
 
 const SearchResult = () => {
   const { id } = useParams();
-  const { librarySongs, setLibrarySongs, addSongToLibrary } = useContext(LibraryContext); // Context provider
+  const { librarySongs, setLibrarySongs, isSongInLibrary } = useContext(LibraryContext); // Context provider
   const [song, setSong] = useState(undefined);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,7 @@ const SearchResult = () => {
         .then((data) => {
           setSong(data);
           setIsLoading(false);
+          setInLibrary(isSongInLibrary(data));
         });
     } catch (e) {
       console.log(`Error: ${e}`);
@@ -31,16 +32,6 @@ const SearchResult = () => {
       setIsLoading(false);
     }
   }, [id]);
-
-  useEffect(() => {
-    console.log('Check if in library hook running....');
-    if (song) {
-      if (librarySongs.find((element) => element.genius_id === song.id)) {
-        setInLibrary(true);
-        console.log('Made it through conditional');
-      }
-    }
-  }, [librarySongs, song]);
 
   const clickHandler = () => {
     fetch('http://localhost:8000/library', {
@@ -52,7 +43,7 @@ const SearchResult = () => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        addSongToLibrary(data.song);
+        setLibrarySongs([data.song, ...librarySongs]);
         setInLibrary(true);
       })
       .catch((error) => {

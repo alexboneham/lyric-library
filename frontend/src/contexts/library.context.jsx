@@ -5,7 +5,7 @@ import { isResponseOk } from '../utils/helper-functions';
 export const LibraryContext = createContext({
   librarySongs: [],
   setLibrarySongs: () => null,
-  addSongToLibrary: () => null,
+  isSongInLibrary: false,
 });
 
 export const LibraryProvider = ({ children }) => {
@@ -21,12 +21,17 @@ export const LibraryProvider = ({ children }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const addSongToLibrary = (newSong) => setLibrarySongs([...librarySongs, newSong]);
+  const isSongInLibrary = (song) => {
+    if (librarySongs.find((element) => element.genius_id === song.id)) {
+      return true;
+    }
+    return false;
+  };
 
   const value = {
     librarySongs,
     setLibrarySongs,
-    addSongToLibrary,
+    isSongInLibrary,
   };
 
   return <LibraryContext.Provider value={value}>{children}</LibraryContext.Provider>;
