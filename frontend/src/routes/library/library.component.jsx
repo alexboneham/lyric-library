@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import LibraryList from '../../components/library-list/library-list.component';
+import { LibraryContext } from '../../contexts/library.context';
 
 import './library.styles.scss';
 
-const Libary = ({ librarySongs }) => {
+const Libary = () => {
+  const { librarySongs } = useContext(LibraryContext);
+
   const [searchValue, setSearchValue] = useState('');
   const [filteredSongs, setFilteredSongs] = useState(librarySongs);
 

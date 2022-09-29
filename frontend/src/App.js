@@ -27,15 +27,6 @@ const App = () => {
       });
   }, []);
 
-  useEffect(() => {
-    fetch('http://localhost:8000/library')
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        setLibrarySongs(data.songs);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
   return (
     <Router>
       <Routes>

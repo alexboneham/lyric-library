@@ -74,7 +74,7 @@ def library(request):
         except Exception as e:
             return JsonResponse({'error': f'{e}'}, status=e.errno)
 
-        if Song.objects.filter(title=data['title']).exists():
+        if Song.objects.filter(genius_id=data['id']).exists():
             return JsonResponse({'error': 'Song already exists in database'}, status=409)
         else:
             try:
@@ -99,7 +99,10 @@ def library(request):
                 s.album = alb
 
                 s.save()
-                return JsonResponse({'success': f'Successfully added {s.title} to your library!'}, status=201)
+                return JsonResponse({
+                        'success': f'Successfully added {s.title} to your library!',
+                        'song': s.serialize(),
+                    }, status=201)
             except Exception as e:
                 print(e)
                 return JsonResponse({'error': f'{e}'}, status=400)

@@ -1,13 +1,15 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { isResponseOk } from '../../utils/helper-functions';
 import Loading from '../../components/loading/loading.component';
+import { LibraryContext } from '../../contexts/library.context';
 
 import './search-result.styles.scss';
 
-const SearchResult = ({ librarySongs }) => {
+const SearchResult = () => {
   const { id } = useParams();
+  const { librarySongs, setLibrarySongs, addSongToLibrary } = useContext(LibraryContext); // Context provider
   const [song, setSong] = useState(undefined);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,15 +34,15 @@ const SearchResult = ({ librarySongs }) => {
 
   useEffect(() => {
     console.log('Check if in library hook running....');
-    if(song){
-      if(librarySongs.find((element) => element.genius_id === song.id)){
+    if (song) {
+      if (librarySongs.find((element) => element.genius_id === song.id)) {
         setInLibrary(true);
         console.log('Made it through conditional');
       }
     }
   }, [librarySongs, song]);
 
-  const addSongToLibrary = () => {
+  const clickHandler = () => {
     fetch('http://localhost:8000/library', {
       method: 'POST',
       headers: {
@@ -50,12 +52,13 @@ const SearchResult = ({ librarySongs }) => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(data);
-        // Update library state ??
+        addSongToLibrary(data.song);
+        setInLibrary(true);
       })
-      .catch((error) => console.log(error));
-
-    setInLibrary(true);
+      .catch((error) => {
+        console.log(error);
+        setIsError(true);
+      });
   };
 
   return (
@@ -66,7 +69,7 @@ const SearchResult = ({ librarySongs }) => {
         <Fragment>
           <h1 className="title">{song.title}</h1>
           <h3 className="artist-name">by {song.artist}</h3>
-          <button disabled={inLibrary ? true : false} onClick={addSongToLibrary}>
+          <button disabled={inLibrary ? true : false} onClick={clickHandler}>
             {inLibrary ? 'Added to library!' : 'Add to library'}
           </button>
           <p className="lyrics">{song.lyrics}</p>
