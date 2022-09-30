@@ -75,7 +75,7 @@ const SearchResult = () => {
   const buttonProps = {
     inLibrary: inLibrary,
     handler: clickHandler,
-  }
+  };
 
   return (
     <div className="search-result-container">

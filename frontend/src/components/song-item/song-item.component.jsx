@@ -1,12 +1,10 @@
-// import ButtonGroup from '../button-group/button-group.component';
+import ButtonGroup from '../button-group/button-group.component';
 import './song-item.styles.scss';
 
 const SongItem = ({ song, description, thumbnail, buttonProps }) => {
   if (thumbnail) {
     song['thumbnail_url'] = thumbnail;
   }
-
-  const { inLibrary = undefined, handler = undefined, handleDelete = undefined, handleEdit = undefined } = buttonProps;
 
   return (
     <div className="song-item-container">
@@ -17,13 +15,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps }) => {
         <p className="description">{description}</p>
       </div>
       <div className="lyrics-column">
-        {inLibrary !== undefined && (
-          <button disabled={inLibrary ? true : false} onClick={handler}>
-            {inLibrary ? 'Added to library!' : 'Add to library'}
-          </button>
-        )}
-        {handleDelete && <button onClick={handleDelete}>Delete</button>}
-        {handleEdit && <button onClick={handleEdit}>Edit</button>}
+        <ButtonGroup buttonProps={buttonProps} />
         <p className="lyrics">{song.lyrics}</p>
       </div>
     </div>

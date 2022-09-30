@@ -22,11 +22,11 @@ const LibraryItem = () => {
   const buttonProps = {
     handleDelete: deleteSong,
     handleEdit: editSong,
-  }
+  };
 
   return (
     <Fragment>
-      <SongItem song={song} description={song.description} buttonProps={buttonProps}/>
+      <SongItem song={song} description={song.description} buttonProps={buttonProps} />
     </Fragment>
   );
 };
