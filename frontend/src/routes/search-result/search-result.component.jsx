@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import Loading from '../../components/loading/loading.component';
 import SongItem from '../../components/song-item/song-item.component';
@@ -74,7 +74,11 @@ const SearchResult = () => {
 
   return (
     <div className="search-result-container">
-      {isError && <div>Something went wrong...</div>}
+      {isError && 
+      <div>
+        <p>Something went wrong...</p>
+        <p>Please <Link to={`/search/${id}`}>try again</Link></p>
+        </div>}
       {isLoading && <Loading />}
       {song && (
         <SongItem
