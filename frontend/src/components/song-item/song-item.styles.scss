@@ -1,12 +1,18 @@
 .song-item-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 
-  .song-info {
+  .song-info-column {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 400px;
+    width: 500px;
+    padding: 10px;
+
+    .title {
+      text-align: center;
+    }
 
     img {
       height: 250px;
@@ -17,12 +23,14 @@
     }
   }
 
-  .lyrics-container {
-    text-align: center;
+  .lyrics-column {
+    width: 500px;
+    padding: 10px;
 
     .lyrics {
       white-space: pre-line;
       font-size: large;
+      text-align: center;
     }
   }
 }

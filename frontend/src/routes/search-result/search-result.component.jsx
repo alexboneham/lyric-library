@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Loading from '../../components/loading/loading.component';
@@ -26,6 +26,11 @@ const SearchResult = () => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         setIsLoading(false);
+        if (data.description.plain) {
+          if (data.description.plain === '?') {
+            data.description.plain = `From the album: ${data.album.name}`;
+          }
+        }
         setSong(data);
       })
       .catch((error) => {
@@ -72,16 +77,11 @@ const SearchResult = () => {
       {isError && <div>Something went wrong...</div>}
       {isLoading && <Loading />}
       {song && (
-        <div>
-          <button disabled={inLibrary ? true : false} onClick={clickHandler}>
-            {inLibrary ? 'Added to library!' : 'Add to library'}
-          </button>
-          <SongItem
-            song={song}
-            description={song.description['plain']}
-            thumbnail={song['song_art_image_thumbnail_url']}
-          />
-        </div>
+        <SongItem
+          song={song}
+          description={song.description['plain']}
+          thumbnail={song['song_art_image_thumbnail_url']}
+        />
       )}
     </div>
   );

@@ -18,7 +18,7 @@ const LibraryItem = () => {
 
   return (
     <Fragment>
-      <SongItem song={song} description={song.description} showButton={false} />
+      <SongItem song={song} description={song.description} />
     </Fragment>
   );
 };
