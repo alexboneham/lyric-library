@@ -74,11 +74,14 @@ const SearchResult = () => {
 
   return (
     <div className="search-result-container">
-      {isError && 
-      <div>
-        <p>Something went wrong...</p>
-        <p>Please <Link to={`/search/${id}`}>try again</Link></p>
-        </div>}
+      {isError && (
+        <div>
+          <p>Something went wrong...</p>
+          <p>
+            Please <Link to={`/search/${id}`}>try again</Link>
+          </p>
+        </div>
+      )}
       {isLoading && <Loading />}
       {song && (
         <SongItem
