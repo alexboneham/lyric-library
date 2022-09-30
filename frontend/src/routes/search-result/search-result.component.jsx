@@ -10,34 +10,45 @@ import { LibraryContext } from '../../contexts/library.context';
 import './search-result.styles.scss';
 
 const SearchResult = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Get Genius id from the URL route
   const { librarySongs, setLibrarySongs, isSongInLibrary } = useContext(LibraryContext); // Context provider
+
+  // Set State
   const [song, setSong] = useState(undefined);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inLibrary, setInLibrary] = useState(false);
 
   useEffect(() => {
-    console.log('Search result route useEffect is running');
     setIsLoading(true);
-    // API call for song details
+    // Calls Django API, which in turn calls Genius API for song info, lyrics, etc
     fetch(`http://localhost:8000/search/${id}`)
       .then((res) => isResponseOk(res))
       .then((data) => {
         setIsLoading(false);
         setSong(data);
-        if (isSongInLibrary(data)) {
-          setInLibrary(true);
-        }
       })
       .catch((error) => {
         console.log(error);
-        setIsError(true);
         setIsLoading(false);
+        setIsError(true);
       });
-  }, [id, isSongInLibrary]);
+  }, [id]);
+
+  useEffect(() => {
+    // Runs when song is loaded to check whether song is in library.
+    // N.B. moved this function out of the fetch useEffect because it was triggering it to
+    // re-run thus making a redundant call to the API + re-rendering the entire page.
+    // Now this use effect runs more often, but avoids the fetch and is lightweight.
+    if (song) {
+      if (isSongInLibrary(song)) {
+        setInLibrary(true);
+      }
+    }
+  }, [song, isSongInLibrary]);
 
   const clickHandler = () => {
+    // Handles POST request to Django API to save the song to the user's database
     fetch('http://localhost:8000/library', {
       method: 'POST',
       headers: {
