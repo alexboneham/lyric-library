@@ -6,7 +6,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps }) => {
     song['thumbnail_url'] = thumbnail;
   }
 
-  const { inLibrary = undefined, handler = undefined } = buttonProps;
+  const { inLibrary = undefined, handler = undefined, handleDelete = undefined, handleEdit = undefined } = buttonProps;
 
   return (
     <div className="song-item-container">
@@ -22,6 +22,8 @@ const SongItem = ({ song, description, thumbnail, buttonProps }) => {
             {inLibrary ? 'Added to library!' : 'Add to library'}
           </button>
         )}
+        {handleDelete && <button onClick={handleDelete}>Delete</button>}
+        {handleEdit && <button onClick={handleEdit}>Edit</button>}
         <p className="lyrics">{song.lyrics}</p>
       </div>
     </div>

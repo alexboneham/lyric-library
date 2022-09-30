@@ -16,8 +16,12 @@ const LibraryItem = () => {
     fetchSong();
   }, [id]);
 
-  const buttonProps = {
+  const editSong = () => console.log('edited');
+  const deleteSong = () => console.log('deleted');
 
+  const buttonProps = {
+    handleDelete: deleteSong,
+    handleEdit: editSong,
   }
 
   return (
