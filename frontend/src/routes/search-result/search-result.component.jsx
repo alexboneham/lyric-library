@@ -84,11 +84,16 @@ const SearchResult = () => {
       )}
       {isLoading && <Loading />}
       {song && (
-        <SongItem
-          song={song}
-          description={song.description['plain']}
-          thumbnail={song['song_art_image_thumbnail_url']}
-        />
+        <Fragment>
+          <SongItem
+            song={song}
+            description={song.description['plain']}
+            thumbnail={song['song_art_image_thumbnail_url']}
+          />
+          <div>
+            <button onClick={clickHandler} disabled={inLibrary ? true : false}>{inLibrary ? 'Added to library!' : 'Add to library'}</button>
+          </div>
+        </Fragment>
       )}
     </div>
   );
