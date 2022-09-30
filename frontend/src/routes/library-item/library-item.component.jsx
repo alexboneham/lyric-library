@@ -1,4 +1,4 @@
-import { useState, useEffect,Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
 import SongItem from '../../components/song-item/song-item.component';
@@ -16,9 +16,13 @@ const LibraryItem = () => {
     fetchSong();
   }, [id]);
 
+  const buttonProps = {
+
+  }
+
   return (
     <Fragment>
-      <SongItem song={song} description={song.description} />
+      <SongItem song={song} description={song.description} buttonProps={buttonProps}/>
     </Fragment>
   );
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, Fragment } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Loading from '../../components/loading/loading.component';
 import SongItem from '../../components/song-item/song-item.component';
@@ -72,15 +72,20 @@ const SearchResult = () => {
       });
   };
 
+  const buttonProps = {
+    inLibrary: inLibrary,
+    handler: clickHandler,
+  }
+
   return (
     <div className="search-result-container">
       {isError && (
-        <div>
+        <Fragment>
           <p>Something went wrong...</p>
           <p>
-            Please <Link to={`/search/${id}`}>try again</Link>
+            Please <a href={`/search/${id}`}>try again</a>
           </p>
-        </div>
+        </Fragment>
       )}
       {isLoading && <Loading />}
       {song && (
@@ -89,10 +94,11 @@ const SearchResult = () => {
             song={song}
             description={song.description['plain']}
             thumbnail={song['song_art_image_thumbnail_url']}
+            buttonProps={buttonProps}
           />
-          <div>
+          {/* <div>
             <button onClick={clickHandler} disabled={inLibrary ? true : false}>{inLibrary ? 'Added to library!' : 'Add to library'}</button>
-          </div>
+          </div> */}
         </Fragment>
       )}
     </div>
