@@ -13,17 +13,18 @@
       }
     }
 
-    .nav-search-container {
-      width: 30%;
-      margin-left: 0;
-    }
+    // .nav-search-container {
+    //   width: 30%;
+    //   margin-left: 0;
+    // }
 
     .nav-links-container {
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 55%;
+      width: 35%;
       justify-content: space-evenly;
+      margin-left: auto;
 
       .nav-link {
         text-decoration: none;

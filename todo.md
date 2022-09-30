@@ -36,6 +36,7 @@
 - useParams() for nested routes with ids
 - consider auth options
 - more error handling, especially for timeouts
+- work on cross-site cookies settings
 
 **DONE**
 - consider which method to connect Django and React

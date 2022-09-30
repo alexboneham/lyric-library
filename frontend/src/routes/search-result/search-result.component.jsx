@@ -1,8 +1,10 @@
-import { useState, useEffect, Fragment, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { isResponseOk } from '../../utils/helper-functions';
 import Loading from '../../components/loading/loading.component';
+import SongItem from '../../components/song-item/song-item.component';
+
+import { isResponseOk } from '../../utils/helper-functions';
 import { LibraryContext } from '../../contexts/library.context';
 
 import './search-result.styles.scss';
@@ -16,6 +18,7 @@ const SearchResult = () => {
   const [inLibrary, setInLibrary] = useState(false);
 
   useEffect(() => {
+    console.log('Search result route useEffect is running');
     setIsLoading(true);
     // API call for song details
     fetch(`http://localhost:8000/search/${id}`)
@@ -24,7 +27,7 @@ const SearchResult = () => {
         setIsLoading(false);
         setSong(data);
         if (isSongInLibrary(data)) {
-          setInLibrary(true)
+          setInLibrary(true);
         }
       })
       .catch((error) => {
@@ -58,14 +61,16 @@ const SearchResult = () => {
       {isError && <div>Something went wrong...</div>}
       {isLoading && <Loading />}
       {song && (
-        <Fragment>
-          <h1 className="title">{song.title}</h1>
-          <h3 className="artist-name">by {song.artist}</h3>
+        <div>
           <button disabled={inLibrary ? true : false} onClick={clickHandler}>
             {inLibrary ? 'Added to library!' : 'Add to library'}
           </button>
-          <p className="lyrics">{song.lyrics}</p>
-        </Fragment>
+          <SongItem
+            song={song}
+            description={song.description['plain']}
+            thumbnail={song['song_art_image_thumbnail_url']}
+          />
+        </div>
       )}
     </div>
   );

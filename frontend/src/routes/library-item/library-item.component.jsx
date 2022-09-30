@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
+import SongItem from '../../components/song-item/song-item.component';
 import './library-item.styles.scss';
 
 const LibraryItem = () => {
@@ -16,17 +17,9 @@ const LibraryItem = () => {
   }, [id]);
 
   return (
-    <div className="library-item-container">
-      <div className="song-info">
-        <h1 className="title">{song.title}</h1>
-        <h2 className="artist">by {song.artist}</h2>
-        <img src={song.thumbnail_url} alt={song.full_title} />
-        <p className='description'>{song.description}</p>
-      </div>
-      <div className="lyrics-container">
-        <p className="lyrics">{song.lyrics}</p>
-      </div>
-    </div>
+    <Fragment>
+      <SongItem song={song} description={song.description} showButton={false} />
+    </Fragment>
   );
 };
 

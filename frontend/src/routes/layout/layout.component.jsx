@@ -16,9 +16,9 @@ const Layout = () => {
             <img src={logo} alt="lyric-library" />
           </NavLink>
         </div>
-        <div className="nav-search-container">
+        {/* <div className="nav-search-container">
           <SearchBar />
-        </div>
+        </div> */}
         <div className="nav-links-container">
           <NavLink className="nav-link" to="/library" style={({ isActive }) => (isActive ? activeStyle : undefined)}>
             Library
