@@ -27,6 +27,11 @@ const LibraryItem = () => {
   const handleEditSubmit = (e) => {
     // Make PUT request to Django API to update the song with new lyrics
     e.preventDefault();
+    if (!editValue) {
+      console.log('No changes detected');
+      setEditOpen(false);
+      return;
+    }
     fetch(`http://localhost:8000/library/${id}`, {
       method: 'PUT',
       headers: {
@@ -51,13 +56,12 @@ const LibraryItem = () => {
   };
 
   const handleDelete = () => {
-    console.log('Delete clicked');
-
     fetch(`http://localhost:8000/library/${id}`, {
       method: 'DELETE',
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
+        console.log('Song deleted!')
         console.log(data);
         removeSong(song);
         navigate('/library');
