@@ -14,8 +14,9 @@ const LibraryItem = () => {
   useEffect(() => {
     // Load song from database
     fetch(`http://localhost:8000/library/${id}`)
-    .then((res) => isResponseOk(res))
-    .then((data) => setSong(data))
+      .then((res) => isResponseOk(res))
+      .then((data) => setSong(data))
+      .catch((e) => console.log(e));
   }, [id]);
 
   const handleEditSubmit = (e) => {
@@ -32,15 +33,18 @@ const LibraryItem = () => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        song.lyrics = data.lyrics
+        song.lyrics = data.lyrics;
         setEditOpen(false);
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleEditChange = (e) => {
     // Grab value from textarea on change for use in submit
     setEditValue(e.target.value);
   };
+
+  const handleDelete = () => {};
 
   // Props to send relating to actions
   const actionProps = {
@@ -52,7 +56,7 @@ const LibraryItem = () => {
   // Props to send relating to button display
   const buttonProps = {
     editButtonClick: () => setEditOpen(true),
-    deleteButtonClick: () => console.log('Delete clicked')
+    deleteButtonClick: () => console.log('Delete clicked'),
   };
 
   return (
