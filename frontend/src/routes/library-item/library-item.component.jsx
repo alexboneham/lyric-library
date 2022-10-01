@@ -56,17 +56,19 @@ const LibraryItem = () => {
   };
 
   const handleDelete = () => {
-    fetch(`http://localhost:8000/library/${id}`, {
-      method: 'DELETE',
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        console.log('Song deleted!')
-        console.log(data);
-        removeSong(song);
-        navigate('/library');
+    if (window.confirm('Are you sure you want to delete this song?')) {
+      fetch(`http://localhost:8000/library/${id}`, {
+        method: 'DELETE',
       })
-      .catch((e) => console.log(e));
+        .then((res) => isResponseOk(res))
+        .then((data) => {
+          console.log('Song deleted!');
+          console.log(data);
+          removeSong(song);
+          navigate('/library');
+        })
+        .catch((e) => console.log(e));
+    }
   };
 
   // Props to send relating to actions
