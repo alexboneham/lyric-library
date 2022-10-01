@@ -28,7 +28,7 @@
 ## Frontend
 
 **TODO**
-- move add to library button inside <SongItem /> component
+- Edit and Delete functions
 - consider auth options
 - more error handling, especially for timeouts
 - work on cross-site cookies settings
@@ -43,3 +43,4 @@
 - set up context for handling song library information
 - set up basic setlists route and fetch call
 - useParams() for nested routes with ids
+- move add to library button inside <SongItem /> component

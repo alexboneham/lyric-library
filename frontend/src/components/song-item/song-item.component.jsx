@@ -1,10 +1,12 @@
 import ButtonGroup from '../button-group/button-group.component';
 import './song-item.styles.scss';
 
-const SongItem = ({ song, description, thumbnail, buttonProps }) => {
+const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) => {
   if (thumbnail) {
     song['thumbnail_url'] = thumbnail;
   }
+
+  const { editOpen = undefined, handleEditSubmit = undefined, handleEditChange = undefined } = actionProps;
 
   return (
     <div className="song-item-container">
@@ -16,7 +18,14 @@ const SongItem = ({ song, description, thumbnail, buttonProps }) => {
       </div>
       <div className="lyrics-column">
         <ButtonGroup buttonProps={buttonProps} />
-        <p className="lyrics">{song.lyrics}</p>
+        {editOpen ? (
+          <form onSubmit={handleEditSubmit}>
+            <textarea defaultValue={song.lyrics} cols={50} rows={50} onChange={handleEditChange} />
+            <button type="submit">Submit</button>
+          </form>
+        ) : (
+          <p className="lyrics">{song.lyrics}</p>
+        )}
       </div>
     </div>
   );

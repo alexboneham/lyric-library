@@ -1,6 +1,6 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
@@ -128,7 +128,7 @@ def song(request, song_id):
     if request.method == 'PUT':
         song.lyrics = json.loads(request.body)['lyrics']
         song.save()
-        return JsonResponse(song.seralize(), status=200)
+        return JsonResponse(song.serialize(), status=200)
 
     elif request.method == 'DELETE':
         res = song.delete()

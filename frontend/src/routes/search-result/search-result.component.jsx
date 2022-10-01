@@ -77,6 +77,9 @@ const SearchResult = () => {
     handler: clickHandler,
   };
 
+  // Send empty object to satisfy destructing at song-item level
+  const actionProps = {}
+
   return (
     <div className="search-result-container">
       {isError && (
@@ -95,6 +98,7 @@ const SearchResult = () => {
             description={song.description['plain']}
             thumbnail={song['song_art_image_thumbnail_url']}
             buttonProps={buttonProps}
+            actionProps={actionProps}
           />
           {/* <div>
             <button onClick={clickHandler} disabled={inLibrary ? true : false}>{inLibrary ? 'Added to library!' : 'Add to library'}</button>

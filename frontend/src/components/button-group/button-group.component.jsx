@@ -1,7 +1,14 @@
 import './button-group.styles.scss';
 
 const ButtonGroup = ({ buttonProps }) => {
-  const { inLibrary = undefined, handler = undefined, handleDelete = undefined, handleEdit = undefined } = buttonProps;
+  // Destructure variables and functions from props
+  // Each has a defult value to avoid errors when running conditionally logic in render.
+  const {
+    inLibrary = undefined,
+    handler = undefined,
+    deleteButtonClick = undefined,
+    editButtonClick = undefined,
+  } = buttonProps;
 
   return (
     <div className="button-group">
@@ -10,8 +17,8 @@ const ButtonGroup = ({ buttonProps }) => {
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </button>
       )}
-      {handleDelete && <button onClick={handleDelete}>Delete</button>}
-      {handleEdit && <button onClick={handleEdit}>Edit</button>}
+      {editButtonClick && <button onClick={editButtonClick}>Edit</button>}
+      {deleteButtonClick && <button onClick={deleteButtonClick}>Delete</button>}
     </div>
   );
 };
