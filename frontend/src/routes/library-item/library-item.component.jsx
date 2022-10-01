@@ -1,8 +1,10 @@
-import { useState, useEffect, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, Fragment, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import SongItem from '../../components/song-item/song-item.component';
 import { isResponseOk } from '../../utils/helper-functions';
+import { LibraryContext } from '../../contexts/library.context';
+
 import './library-item.styles.scss';
 
 const LibraryItem = () => {
@@ -10,6 +12,9 @@ const LibraryItem = () => {
   const [song, setSong] = useState({});
   const [editOpen, setEditOpen] = useState(false);
   const [editValue, setEditValue] = useState('');
+
+  const { removeSong } = useContext(LibraryContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Load song from database
@@ -35,6 +40,7 @@ const LibraryItem = () => {
       .then((data) => {
         song.lyrics = data.lyrics;
         setEditOpen(false);
+        console.log('Song edited!');
       })
       .catch((e) => console.log(e));
   };
@@ -44,7 +50,20 @@ const LibraryItem = () => {
     setEditValue(e.target.value);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    console.log('Delete clicked');
+
+    fetch(`http://localhost:8000/library/${id}`, {
+      method: 'DELETE',
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        removeSong(song);
+        navigate('/library');
+      })
+      .catch((e) => console.log(e));
+  };
 
   // Props to send relating to actions
   const actionProps = {
@@ -56,7 +75,7 @@ const LibraryItem = () => {
   // Props to send relating to button display
   const buttonProps = {
     editButtonClick: () => setEditOpen(true),
-    deleteButtonClick: () => console.log('Delete clicked'),
+    deleteButtonClick: handleDelete,
   };
 
   return (

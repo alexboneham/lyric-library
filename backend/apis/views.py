@@ -132,7 +132,7 @@ def song(request, song_id):
 
     elif request.method == 'DELETE':
         res = song.delete()
-        return JsonResponse({'success': f'Song deleted. Result: {res}'}, status=200)
+        return JsonResponse({'success': 'Song deleted', 'res': res}, status=200)
 
     elif request.method == 'GET':
         return JsonResponse(song.serialize(), status=200)

@@ -6,6 +6,7 @@ export const LibraryContext = createContext({
   librarySongs: [],
   setLibrarySongs: () => null,
   isSongInLibrary: () => null,
+  removeSong: () => null,
 });
 
 export const LibraryProvider = ({ children }) => {
@@ -27,10 +28,17 @@ export const LibraryProvider = ({ children }) => {
     return false;
   };
 
+  // Remove song from library function
+  const removeSong = (song) => {
+    const newSongs = librarySongs.filter((item) => item.id !== song.id);
+    setLibrarySongs(newSongs);
+  };
+
   const value = {
     librarySongs,
     setLibrarySongs,
     isSongInLibrary,
+    removeSong,
   };
 
   return <LibraryContext.Provider value={value}>{children}</LibraryContext.Provider>;
