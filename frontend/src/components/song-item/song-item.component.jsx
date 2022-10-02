@@ -2,11 +2,11 @@ import ButtonGroup from '../button-group/button-group.component';
 import './song-item.styles.scss';
 
 const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) => {
+  const { editOpen = undefined, handleEditSubmit = undefined, handleEditChange = undefined } = actionProps;
+
   if (thumbnail) {
     song['thumbnail_url'] = thumbnail;
   }
-
-  const { editOpen = undefined, handleEditSubmit = undefined, handleEditChange = undefined } = actionProps;
 
   return (
     <div className="song-item-container">

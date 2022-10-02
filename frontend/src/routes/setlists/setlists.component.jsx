@@ -1,47 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { LibraryContext } from '../../contexts/library.context';
 import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
 
 const Setlists = () => {
   const [setlists, setSetlists] = useState([]);
   const [formOpen, setFormOpen] = useState(false);
-  const [setlistName, setSetlistName] = useState('');
-  const [allSongs, setAllSongs] = useState([]);
+  const [setlistNameValue, setSetlistNameValue] = useState('');
   const [selectSongs, setSelectSongs] = useState([]);
 
+  const { librarySongs } = useContext(LibraryContext);
+
   useEffect(() => {
-    // Makes get request on page load for setlists data
-    const makeFetch = async () => {
-      const res = await (await fetch('http://localhost:8000/setlists')).json();
-      setSetlists(res.setlists);
-    };
-    makeFetch();
+    // Get setlists from database
+    fetch('http://localhost:8000/setlists')
+      .then((res) => isResponseOk(res))
+      .then((data) => setSetlists(data.setlists));
   }, []);
 
-  const clickHandler = (e) => {
-    // Toggles form show/hide
-    setFormOpen(true);
-    // Grab songs from user's library
-    fetch('http://localhost:8000/library')
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        setAllSongs(data.songs);
-      });
-  };
-
-  const submitHandler = (e) => {
+  const handleFormSubmit = (e) => {
     // Create a setlist and save to database
     e.preventDefault();
-    newSetlist();
-    setSetlistName('');
-    setFormOpen(false);
-  };
 
-  const changeHandler = (e) => {
-    // Set state value from form input
-    setSetlistName(e.target.value);
+    fetch('http://localhost:8000/setlists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: setlistNameValue,
+        new_songs: selectSongs,
+      }),
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        setSetlists([...setlists, data]);
+        setSetlistNameValue('');
+        setFormOpen(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleSelectChange = (e) => {
@@ -51,27 +53,6 @@ const Setlists = () => {
       newSelectSongs.push(selectOptions[i].value);
     }
     setSelectSongs(newSelectSongs);
-  };
-
-  const newSetlist = () => {
-    fetch('http://localhost:8000/setlists', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: setlistName,
-        new_songs: selectSongs,
-      }),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        console.log(data);
-        setSetlists([...setlists, data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
@@ -86,21 +67,21 @@ const Setlists = () => {
       </div>
       {formOpen ? (
         <div className="form-container">
-          <form onSubmit={submitHandler} className="new-setlist-form">
+          <form onSubmit={handleFormSubmit} className="new-setlist-form">
             <label htmlFor="name">Setlist name: </label>
             <input
               name="name"
               id="name"
-              value={setlistName}
+              value={setlistNameValue}
               placeholder="setlist name"
               className="form-input"
-              onChange={changeHandler}
+              onChange={(e) => setSetlistNameValue(e.target.value)}
               required
               autoComplete="off"
             />
             <label htmlFor="songs-menu">Select songs: </label>
             <select id="songs-menu" multiple={true} className="select-input" onChange={handleSelectChange}>
-              {allSongs.map((song) => (
+              {librarySongs.map((song) => (
                 <option value={song.id} key={song.id}>
                   {song.title}
                 </option>
@@ -115,7 +96,7 @@ const Setlists = () => {
           </form>
         </div>
       ) : (
-        <button type="submit" onClick={clickHandler} className="new-button">
+        <button onClick={() => setFormOpen(true)} className="new-button">
           New setlist
         </button>
       )}

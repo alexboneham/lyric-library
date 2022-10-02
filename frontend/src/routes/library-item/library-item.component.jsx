@@ -80,7 +80,7 @@ const LibraryItem = () => {
 
   // Props to send relating to button display
   const buttonProps = {
-    editButtonClick: () => setEditOpen(true),
+    editButtonClick: () => editOpen ? setEditOpen(false) : setEditOpen(true),
     deleteButtonClick: handleDelete,
   };
 
