@@ -13,6 +13,7 @@ export const LibraryProvider = ({ children }) => {
   const [librarySongs, setLibrarySongs] = useState([]);
 
   useEffect(() => {
+    console.log('Context fetch running...')
     fetch('http://localhost:8000/library')
       .then((res) => isResponseOk(res))
       .then((data) => {

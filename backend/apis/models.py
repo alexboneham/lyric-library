@@ -70,5 +70,11 @@ class Setlist(models.Model):
             "id": self.id,
             "name": self.name,
             "timestamp": self.timestamp.strftime("%c"),
-            "songs": [song.title for song in self.songs.all()],
+            "songs": [song.serialize() for song in self.songs.all()],
+        }
+    
+    def slim_serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name
         }
