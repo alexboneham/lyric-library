@@ -182,6 +182,10 @@ def setlist(request, id):
         # clear old setlist songs and replace with songs whose pk is in new songs array
         setlist.songs.set(data['songs'], clear=True)
 
+    elif request.method == 'DELETE':
+        res = setlist.delete()
+        return JsonResponse({'success': 'Setlist deleted', 'res': res}, status=200)        
+
     elif request.method == 'GET':
         return JsonResponse(setlist.serialize(), status=200)
 
