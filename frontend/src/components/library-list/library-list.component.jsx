@@ -11,7 +11,7 @@ const LibraryList = ({ songs }) => {
       <div className='library-list-container'>
         {songs.map((song) => (
           <div key={song.id} className="link-container">
-            <Link to={`${song.id.toString()}`} className="link-style">
+            <Link to={`/library/${song.id.toString()}`} className="link-style">
               <SongCard song={song} />
             </Link>
           </div>
