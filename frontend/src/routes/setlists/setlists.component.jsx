@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component'
+import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component';
 
 import { LibraryContext } from '../../contexts/library.context';
 import { isResponseOk } from '../../utils/helper-functions';
@@ -41,6 +41,7 @@ const Setlists = () => {
         console.log(data);
         setSetlists([...setlists, data]);
         setSetlistNameValue('');
+        setSelectSongs([]);
         setFormOpen(false);
       })
       .catch((error) => {
@@ -68,35 +69,15 @@ const Setlists = () => {
         ))}
       </div>
       {formOpen ? (
-        <div className="form-container">
-          <form onSubmit={handleFormSubmit} className="new-setlist-form">
-            <label htmlFor="name">Setlist name: </label>
-            <input
-              name="name"
-              id="name"
-              value={setlistNameValue}
-              placeholder="setlist name"
-              className="form-input"
-              onChange={(e) => setSetlistNameValue(e.target.value)}
-              required
-              autoComplete="off"
-            />
-            <label htmlFor="songs-menu">Select songs: </label>
-            <select id="songs-menu" multiple={true} className="select-input" onChange={handleSelectChange}>
-              {librarySongs.map((song) => (
-                <option value={song.id} key={song.id}>
-                  {song.title}
-                </option>
-              ))}
-            </select>
-            <span>
-              <small>Hold down “Control”, or “Command” on a Mac, to select more than one.</small>
-            </span>
-            <button type="submit" className="form-button">
-              Create setlist
-            </button>
-          </form>
-        </div>
+        <SetlistEditForm
+          handleFormSubmit={handleFormSubmit}
+          handleSelectChange={handleSelectChange}
+          setlistNameValue={setlistNameValue}
+          setSetlistNameValue={setSetlistNameValue}
+          selectSongs={selectSongs}
+          librarySongs={librarySongs}
+          buttonMessage={'Create setlist'}
+        />
       ) : (
         <button onClick={() => setFormOpen(true)} className="new-button">
           New setlist
