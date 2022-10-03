@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component';
 
 import { LibraryContext } from '../../contexts/library.context';
-import { SetlistContext } from '../../contexts/setlists.context';
+import { SetlistsContext } from '../../contexts/setlists.context';
 
 import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
@@ -15,7 +15,7 @@ const Setlists = () => {
   const [selectSongs, setSelectSongs] = useState([]);
 
   const { librarySongs } = useContext(LibraryContext);
-  const { setlists, setSetlists } = useContext(SetlistContext);
+  const { setlists, setSetlists } = useContext(SetlistsContext);
 
   const handleFormSubmit = (e) => {
     /* 

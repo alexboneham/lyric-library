@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect } from 'react';
 import { isResponseOk } from '../utils/helper-functions';
 
-export const SetlistContext = createContext({
+export const SetlistsContext = createContext({
   setlists: [],
 });
 
-export const SetlistProvider = ({ children }) => {
+export const SetlistsProvider = ({ children }) => {
   const [setlists, setSetlists] = useState([]);
 
   useEffect(() => {
@@ -19,5 +19,5 @@ export const SetlistProvider = ({ children }) => {
     setlists,
     setSetlists,
   };
-  return <SetlistContext.Provider value={value}>{children}</SetlistContext.Provider>;
+  return <SetlistsContext.Provider value={value}>{children}</SetlistsContext.Provider>;
 };

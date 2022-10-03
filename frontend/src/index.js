@@ -4,16 +4,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { LibraryProvider } from './contexts/library.context';
-import { SetlistProvider } from './contexts/setlists.context';
+import { SetlistsProvider } from './contexts/setlists.context';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
   <LibraryProvider>
-    <SetlistProvider>
+    <SetlistsProvider>
       <App />
-    </SetlistProvider>
+    </SetlistsProvider>
   </LibraryProvider>
   // </React.StrictMode>
 );

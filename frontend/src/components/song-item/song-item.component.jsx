@@ -30,7 +30,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
               <option>Setlist 2</option>
               <option>Setlist 3</option>
             </select>
-            <button type='submit'>Add</button>
+            <button type="submit">Add</button>
           </form>
         )}
         {editOpen ? (
