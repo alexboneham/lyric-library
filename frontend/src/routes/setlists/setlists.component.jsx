@@ -1,26 +1,21 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component';
 
 import { LibraryContext } from '../../contexts/library.context';
+import { SetlistContext } from '../../contexts/setlists.context';
+
 import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
 
 const Setlists = () => {
-  const [setlists, setSetlists] = useState([]);
   const [formOpen, setFormOpen] = useState(false);
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [selectSongs, setSelectSongs] = useState([]);
 
   const { librarySongs } = useContext(LibraryContext);
-
-  useEffect(() => {
-    // Get setlists from database
-    fetch('http://localhost:8000/setlists')
-      .then((res) => isResponseOk(res))
-      .then((data) => setSetlists(data.setlists));
-  }, []);
+  const { setlists, setSetlists } = useContext(SetlistContext);
 
   const handleFormSubmit = (e) => {
     /* 

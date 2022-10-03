@@ -161,7 +161,7 @@ def setlists(request):
         return JsonResponse(s.serialize(), status=200)
 
     elif request.method == 'GET':
-        setlists = [setlist.slim_serialize() for setlist in Setlist.objects.all()]
+        setlists = [setlist.serialize() for setlist in Setlist.objects.all()]
         return JsonResponse({'setlists': setlists}, status=200)
 
     else:

@@ -12,6 +12,7 @@ const LibraryItem = () => {
   const [song, setSong] = useState({});
   const [editOpen, setEditOpen] = useState(false);
   const [editValue, setEditValue] = useState('');
+  const [addToSetlistOpen, setAddToSetlistOpen] = useState(false);
 
   const { removeSong } = useContext(LibraryContext);
   const navigate = useNavigate();
@@ -74,14 +75,16 @@ const LibraryItem = () => {
   // Props to send relating to actions
   const actionProps = {
     editOpen,
+    addToSetlistOpen,
     handleEditSubmit,
     handleEditChange,
   };
 
   // Props to send relating to button display
   const buttonProps = {
-    editButtonClick: () => editOpen ? setEditOpen(false) : setEditOpen(true),
+    editButtonClick: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
     deleteButtonClick: handleDelete,
+    setlistButtonClick: () => (addToSetlistOpen ? setAddToSetlistOpen(false) : setAddToSetlistOpen(true))
   };
 
   return (

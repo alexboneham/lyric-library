@@ -8,6 +8,7 @@ const ButtonGroup = ({ buttonProps }) => {
     handler = undefined,
     deleteButtonClick = undefined,
     editButtonClick = undefined,
+    setlistButtonClick = undefined,
   } = buttonProps;
 
   return (
@@ -19,6 +20,7 @@ const ButtonGroup = ({ buttonProps }) => {
       )}
       {editButtonClick && <button onClick={editButtonClick}>Edit</button>}
       {deleteButtonClick && <button onClick={deleteButtonClick}>Delete</button>}
+      {setlistButtonClick && <button onClick={setlistButtonClick}>Add to setlist</button>}
     </div>
   );
 };
