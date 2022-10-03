@@ -29,6 +29,12 @@ const Setlist = () => {
       });
   }, [id]);
 
+  useEffect(() => {
+    if (setlist.songs) {
+      setSelectSongs(setlist['songs'].map((item) => item.id));
+    }
+  }, [setlist]);
+
   const editButtonClick = () => setEditOpen(editOpen ? false : true);
 
   const handleFormSubmit = (e) => {
@@ -90,6 +96,7 @@ const Setlist = () => {
           handleSelectChange={handleSelectChange}
           setlistNameValue={setlistNameValue}
           setSetlistNameValue={setSetlistNameValue}
+          selectSongs={selectSongs}
           librarySongs={librarySongs}
           buttonMessage={'Save setlist'}
         />

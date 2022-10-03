@@ -5,9 +5,11 @@ const SetlistEditForm = ({
   handleSelectChange,
   setlistNameValue,
   setSetlistNameValue,
+  selectSongs,
   librarySongs,
   buttonMessage,
 }) => {
+
   return (
     <div className="form-container">
       <form onSubmit={handleFormSubmit} className="new-setlist-form">
@@ -23,7 +25,7 @@ const SetlistEditForm = ({
           autoComplete="off"
         />
         <label htmlFor="songs-menu">Select songs: </label>
-        <select id="songs-menu" multiple={true} className="select-input" onChange={handleSelectChange}>
+        <select id="songs-menu" multiple={true} className="select-input" onChange={handleSelectChange} value={selectSongs}>
           {librarySongs &&
             librarySongs.map((song) => (
               <option value={song.id} key={song.id}>
