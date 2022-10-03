@@ -178,9 +178,10 @@ def setlist(request, id):
     if request.method == 'PUT':
         data = json.loads(request.body)
         setlist.name = data['name']
-        # May need to call save()...
+        setlist.save()
         # clear old setlist songs and replace with songs whose pk is in new songs array
         setlist.songs.set(data['songs'], clear=True)
+        return JsonResponse(setlist.serialize(), status=200)
 
     elif request.method == 'DELETE':
         res = setlist.delete()

@@ -1,0 +1,23 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+
+    .new-setlist-form {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+
+      .form-input {
+        margin: 5px auto 10px;
+      }
+
+      .select-input {
+        margin: 5px 0 10px;
+      }
+
+      .form-button {
+        margin: 10px auto;
+      }
+    }
+  }

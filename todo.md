@@ -28,10 +28,18 @@
 ## Frontend
 
 **TODO**
-- Edit and Delete functions
+
 - consider auth options
 - more error handling, especially for timeouts
+- fix isResponseOk function not logging error...
 - work on cross-site cookies settings
+- create re-useable setlist edit form component
+
+### UI/UX
+- Build out SPA nav style architecture
+- 
+
+
 
 
 **DONE**
@@ -44,3 +52,5 @@
 - set up basic setlists route and fetch call
 - useParams() for nested routes with ids
 - move add to library button inside <SongItem /> component
+- Edit and Delete functions
+- edit and delete setlist function

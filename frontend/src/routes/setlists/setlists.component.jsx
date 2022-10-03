@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component'
+
 import { LibraryContext } from '../../contexts/library.context';
 import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
