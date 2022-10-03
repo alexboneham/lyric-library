@@ -58,6 +58,7 @@ const Setlist = () => {
       .then((data) => {
         console.log(data);
         setSetlist(data);
+        setEditOpen(false)
       });
   };
 
