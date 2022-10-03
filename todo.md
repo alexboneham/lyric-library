@@ -33,7 +33,7 @@
 - more error handling, especially for timeouts
 - fix isResponseOk function not logging error...
 - work on cross-site cookies settings
-- create re-useable setlist edit form component
+- fix message when a setlist is empty
 
 ### UI/UX
 - Build out SPA nav style architecture
@@ -54,3 +54,4 @@
 - move add to library button inside <SongItem /> component
 - Edit and Delete functions
 - edit and delete setlist function
+- create re-useable setlist edit form component

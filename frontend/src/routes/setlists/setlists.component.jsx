@@ -23,7 +23,11 @@ const Setlists = () => {
   }, []);
 
   const handleFormSubmit = (e) => {
-    // Create a setlist and save to database
+    /* 
+      Create new setlist
+      Send POST request to API with name and songs to add
+      Returns new setlist object, spread to current setlists object
+    */
     e.preventDefault();
 
     fetch('http://localhost:8000/setlists', {
@@ -50,6 +54,7 @@ const Setlists = () => {
   };
 
   const handleSelectChange = (e) => {
+    // Updates state from chosen options in edit select menu
     const selectOptions = e.target.selectedOptions;
     let newSelectSongs = [];
     for (let i = 0; i < selectOptions.length; i++) {
