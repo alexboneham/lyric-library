@@ -1,4 +1,5 @@
 import ButtonGroup from '../button-group/button-group.component';
+import AddSongToSetlist from '../add-song-to-setlist/add-song-to-setlist.component';
 import './song-item.styles.scss';
 
 const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) => {
@@ -24,14 +25,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
       <div className="lyrics-column">
         <ButtonGroup buttonProps={buttonProps} />
         {addToSetlistOpen && (
-          <form>
-            <select>
-              <option>Setlist 1</option>
-              <option>Setlist 2</option>
-              <option>Setlist 3</option>
-            </select>
-            <button type="submit">Add</button>
-          </form>
+          <AddSongToSetlist song={song}/>
         )}
         {editOpen ? (
           <form onSubmit={handleEditSubmit}>

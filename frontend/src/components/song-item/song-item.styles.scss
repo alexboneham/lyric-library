@@ -27,6 +27,15 @@
     width: 500px;
     padding: 10px;
 
+    .add-to-setlist-form {
+      text-align: center;
+      margin-top: 1em;
+
+      button {
+        margin-left: 8px;
+      }
+    }
+
     .lyrics {
       white-space: pre-line;
       font-size: large;
