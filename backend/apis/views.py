@@ -1,6 +1,6 @@
 import json
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
@@ -53,7 +53,7 @@ def search_genius_by_id(request, id):
         song = genius_search_song_by_id(id)
         cleaned_song = clean_lyrics(song)
     except Exception as e:
-        print(e)
+        print(f'Exception occurred from lyrics genius: {e}')
         return JsonResponse({'error': f'{e}'}, status=400)
         
     # uses to_dict() method on type Song from lyrics-genius
@@ -192,3 +192,7 @@ def setlist(request, id):
 
     else:
         return JsonResponse({'error': 'Request method must be GET or PUT'}, status=405)
+
+
+def test(resquest):
+    return HttpResponse('Made it to test')

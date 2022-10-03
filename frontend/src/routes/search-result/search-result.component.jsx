@@ -34,7 +34,7 @@ const SearchResult = () => {
         setSong(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(`from useEffect: ${error}`);
         setIsLoading(false);
         setIsError(true);
       });
