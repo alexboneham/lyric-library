@@ -1,9 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { SetlistsContext } from '../../contexts/setlists.context';
+import { isResponseOk } from '../../utils/helper-functions';
 
 const AddSongToSetlist = ({ song }) => {
   const { setlists } = useContext(SetlistsContext);
+  const [selectValue, setSelectValue] = useState(0);
 
   const checkSongInSetlist = (setlist) => {
     if (setlist.songs.find(({ id }) => id === song.id)) {
@@ -12,9 +14,41 @@ const AddSongToSetlist = ({ song }) => {
     return false;
   };
 
+  const handleChange = (e) => {
+    setSelectValue(parseInt(e.target.value));
+  };
+
+  const handleSubmit = (e) => {
+    /* 
+      Edit setlist
+      Send PUT request to API with name and an array of song ids for setlist
+      Returns new setlist object
+    */
+    e.preventDefault();
+    const setlistToUpdate = setlists.find(({ id }) => id === selectValue);
+    const songsArray = setlistToUpdate['songs'].map((item) => item.id);
+
+    fetch(`http://localhost:8000/setlists/${setlistToUpdate.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: setlistToUpdate.name,
+        songs: [...songsArray, song.id],
+      }),
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        // Need to disable the select menu option for that setlist
+        // need the select menu to re-render due to state change
+      });
+  };
+
   return (
-    <form className="add-to-setlist-form">
-      <select>
+    <form className="add-to-setlist-form" name="add-to-setlist" onSubmit={handleSubmit}>
+      <select value={selectValue} onChange={handleChange}>
         {setlists.map((setlist) => {
           let check = checkSongInSetlist(setlist);
           return (
