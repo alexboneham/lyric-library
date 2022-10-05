@@ -24,18 +24,18 @@ def search_genius(request):
     if request.method != 'GET':
         return JsonResponse({'error': 'Request method should be GET'}, status=405)
 
-    if ('q' in request.GET) and ('artist' in request.GET):
+    if ('title' in request.GET) and ('artist' in request.GET):
         song = genius_search_song_and_artist(
-            request.GET.get('q'), request.GET.get('artist'))
+            request.GET.get('title'), request.GET.get('artist'))
         print(song)
         if song:
             return JsonResponse(clean_lyrics(song).to_dict(), status=200)
         else:
             return JsonResponse({'error': 'No song was found with those terms'}, status=404)
 
-    if 'q' in request.GET:
+    elif 'title' in request.GET:
         found_songs = genius_search_songs(
-            request.GET.get('q'))  # returns a dict
+            request.GET.get('title'))  # returns a dict
         if found_songs:
             return JsonResponse(found_songs, status=200)
         else:

@@ -21,7 +21,6 @@ const App = () => {
     fetch('http://localhost:8000')
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(data)
         document.title = data.app;
         setTitle(data.heading);
         setMessage(data.message);
