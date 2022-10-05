@@ -53,6 +53,7 @@ const Search = () => {
       .catch((error) => {
         console.log(error);
         setIsError(true)
+        setIsLoading(false)
       });
   };
 
@@ -71,7 +72,7 @@ const Search = () => {
         />
         <button type="submit">Search</button>
       </form>
-      {isError && <div>An Error has occurred</div>}
+      {isError && <div style={{'marginTop': '20px'}}>An Error has occurred</div>}
       {isLoading ? <Loading /> : <SearchResults songs={results} />}
     </div>
   );

@@ -21,10 +21,15 @@ const App = () => {
     fetch('http://localhost:8000')
       .then((res) => isResponseOk(res))
       .then((data) => {
+        console.log(data)
         document.title = data.app;
         setTitle(data.heading);
         setMessage(data.message);
-      });
+      })
+      .catch((error) => {
+        setMessage('API is not connected or configured properly')
+        console.log(error)
+      })
   }, []);
 
   return (

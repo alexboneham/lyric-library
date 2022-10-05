@@ -28,7 +28,11 @@ const Libary = () => {
       <form>
         <input placeholder="search library" name="search-value" onChange={changeHandler} autoComplete={'off'} />
       </form>
-      <div className="songs-container">{filteredSongs && <LibraryList songs={filteredSongs} />}</div>
+      {librarySongs.length < 1 ? (
+        <div className='empty-library-message'>Your library is empty</div>
+      ) : (
+        <div className="songs-container">{filteredSongs && <LibraryList songs={filteredSongs} />}</div>
+      )}
     </div>
   );
 };
