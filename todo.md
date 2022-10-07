@@ -36,7 +36,8 @@
 - fix message when a setlist is empty
 - pagination for seach results
 - pagination for library songs
-- infinite scross for pagination
+- infinite scroll for pagination
+- fix add to setlist state bug (need to disbale select options after state change)
 
 ### UI/UX
 - Build out SPA nav style architecture
@@ -58,3 +59,5 @@
 - Edit and Delete functions
 - edit and delete setlist function
 - create re-useable setlist edit form component
+- add ability to search by title AND artist
+- add dynamic back button component

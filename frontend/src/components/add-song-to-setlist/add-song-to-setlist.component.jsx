@@ -5,7 +5,7 @@ import { isResponseOk } from '../../utils/helper-functions';
 
 const AddSongToSetlist = ({ song }) => {
   const { setlists } = useContext(SetlistsContext);
-  const [selectValue, setSelectValue] = useState(0);
+  const [selectValue, setSelectValue] = useState(setlists[0]['id']);
 
   const checkSongInSetlist = (setlist) => {
     if (setlist.songs.find(({ id }) => id === song.id)) {
