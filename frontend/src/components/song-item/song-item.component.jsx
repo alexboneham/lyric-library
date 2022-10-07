@@ -1,5 +1,6 @@
 import ButtonGroup from '../button-group/button-group.component';
 import AddSongToSetlist from '../add-song-to-setlist/add-song-to-setlist.component';
+import BackButton from '../back-button.component';
 import './song-item.styles.scss';
 
 const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) => {
@@ -21,6 +22,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
         <h2 className="artist">by {song.artist}</h2>
         <img src={song.thumbnail_url} alt={song.full_title} />
         <p className="description">{description}</p>
+        <BackButton />
       </div>
       <div className="lyrics-column">
         <ButtonGroup buttonProps={buttonProps} />
