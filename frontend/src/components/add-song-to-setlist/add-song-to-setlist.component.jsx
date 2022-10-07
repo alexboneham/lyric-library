@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 
 import { SetlistsContext } from '../../contexts/setlists.context';
-import { isResponseOk } from '../../utils/helper-functions';
 
 const AddSongToSetlist = ({ song }) => {
   const { setlists, addSongToSetlist } = useContext(SetlistsContext);
@@ -25,18 +24,19 @@ const AddSongToSetlist = ({ song }) => {
       Returns new setlist object
     */
     e.preventDefault();
-    if(selectValue < 0){
-      console.log('No setlist value selected')
-      return 
+    if (selectValue < 0) {
+      console.log('No setlist value selected');
+      return;
     }
     addSongToSetlist(selectValue, song);
-    
   };
 
   return (
     <form className="add-to-setlist-form" name="add-to-setlist" onSubmit={handleSubmit}>
       <select value={selectValue} onChange={handleChange}>
-        <option value={-1} disabled={true}>--choose a setlist--</option>
+        <option value={-1} disabled={true}>
+          --choose a setlist--
+        </option>
         {setlists.map((setlist) => {
           let check = checkSongInSetlist(setlist);
           return (

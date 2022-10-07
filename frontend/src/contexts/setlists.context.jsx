@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
 import { isResponseOk } from '../utils/helper-functions';
 
 export const SetlistsContext = createContext({
@@ -9,17 +9,20 @@ export const SetlistsContext = createContext({
 export const SetlistsProvider = ({ children }) => {
   const [setlists, setSetlists] = useState([]);
 
-  useEffect(() => {
+  const getSetlists = useCallback(() => {
     // Get setlists from database
     fetch('http://localhost:8000/setlists')
       .then((res) => isResponseOk(res))
       .then((data) => setSetlists(data.setlists));
   }, []);
 
-  const addSongToSetlist = (setlistId, song) => {
+  useEffect(() => {
+    getSetlists();
+  }, [getSetlists]);
 
+  const addSongToSetlist = (setlistId, song) => {
     const setlistToUpdate = setlists.find(({ id }) => id === setlistId);
-    if (!setlistToUpdate) return
+    if (!setlistToUpdate) return;
     const songsIdsArray = setlistToUpdate['songs'].map((item) => item.id);
 
     fetch(`http://localhost:8000/setlists/${setlistToUpdate.id}`, {
@@ -35,16 +38,14 @@ export const SetlistsProvider = ({ children }) => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
-        // Need to disable the select menu option for that setlist
-        // need the select menu to re-render due to state change
-        
+        getSetlists();
       });
-  }
+  };
 
   const value = {
     setlists,
     setSetlists,
-    addSongToSetlist
+    addSongToSetlist,
   };
   return <SetlistsContext.Provider value={value}>{children}</SetlistsContext.Provider>;
 };
