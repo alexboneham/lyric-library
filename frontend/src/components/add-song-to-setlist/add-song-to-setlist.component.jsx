@@ -29,6 +29,7 @@ const AddSongToSetlist = ({ song }) => {
       return;
     }
     addSongToSetlist(selectValue, song);
+    setSelectValue(-1);
   };
 
   return (
