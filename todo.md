@@ -37,7 +37,7 @@
 - pagination for seach results
 - pagination for library songs
 - infinite scroll for pagination
-- fix add to setlist state bug (need to disbale select options after state change)
+
 
 ### UI/UX
 - Build out SPA nav style architecture
@@ -61,3 +61,4 @@
 - create re-useable setlist edit form component
 - add ability to search by title AND artist
 - add dynamic back button component
+- fix add to setlist state bug (need to disbale select options after state change)

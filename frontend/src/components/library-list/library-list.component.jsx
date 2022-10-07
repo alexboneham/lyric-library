@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import SongCard from '../song-card/song-card.component';
 
 import './library-list.styles.scss';
 
 const LibraryList = ({ songs }) => {
+  let { id = undefined } = useParams();
 
   return (
     <div className='container'>
@@ -18,9 +19,13 @@ const LibraryList = ({ songs }) => {
         ))}
       </div>
       {songs.length < 1 && (
-        <div>
-          This song is not in your library, try <Link to={'/search'}>searching</Link> for it instead
-        </div>
+        id ? (
+          <div>This setlist is empty. Try adding a song</div>
+        ) : (
+          <div>
+            This song is not in your library, try <Link to={'/search'}>searching</Link> for it instead
+          </div>
+        )
       )}
     </div>
   );
