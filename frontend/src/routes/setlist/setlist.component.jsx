@@ -102,7 +102,7 @@ const Setlist = () => {
           buttonMessage={'Save setlist'}
         />
       )}
-      {setlist.songs && <LibraryList songs={setlist.songs} />}
+      {setlist.songs && <LibraryList songs={setlist.songs} parent={'setlist'} />}
     </div>
   );
 };

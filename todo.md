@@ -34,6 +34,7 @@
 - fix isResponseOk function not logging error...
 - work on cross-site cookies settings
 - fix message when a setlist is empty
+
 - pagination for seach results
 - pagination for library songs
 - infinite scroll for pagination
