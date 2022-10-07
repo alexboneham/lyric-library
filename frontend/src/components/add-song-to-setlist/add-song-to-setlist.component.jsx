@@ -5,7 +5,7 @@ import { isResponseOk } from '../../utils/helper-functions';
 
 const AddSongToSetlist = ({ song }) => {
   const { setlists } = useContext(SetlistsContext);
-  const [selectValue, setSelectValue] = useState(setlists[0]['id']);
+  const [selectValue, setSelectValue] = useState(-1);
 
   const checkSongInSetlist = (setlist) => {
     if (setlist.songs.find(({ id }) => id === song.id)) {
@@ -25,6 +25,10 @@ const AddSongToSetlist = ({ song }) => {
       Returns new setlist object
     */
     e.preventDefault();
+    if(selectValue < 0){
+      console.log('No setlist value selected')
+      return 
+    }
     const setlistToUpdate = setlists.find(({ id }) => id === selectValue);
     const songsArray = setlistToUpdate['songs'].map((item) => item.id);
 
@@ -49,6 +53,7 @@ const AddSongToSetlist = ({ song }) => {
   return (
     <form className="add-to-setlist-form" name="add-to-setlist" onSubmit={handleSubmit}>
       <select value={selectValue} onChange={handleChange}>
+        <option value={-1} disabled={true}>--choose a setlist--</option>
         {setlists.map((setlist) => {
           let check = checkSongInSetlist(setlist);
           return (
