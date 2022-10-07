@@ -4,7 +4,7 @@ import { SetlistsContext } from '../../contexts/setlists.context';
 import { isResponseOk } from '../../utils/helper-functions';
 
 const AddSongToSetlist = ({ song }) => {
-  const { setlists } = useContext(SetlistsContext);
+  const { setlists, addSongToSetlist } = useContext(SetlistsContext);
   const [selectValue, setSelectValue] = useState(-1);
 
   const checkSongInSetlist = (setlist) => {
@@ -29,25 +29,8 @@ const AddSongToSetlist = ({ song }) => {
       console.log('No setlist value selected')
       return 
     }
-    const setlistToUpdate = setlists.find(({ id }) => id === selectValue);
-    const songsArray = setlistToUpdate['songs'].map((item) => item.id);
-
-    fetch(`http://localhost:8000/setlists/${setlistToUpdate.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: setlistToUpdate.name,
-        songs: [...songsArray, song.id],
-      }),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        console.log(data);
-        // Need to disable the select menu option for that setlist
-        // need the select menu to re-render due to state change
-      });
+    addSongToSetlist(selectValue, song);
+    
   };
 
   return (
