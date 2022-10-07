@@ -27,7 +27,6 @@ def search_genius(request):
     if ('title' in request.GET) and ('artist' in request.GET):
         song = genius_search_song_and_artist(
             request.GET.get('title'), request.GET.get('artist'))
-        print(song)
         if song:
             return JsonResponse(clean_lyrics(song).to_dict(), status=200)
         else:
