@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup'
 
-import './home.styles.scss';
-
 const Home = ({ title, message }) => (
   <Container className="p-3 text-center shadow-lg rounded">
     <h1 className='display-4'>{title}</h1>
