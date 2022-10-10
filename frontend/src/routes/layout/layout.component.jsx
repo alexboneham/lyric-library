@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
-import SearchBar from '../../components/search-bar.component';
+// import SearchBar from '../../components/search-bar.component';
 
 import './layout.styles.scss';
 
@@ -31,9 +31,7 @@ const Layout = () => {
           </NavLink>
         </div>
       </nav>
-      <div className="body-container">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
