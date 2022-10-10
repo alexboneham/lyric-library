@@ -28,12 +28,8 @@
 ## Frontend
 
 **TODO**
-
 - consider auth options
-- more error handling, especially for timeouts
-- fix isResponseOk function not logging error...
 - work on cross-site cookies settings
-- fix message when a setlist is empty
 
 - pagination for seach results
 - pagination for library songs
@@ -42,7 +38,7 @@
 
 ### UI/UX
 - Build out SPA nav style architecture
-- 
+- add bootstrap
 
 
 
@@ -63,3 +59,6 @@
 - add ability to search by title AND artist
 - add dynamic back button component
 - fix add to setlist state bug (need to disbale select options after state change)
+- fix message when a setlist is empty
+- fix isResponseOk function not logging error...
+- more error handling, especially for timeouts
