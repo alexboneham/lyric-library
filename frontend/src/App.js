@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Layout from './routes/layout/layout.component';
-import Home from './routes/home/home.component';
+import Home from './routes/home.component';
 import Library from './routes/library/library.component';
 import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists/setlists.component';

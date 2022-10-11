@@ -198,4 +198,11 @@ def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
 def ping(request):
-    return JsonResponse({'result': 'OK'})
+    res = ''
+    if request.method == 'POST':
+        res = 'POST request OK!'
+    elif request.method == 'GET':
+        res = 'GET request OK!'
+    else:
+        res = 'Method something other than GET or POST...'
+    return JsonResponse({'result': res})
