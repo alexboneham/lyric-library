@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import './index.css';
 import App from './App';
+import { UserProvider } from './contexts/user.context';
 import { LibraryProvider } from './contexts/library.context';
 import { SetlistsProvider } from './contexts/setlists.context';
 import reportWebVitals from './reportWebVitals';
@@ -10,11 +11,13 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <LibraryProvider>
-    <SetlistsProvider>
-      <App />
-    </SetlistsProvider>
-  </LibraryProvider>
+  <UserProvider>
+    <LibraryProvider>
+      <SetlistsProvider>
+        <App />
+      </SetlistsProvider>
+    </LibraryProvider>
+  </UserProvider>
   // </React.StrictMode>
 );
 

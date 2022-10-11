@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-
 import { isResponseOk } from '../utils/helper-functions';
 
 export const LibraryContext = createContext({

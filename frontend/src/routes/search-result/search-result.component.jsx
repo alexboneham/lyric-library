@@ -18,6 +18,18 @@ const SearchResult = () => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inLibrary, setInLibrary] = useState(false);
+  const [csrfToken, setCsrfToken] = useState(null);
+  
+
+  useEffect(() => {
+    // Get CSRF Token
+    console.log('token hook running...');
+    fetch('http://localhost:8000/csrf', {
+      credentials: 'include',
+    })
+    .then((res) => isResponseOk(res))
+    .then(data => setCsrfToken(data.csrfToken))
+  }, [])
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,7 +70,9 @@ const SearchResult = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
       },
+      credentials: 'include',
       body: JSON.stringify(song),
     })
       .then((res) => isResponseOk(res))

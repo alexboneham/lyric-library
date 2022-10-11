@@ -63,7 +63,6 @@ def search_genius_by_id(request, id):
 """ Django databse CRUD views """
 
 
-@csrf_exempt
 def library(request):
 
     if request.method == 'POST':
