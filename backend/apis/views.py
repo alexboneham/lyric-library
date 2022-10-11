@@ -1,6 +1,7 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
+from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
@@ -193,5 +194,8 @@ def setlist(request, id):
         return JsonResponse({'error': 'Request method must be GET or PUT'}, status=405)
 
 
-def test(resquest):
-    return HttpResponse('Made it to test')
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
+
+def ping(request):
+    return JsonResponse({'result': 'OK'})
