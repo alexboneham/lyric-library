@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import SongItem from '../../components/song-item/song-item.component';
 import { isResponseOk } from '../../utils/helper-functions';
 import { LibraryContext } from '../../contexts/library.context';
+import { UserContext } from '../../contexts/user.context';
 
 import './library-item.styles.scss';
 
@@ -15,6 +16,7 @@ const LibraryItem = () => {
   const [addToSetlistOpen, setAddToSetlistOpen] = useState(false);
 
   const { removeSong } = useContext(LibraryContext);
+  const {csrfToken} = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +39,9 @@ const LibraryItem = () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
       },
+      credentials: 'include',
       body: JSON.stringify({
         lyrics: editValue,
       }),
@@ -60,6 +64,10 @@ const LibraryItem = () => {
     if (window.confirm('Are you sure you want to delete this song?')) {
       fetch(`http://localhost:8000/library/${id}`, {
         method: 'DELETE',
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+        credentials: 'include',
       })
         .then((res) => isResponseOk(res))
         .then((data) => {

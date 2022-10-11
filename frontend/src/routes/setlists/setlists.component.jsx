@@ -5,6 +5,7 @@ import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-for
 
 import { LibraryContext } from '../../contexts/library.context';
 import { SetlistsContext } from '../../contexts/setlists.context';
+import { UserContext } from '../../contexts/user.context';
 
 import { isResponseOk } from '../../utils/helper-functions';
 import './setlists.styles.scss';
@@ -15,6 +16,7 @@ const Setlists = () => {
   const [selectSongs, setSelectSongs] = useState([]);
 
   const { librarySongs } = useContext(LibraryContext);
+  const { csrfToken } = useContext(UserContext);
   const { setlists, setSetlists } = useContext(SetlistsContext);
 
   const handleFormSubmit = (e) => {
@@ -29,7 +31,9 @@ const Setlists = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: setlistNameValue,
         new_songs: selectSongs,

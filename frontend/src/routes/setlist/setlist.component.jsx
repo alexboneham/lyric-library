@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { isResponseOk } from '../../utils/helper-functions';
 import { LibraryContext } from '../../contexts/library.context';
+import { UserContext } from '../../contexts/user.context';
 
 import ButtonGroup from '../../components/button-group/button-group.component';
 import LibraryList from '../../components/library-list/library-list.component';
@@ -18,7 +19,9 @@ const Setlist = () => {
 
   const { id } = useParams();
   const naviagate = useNavigate();
+
   const { librarySongs } = useContext(LibraryContext);
+  const { csrfToken } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`http://localhost:8000/setlists/${id}`)
@@ -48,7 +51,9 @@ const Setlist = () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: setlistNameValue,
         songs: selectSongs,
@@ -77,6 +82,10 @@ const Setlist = () => {
     if (window.confirm('Are you sure you want to delete this setlist?')) {
       fetch(`http://localhost:8000/setlists/${id}`, {
         method: 'DELETE',
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+        credentials: 'include',
       })
         .then((res) => isResponseOk(res))
         .then((data) => {

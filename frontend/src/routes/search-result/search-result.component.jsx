@@ -6,30 +6,20 @@ import SongItem from '../../components/song-item/song-item.component';
 
 import { isResponseOk } from '../../utils/helper-functions';
 import { LibraryContext } from '../../contexts/library.context';
+import { UserContext } from '../../contexts/user.context';
 
 import './search-result.styles.scss';
 
 const SearchResult = () => {
   const { id } = useParams(); // Get Genius id from the URL route
   const { librarySongs, setLibrarySongs, isSongInLibrary } = useContext(LibraryContext); // Context provider
+  const { csrfToken } = useContext(UserContext);
 
   // Set State
   const [song, setSong] = useState(undefined);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [inLibrary, setInLibrary] = useState(false);
-  const [csrfToken, setCsrfToken] = useState(null);
-  
-
-  useEffect(() => {
-    // Get CSRF Token
-    console.log('token hook running...');
-    fetch('http://localhost:8000/csrf', {
-      credentials: 'include',
-    })
-    .then((res) => isResponseOk(res))
-    .then(data => setCsrfToken(data.csrfToken))
-  }, [])
 
   useEffect(() => {
     setIsLoading(true);
@@ -92,7 +82,7 @@ const SearchResult = () => {
   };
 
   // Send empty object to satisfy destructing at song-item level
-  const actionProps = {}
+  const actionProps = {};
 
   return (
     <div className="search-result-container">
@@ -114,9 +104,6 @@ const SearchResult = () => {
             buttonProps={buttonProps}
             actionProps={actionProps}
           />
-          {/* <div>
-            <button onClick={clickHandler} disabled={inLibrary ? true : false}>{inLibrary ? 'Added to library!' : 'Add to library'}</button>
-          </div> */}
         </Fragment>
       )}
     </div>

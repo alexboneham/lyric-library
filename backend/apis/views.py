@@ -1,8 +1,7 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Song, Setlist, Artist, Album
 from .utils.helper_funcs import clean_lyrics, MESSAGE
@@ -116,7 +115,6 @@ def library(request):
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
 
-@csrf_exempt
 def song(request, song_id):
 
     try:
@@ -140,7 +138,6 @@ def song(request, song_id):
         return JsonResponse({'error': 'Request method must be GET, PUT, or DELETE'}, status=405)
 
 
-@csrf_exempt
 def setlists(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -167,7 +164,6 @@ def setlists(request):
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
 
-@csrf_exempt
 def setlist(request, id):
     try:
         setlist = Setlist.objects.get(pk=id)
