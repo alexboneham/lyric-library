@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import TokenTest from './tokenTest.component';
-
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 
@@ -24,7 +22,6 @@ const Home = ({ title, message }) => (
         </ListGroup.Item>
       </ListGroup>
     </Container>
-    <TokenTest />
   </Container>
 );
 
