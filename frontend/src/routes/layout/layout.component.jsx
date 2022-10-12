@@ -1,11 +1,22 @@
 import { Outlet, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
-// import SearchBar from '../../components/search-bar.component';
+import SimpleNav from '../../components/navbar.component';
 
 import './layout.styles.scss';
 
 const Layout = () => {
+  return (
+    <>
+    <SimpleNav />
+    <Outlet />
+    </>
+  )
+};
+
+export default Layout;
+
+const oldNavbar = () => {
   const activeStyle = { textDecoration: 'underline' };
 
   return (
@@ -34,6 +45,4 @@ const Layout = () => {
       <Outlet />
     </div>
   );
-};
-
-export default Layout;
+}
