@@ -1,20 +1,22 @@
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { LinkContainer } from 'react-router-bootstrap';
+
+import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const SearchResults = ({ songs }) => {
-
   return (
-    <Fragment>
-        <ul style={{listStyleType: 'none'}}>
+    <Container className='text-center p-3'>
+      <h2>Search Results...</h2>
+      <ListGroup variant="flush">
         {songs.map((song) => {
-            return (
-              <li key={song.result.id}>
-                <Link to={song.result.id.toString()} >{song.result.full_title}</Link>
-              </li>
-            )
+          return (
+            <LinkContainer to={`/search/${song.result.id}`} key={song.result.id} style={{ cursor: 'pointer' }}>
+              <ListGroup.Item className='text-decoration-underline'>{song.result.full_title}</ListGroup.Item>
+            </LinkContainer>
+          );
         })}
-        </ul>
-    </Fragment>
+      </ListGroup>
+    </Container>
   );
 };
 

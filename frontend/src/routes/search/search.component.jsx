@@ -72,23 +72,25 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(query);
     fetchData(query);
   };
 
   return (
     <>
-    <Container className="d-flex flex-column align-items-center mt-5 p-3">
-      <h1>Find a song</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="form-group">
-          <Form.Control type="text" placeholder="song title" value={title} onChange={handleTitleChange}/>
-          <button type="submit"><Arrow className="arrow" /></button>
-        </Form.Group>
-      </Form>
-    </Container>
-    {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
-    {isLoading ? <Loading /> : <SearchResults songs={results} />}
+      <Container className="d-flex flex-column align-items-center mt-5 p-3">
+        <h1>Find a song</h1>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="form-group">
+            <Form.Control type="text" placeholder="song title" value={title} onChange={handleTitleChange} />
+            <button type="submit">
+              <Arrow className="arrow" />
+            </button>
+          </Form.Group>
+        </Form>
+        {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
+        {isLoading && <Loading />}
+      </Container>
+      {results.length > 0 && <SearchResults songs={results} />}
     </>
   );
 };
