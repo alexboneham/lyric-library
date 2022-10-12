@@ -1,13 +1,17 @@
-import { createContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useState, useEffect, useCallback, useContext } from 'react';
 import { isResponseOk } from '../utils/helper-functions';
+
+import { UserContext } from './user.context';
 
 export const SetlistsContext = createContext({
   setlists: [],
   addSongToSetlist: () => null,
+  deleteSetlist: () => null,
 });
 
 export const SetlistsProvider = ({ children }) => {
   const [setlists, setSetlists] = useState([]);
+  const { csrfToken } = useContext(UserContext);
 
   const getSetlists = useCallback(() => {
     // Get setlists from database
@@ -29,7 +33,9 @@ export const SetlistsProvider = ({ children }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: setlistToUpdate.name,
         songs: [...songsIdsArray, song.id],
@@ -42,10 +48,26 @@ export const SetlistsProvider = ({ children }) => {
       });
   };
 
+  const deleteSetlist = (id) => {
+    fetch(`http://localhost:8000/setlists/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+      credentials: 'include',
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        getSetlists();
+      });
+  };
+
   const value = {
     setlists,
     setSetlists,
     addSongToSetlist,
+    deleteSetlist,
   };
   return <SetlistsContext.Provider value={value}>{children}</SetlistsContext.Provider>;
 };

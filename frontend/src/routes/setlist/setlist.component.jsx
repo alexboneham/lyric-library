@@ -2,8 +2,10 @@ import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { isResponseOk } from '../../utils/helper-functions';
+
 import { LibraryContext } from '../../contexts/library.context';
 import { UserContext } from '../../contexts/user.context';
+import { SetlistsContext } from '../../contexts/setlists.context';
 
 import ButtonGroup from '../../components/button-group/button-group.component';
 import LibraryList from '../../components/library-list/library-list.component';
@@ -18,12 +20,14 @@ const Setlist = () => {
   const [selectSongs, setSelectSongs] = useState([]);
 
   const { id } = useParams();
-  const naviagate = useNavigate();
+  const navivgate = useNavigate();
 
   const { librarySongs } = useContext(LibraryContext);
   const { csrfToken } = useContext(UserContext);
+  const { deleteSetlist } = useContext(SetlistsContext);
 
   useEffect(() => {
+    // Get the setlist data from database
     fetch(`http://localhost:8000/setlists/${id}`)
       .then((res) => isResponseOk(res))
       .then((data) => {
@@ -33,6 +37,7 @@ const Setlist = () => {
   }, [id]);
 
   useEffect(() => {
+    // Set the default values of the select menu after setlist has loaded
     if (setlist.songs) {
       setSelectSongs(setlist['songs'].map((item) => item.id));
     }
@@ -80,18 +85,8 @@ const Setlist = () => {
   const deleteButtonClick = () => {
     // Delete setlist from library
     if (window.confirm('Are you sure you want to delete this setlist?')) {
-      fetch(`http://localhost:8000/setlists/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
-        credentials: 'include',
-      })
-        .then((res) => isResponseOk(res))
-        .then((data) => {
-          console.log(data);
-          naviagate('/setlists');
-        });
+      deleteSetlist(id);
+      navivgate('/setlists');
     }
   };
 
