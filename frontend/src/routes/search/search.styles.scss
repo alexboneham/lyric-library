@@ -1,8 +1,14 @@
-.search-container {
-    text-align: center;
-    margin-top: 50px;
+.form-group {
+  position: relative;
 
-    #query {
-        margin-right: 5px;
-    }
+  button {
+    all: unset;
+  }
+
+  .arrow {
+    height: 25px;
+    position: absolute;
+    right: 5px;
+    top: 6px;
+  }
 }

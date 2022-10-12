@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavSearch from '../components/nav-search-bar.component';
 
-import { ReactComponent as ReactLogo } from '../assets/musical-note.svg';
+import { ReactComponent as Logo } from '../assets/musical-note.svg';
 
 function NavBar() {
   return (
@@ -13,7 +13,7 @@ function NavBar() {
       <Container>
         <LinkContainer to={'/'}>
           <Navbar.Brand>
-            <ReactLogo style={{ height: '50px', width: '50px' }} />
+            <Logo style={{ height: '50px', width: '50px' }} />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

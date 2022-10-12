@@ -4,12 +4,12 @@ import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const Home = ({ title, message }) => (
-  <Container className="p-3 text-center shadow-lg rounded">
+  <Container className="p-3 mt-3 text-center shadow-lg rounded ">
     <h1 className="display-4">{title}</h1>
     <p>{message}</p>
     <hr />
     <h2>Usage:</h2>
-    <Container className="w-50">
+    <Container className="w-75">
       <ListGroup variant="flush">
         <ListGroup.Item>
           <Link to={'/search'}>Search</Link> for a song by title or artist

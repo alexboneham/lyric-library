@@ -3,11 +3,11 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 
 import SearchResults from '../../components/search-results.component';
 import Loading from '../../components/loading/loading.component';
-import { ReactComponent as Arrow } from '../../assets/right-arrow.svg';
 
 // Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import './search.styles.scss';
 
@@ -77,20 +77,24 @@ const Search = () => {
   };
 
   return (
-    <>
-    <Container className="d-flex flex-column align-items-center mt-5 p-3">
-      <h1>Find a song</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="form-group">
-          <Form.Control type="text" placeholder="song title" value={title} onChange={handleTitleChange}/>
-          <button type="submit"><Arrow className="arrow" /></button>
-        </Form.Group>
-      </Form>
-    </Container>
-    {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
-    {isLoading ? <Loading /> : <SearchResults songs={results} />}
-    </>
-  );
-};
-
-export default Search;
+    <div className="search-container">
+        <h1>Search for a song</h1>
+        <p>Search by song title and (optionally) artist</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            id="query"
+            name="q"
+            value={title}
+            placeholder="search title"
+            required
+            onChange={handleTitleChange}
+            autoComplete="off"
+          />
+          <input name="artist" value={artist} onChange={handleArtistChange} placeholder="search artist" />
+          <button type="submit">Search</button>
+        </form>
+        {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
+        {isLoading ? <Loading /> : <SearchResults songs={results} />}
+      </div>
+  )
+}
