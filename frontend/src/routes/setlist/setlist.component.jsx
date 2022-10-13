@@ -7,7 +7,7 @@ import { LibraryContext } from '../../contexts/library.context';
 import { UserContext } from '../../contexts/user.context';
 import { SetlistsContext } from '../../contexts/setlists.context';
 
-import ButtonGroup from '../../components/button-group/button-group.component';
+import EditButtons from '../../components/edit-buttons.component';
 import LibraryList from '../../components/library-list/library-list.component';
 import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component';
 
@@ -94,7 +94,7 @@ const Setlist = () => {
     <div className="setlist-container">
       <h1>{setlist.name}</h1>
       <p>{setlist.timestamp}</p>
-      <ButtonGroup buttonProps={{ editButtonClick, deleteButtonClick }} />
+      <EditButtons buttonProps={{ editButtonClick, deleteButtonClick }} />
       {editOpen && (
         <SetlistEditForm
           handleFormSubmit={handleFormSubmit}

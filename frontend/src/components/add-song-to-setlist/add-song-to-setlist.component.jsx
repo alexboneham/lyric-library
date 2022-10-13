@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-
 import { SetlistsContext } from '../../contexts/setlists.context';
 
 const AddSongToSetlist = ({ song }) => {

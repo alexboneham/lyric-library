@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext, Fragment } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Loading from '../../components/loading/loading.component';
-import SongItem from '../../components/song-item/song-item.component';
+import Loading from '../components/loading.component';
+import SongItem from '../components/song-item/song-item.component';
 
-import { isResponseOk } from '../../utils/helper-functions';
-import { LibraryContext } from '../../contexts/library.context';
-import { UserContext } from '../../contexts/user.context';
+import Container from 'react-bootstrap/Container';
 
-import './search-result.styles.scss';
+import { isResponseOk } from '../utils/helper-functions';
+import { LibraryContext } from '../contexts/library.context';
+import { UserContext } from '../contexts/user.context';
 
 const SearchResult = () => {
   const { id } = useParams(); // Get Genius id from the URL route
@@ -85,18 +85,20 @@ const SearchResult = () => {
   const actionProps = {};
 
   return (
-    <div className="search-result-container">
+    <>
+    <Container className='text-center'>
       {isError && (
-        <Fragment>
+        <>
           <p>Something went wrong...</p>
           <p>
             Please <a href={`/search/${id}`}>try again</a>
           </p>
-        </Fragment>
+        </>
       )}
       {isLoading && <Loading />}
+      </Container>
       {song && (
-        <Fragment>
+        <>
           <SongItem
             song={song}
             description={song.description['plain']}
@@ -104,9 +106,9 @@ const SearchResult = () => {
             buttonProps={buttonProps}
             actionProps={actionProps}
           />
-        </Fragment>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

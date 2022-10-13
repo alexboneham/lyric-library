@@ -9,7 +9,7 @@ import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists/setlists.component';
 import Setlist from './routes/setlist/setlist.component';
 import Search from './routes/search/search.component';
-import SearchResult from './routes/search-result/search-result.component';
+import SearchResult from './routes/search-result.component';
 
 import { isResponseOk } from './utils/helper-functions';
 import './App.scss';

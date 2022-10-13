@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
 import SearchResults from '../../components/search-results.component';
-import Loading from '../../components/loading/loading.component';
+import Loading from '../../components/loading.component';
 import { ReactComponent as Arrow } from '../../assets/right-arrow.svg';
 
 // Bootstrap components
