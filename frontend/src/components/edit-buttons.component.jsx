@@ -12,7 +12,6 @@ const EditButtons = ({ buttonProps, song }) => {
     handler = undefined,
     deleteButtonClick = undefined,
     editButtonClick = undefined,
-    setlistButtonClick = undefined,
   } = buttonProps;
 
   return (
@@ -30,7 +29,7 @@ const EditButtons = ({ buttonProps, song }) => {
           <Button variant="secondary" onClick={deleteButtonClick}>
             Delete
           </Button>
-          <AddToSetlistDropdown song={song}/>
+          <AddToSetlistDropdown song={song} />
         </ButtonGroup>
       )}
     </Container>
@@ -38,5 +37,3 @@ const EditButtons = ({ buttonProps, song }) => {
 };
 
 export default EditButtons;
-
-// onClick={setlistButtonClick}

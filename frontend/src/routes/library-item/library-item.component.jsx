@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import SongItem from '../../components/song-item/song-item.component';
@@ -13,10 +13,9 @@ const LibraryItem = () => {
   const [song, setSong] = useState({});
   const [editOpen, setEditOpen] = useState(false);
   const [editValue, setEditValue] = useState('');
-  const [addToSetlistOpen, setAddToSetlistOpen] = useState(false);
 
   const { removeSong } = useContext(LibraryContext);
-  const {csrfToken} = useContext(UserContext);
+  const { csrfToken } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -83,7 +82,6 @@ const LibraryItem = () => {
   // Props to send relating to actions
   const actionProps = {
     editOpen,
-    addToSetlistOpen,
     handleEditSubmit,
     handleEditChange,
   };
@@ -92,13 +90,12 @@ const LibraryItem = () => {
   const buttonProps = {
     editButtonClick: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
     deleteButtonClick: handleDelete,
-    setlistButtonClick: () => (addToSetlistOpen ? setAddToSetlistOpen(false) : setAddToSetlistOpen(true))
   };
 
   return (
-    <Fragment>
+    <>
       <SongItem song={song} description={song.description} buttonProps={buttonProps} actionProps={actionProps} />
-    </Fragment>
+    </>
   );
 };
 

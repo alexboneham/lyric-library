@@ -1,5 +1,4 @@
 import EditButtons from '../edit-buttons.component';
-import AddSongToSetlist from '../add-song-to-setlist/add-song-to-setlist.component';
 import BackButton from '../back-button.component';
 
 import Container from 'react-bootstrap/Container';
@@ -12,7 +11,6 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
     editOpen = undefined,
     handleEditSubmit = undefined,
     handleEditChange = undefined,
-    addToSetlistOpen = undefined,
   } = actionProps;
 
   if (thumbnail) {
