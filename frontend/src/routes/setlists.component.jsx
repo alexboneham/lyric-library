@@ -65,6 +65,8 @@ const Setlists = () => {
     setSelectSongs(newSelectSongs);
   };
 
+  const toggleFormOpen = () => formOpen ? setFormOpen(false) : setFormOpen(true);
+
   return (
     <Container className="d-flex flex-column align-items-center">
       <h1 className="my-3">Setlists</h1>
@@ -88,9 +90,10 @@ const Setlists = () => {
           selectSongs={selectSongs}
           librarySongs={librarySongs}
           buttonMessage={'Create setlist'}
+          toggleFormOpen={toggleFormOpen}
         />
       ) : (
-        <Button onClick={() => setFormOpen(true)} className="mt-2" variant="outline-secondary">
+        <Button onClick={toggleFormOpen} className="mt-2" variant="outline-secondary">
           New setlist
         </Button>
       )}
