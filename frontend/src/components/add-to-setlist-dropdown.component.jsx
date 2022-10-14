@@ -15,8 +15,8 @@ const AddToSetlistDropdown = ({ song }) => {
       Send PUT request to API with name and an array of song ids for setlist
       Returns new setlist object
     */
-   addSongToSetlist(parseInt(e), song);
-  }
+    addSongToSetlist(parseInt(e), song);
+  };
 
   const disableCheck = (setlist) => {
     if (setlist.songs.find(({ id }) => id === song.id)) {
@@ -30,19 +30,20 @@ const AddToSetlistDropdown = ({ song }) => {
       as={ButtonGroup}
       title="Add to setlist"
       id="add-to-setlist-dropdown"
-      variant="secondary"
+      variant="outline-dark"
       menuVariant="dark"
       onSelect={handleSelect}
     >
-      {setlists && setlists.map((setlist) => {
-        // Check if song already in list, if so disable item
-        let check = disableCheck(setlist);
-        return (
-          <Dropdown.Item key={setlist.id} eventKey={setlist.id} disabled={check}>
-            {setlist.name}
-          </Dropdown.Item>
-        );
-      })}
+      {setlists &&
+        setlists.map((setlist) => {
+          // Check if song already in list, if so disable item
+          let check = disableCheck(setlist);
+          return (
+            <Dropdown.Item key={setlist.id} eventKey={setlist.id} disabled={check}>
+              {setlist.name}
+            </Dropdown.Item>
+          );
+        })}
     </DropdownButton>
   );
 };
