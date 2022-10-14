@@ -1,5 +1,5 @@
-import EditButtons from '../edit-buttons.component';
-import BackButton from '../back-button.component';
+import EditButtons from './edit-buttons.component';
+import BackButton from './back-button.component';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -40,8 +40,12 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
                 className="text-center"
               />
               <Stack gap={2} className="col-md-5 mx-auto mt-2">
-                <Button variant="secondary" type='submit'>Save changes</Button>
-                <Button variant="outline-secondary" onClick={buttonProps.editButtonClick}>Cancel</Button>
+                <Button variant="secondary" type="submit">
+                  Save changes
+                </Button>
+                <Button variant="outline-secondary" onClick={buttonProps.editButtonClick}>
+                  Cancel
+                </Button>
               </Stack>
             </Form>
           ) : (

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Loading from '../components/loading.component';
-import SongItem from '../components/song-item/song-item.component';
+import SongItem from '../components/song-item.component';
 
 import Container from 'react-bootstrap/Container';
 
@@ -86,16 +86,16 @@ const SearchResult = () => {
 
   return (
     <>
-    <Container className='text-center'>
-      {isError && (
-        <>
-          <p>Something went wrong...</p>
-          <p>
-            Please <a href={`/search/${id}`}>try again</a>
-          </p>
-        </>
-      )}
-      {isLoading && <Loading />}
+      <Container className="text-center">
+        {isError && (
+          <>
+            <p>Something went wrong...</p>
+            <p>
+              Please <a href={`/search/${id}`}>try again</a>
+            </p>
+          </>
+        )}
+        {isLoading && <Loading />}
       </Container>
       {song && (
         <>
