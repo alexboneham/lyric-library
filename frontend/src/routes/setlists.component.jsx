@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 
-import SetlistEditForm from '../components/setlist-edit-form/setlist-edit-form.component'
+import SetlistEditForm from '../components/setlist-edit-form/setlist-edit-form.component';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -90,7 +90,9 @@ const Setlists = () => {
           buttonMessage={'Create setlist'}
         />
       ) : (
-        <Button onClick={() => setFormOpen(true)} className="mt-2" variant='outline-secondary'>New setlist</Button>
+        <Button onClick={() => setFormOpen(true)} className="mt-2" variant="outline-secondary">
+          New setlist
+        </Button>
       )}
     </Container>
   );

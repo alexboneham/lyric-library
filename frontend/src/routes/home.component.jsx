@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Home = ({ title, message }) => (
-  <Container className="p-5 mt-5 shadow-lg rounded ">
+  <Container className="p-5 mt-5 shadow-lg rounded">
     <Container className="text-center px-5 pb-2">
       <h1 className="display-4">{title}</h1>
       <p>{message}</p>
@@ -11,7 +11,7 @@ const Home = ({ title, message }) => (
     <hr />
     <Container className="d-flex flex-column align-items-center">
       <h2>Usage:</h2>
-      <Nav className='flex-column align-items-center'>
+      <Nav className="flex-column align-items-center">
         <Nav.Item className="mb-2">
           <LinkContainer to={'/search'}>
             <Nav.Link className="d-inline-flex p-0">Search</Nav.Link>
