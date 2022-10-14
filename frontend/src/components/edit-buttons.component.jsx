@@ -15,9 +15,9 @@ const EditButtons = ({ buttonProps, song }) => {
   } = buttonProps;
 
   return (
-    <Container>
+    <Container className='d-flex justify-content-center'>
       {inLibrary !== undefined && (
-        <Button disabled={inLibrary ? true : false} onClick={handler} variant="primary">
+        <Button disabled={inLibrary ? true : false} onClick={handler} variant={inLibrary ? "success" : "primary"}>
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </Button>
       )}

@@ -8,6 +8,7 @@ import { ReactComponent as Arrow } from '../../assets/right-arrow.svg';
 // Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
 
 import './search.styles.scss';
 
@@ -20,6 +21,7 @@ const Search = () => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [results, setResults] = useState([]);
+  const [showArtistInput, setShowArtistInput] = useState(false);
   // const page = searchParams.get('page') || 0;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +72,8 @@ const Search = () => {
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleArtistChange = (e) => setArtist(e.target.value);
 
+  const toggleArtistInput = () => (showArtistInput ? setShowArtistInput(false) : setShowArtistInput(true));
+
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchData(query);
@@ -86,7 +90,23 @@ const Search = () => {
               <Arrow className="arrow" />
             </button>
           </Form.Group>
+          {showArtistInput && (
+            <Form.Group className='form-group'>
+              <Form.Control type="text" placeholder="artist name" value={artist} onChange={handleArtistChange} />
+              <button type="submit">
+                <Arrow className="arrow" />
+              </button>
+            </Form.Group>
+          )}
         </Form>
+        {!showArtistInput && (
+          <Nav>
+            <Nav.Item>
+              <Nav.Link onClick={() => toggleArtistInput()}>include artist in search...</Nav.Link>
+            </Nav.Item>
+          </Nav>
+        )}
+
         {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
         {isLoading && <Loading />}
       </Container>

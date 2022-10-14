@@ -29,6 +29,7 @@ const LibraryItem = () => {
   const handleEditSubmit = (e) => {
     // Make PUT request to Django API to update the song with new lyrics
     e.preventDefault();
+    console.log(editValue);
     if (!editValue) {
       console.log('No changes detected');
       setEditOpen(false);
@@ -49,6 +50,7 @@ const LibraryItem = () => {
       .then((data) => {
         song.lyrics = data.lyrics;
         setEditOpen(false);
+        setEditValue('');
         console.log('Song edited!');
       })
       .catch((e) => console.log(e));
