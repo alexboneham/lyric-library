@@ -6,7 +6,7 @@ import Home from './routes/home.component';
 
 import Library from './routes/library/library.component';
 import LibraryItem from './routes/library-item/library-item.component';
-import Setlists from './routes/setlists/setlists.component';
+import Setlists from './routes/setlists.component';
 import Setlist from './routes/setlist/setlist.component';
 import Search from './routes/search/search.component';
 import SearchResult from './routes/search-result.component';

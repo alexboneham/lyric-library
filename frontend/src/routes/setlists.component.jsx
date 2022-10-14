@@ -1,14 +1,17 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 
-import SetlistEditForm from '../../components/setlist-edit-form/setlist-edit-form.component';
+import SetlistEditForm from '../components/setlist-edit-form/setlist-edit-form.component'
 
-import { LibraryContext } from '../../contexts/library.context';
-import { SetlistsContext } from '../../contexts/setlists.context';
-import { UserContext } from '../../contexts/user.context';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
 
-import { isResponseOk } from '../../utils/helper-functions';
-import './setlists.styles.scss';
+import { LibraryContext } from '../contexts/library.context';
+import { SetlistsContext } from '../contexts/setlists.context';
+import { UserContext } from '../contexts/user.context';
+
+import { isResponseOk } from '../utils/helper-functions';
 
 const Setlists = () => {
   const [formOpen, setFormOpen] = useState(false);
@@ -63,15 +66,19 @@ const Setlists = () => {
   };
 
   return (
-    <div className="setlists-container">
-      <div className="header-container">
-        <h1>Setlists</h1>
+    <Container className="d-flex flex-column align-items-center">
+      <h1 className="my-3">Setlists</h1>
+
+      <Nav className="flex-column align-items-center">
         {setlists.map((setlist) => (
-          <div key={setlist.id} className="setlists">
-            <Link to={`/setlists/${setlist.id}`}>{setlist.name}</Link>
-          </div>
+          <Nav.Item key={setlist.id}>
+            <LinkContainer to={`/setlists/${setlist.id}`}>
+              <Nav.Link>{setlist.name}</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
         ))}
-      </div>
+      </Nav>
+
       {formOpen ? (
         <SetlistEditForm
           handleFormSubmit={handleFormSubmit}
@@ -83,11 +90,9 @@ const Setlists = () => {
           buttonMessage={'Create setlist'}
         />
       ) : (
-        <button onClick={() => setFormOpen(true)} className="new-button">
-          New setlist
-        </button>
+        <Button onClick={() => setFormOpen(true)} className="mt-2" variant='outline-secondary'>New setlist</Button>
       )}
-    </div>
+    </Container>
   );
 };
 

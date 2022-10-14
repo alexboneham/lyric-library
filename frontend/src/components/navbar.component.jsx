@@ -18,16 +18,17 @@ function NavBar() {
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" defaultActiveKey={null}>
             <LinkContainer to={'/library'}>
               <Nav.Link>Library</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to={'/setlists'}>
-              <Nav.Link href="/setlists">Setlists</Nav.Link>
             </LinkContainer>
             <LinkContainer to={'/search'}>
               <Nav.Link>Search</Nav.Link>
             </LinkContainer>
+            <LinkContainer to={'/setlists'}>
+              <Nav.Link href="/setlists">Setlists</Nav.Link>
+            </LinkContainer>
+            
           </Nav>
           <Nav className="me-1">
             <LinkContainer to={'/login'}>
