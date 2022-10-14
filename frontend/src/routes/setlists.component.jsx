@@ -1,10 +1,13 @@
 import { useState, useContext } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import SetlistEditForm from '../components/setlist-edit-form/setlist-edit-form.component';
+import SetlistEditForm from '../components/setlist-edit-form.component';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import { LibraryContext } from '../contexts/library.context';
@@ -65,38 +68,48 @@ const Setlists = () => {
     setSelectSongs(newSelectSongs);
   };
 
-  const toggleFormOpen = () => formOpen ? setFormOpen(false) : setFormOpen(true);
+  const toggleFormOpen = () => (formOpen ? setFormOpen(false) : setFormOpen(true));
 
   return (
-    <Container className="d-flex flex-column align-items-center">
-      <h1 className="my-3">Setlists</h1>
+    <Container fluid className='mt-3'>
+      <Row>
+        <Col sm={4}>
+          <Container className="d-flex flex-column align-items-start" fluid>
+            <h1>Setlists</h1>
 
-      <Nav className="flex-column align-items-center">
-        {setlists.map((setlist) => (
-          <Nav.Item key={setlist.id}>
-            <LinkContainer to={`/setlists/${setlist.id}`}>
-              <Nav.Link>{setlist.name}</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-        ))}
-      </Nav>
+            <Nav className="flex-column align-items-start">
+              {setlists.map((setlist) => (
+                <Nav.Item key={setlist.id}>
+                  <LinkContainer to={`/setlists/${setlist.id}`}>
+                    <Nav.Link>{setlist.name}</Nav.Link>
+                  </LinkContainer>
+                </Nav.Item>
+              ))}
+            </Nav>
 
-      {formOpen ? (
-        <SetlistEditForm
-          handleFormSubmit={handleFormSubmit}
-          handleSelectChange={handleSelectChange}
-          setlistNameValue={setlistNameValue}
-          setSetlistNameValue={setSetlistNameValue}
-          selectSongs={selectSongs}
-          librarySongs={librarySongs}
-          buttonMessage={'Create setlist'}
-          toggleFormOpen={toggleFormOpen}
-        />
-      ) : (
-        <Button onClick={toggleFormOpen} className="mt-2" variant="outline-secondary">
-          New setlist
-        </Button>
-      )}
+            {formOpen ? (
+              <SetlistEditForm
+                handleFormSubmit={handleFormSubmit}
+                handleSelectChange={handleSelectChange}
+                setlistNameValue={setlistNameValue}
+                setSetlistNameValue={setSetlistNameValue}
+                selectSongs={selectSongs}
+                librarySongs={librarySongs}
+                buttonMessage={'Create setlist'}
+                toggleFormOpen={toggleFormOpen}
+              />
+            ) : (
+              <Button onClick={toggleFormOpen} className="mt-2" variant="outline-secondary">
+                New setlist
+              </Button>
+            )}
+          </Container>
+        </Col>
+
+        <Col sm={8}>
+          <Outlet />
+        </Col>
+      </Row>
     </Container>
   );
 };

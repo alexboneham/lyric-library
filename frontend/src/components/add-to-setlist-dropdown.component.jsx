@@ -19,6 +19,7 @@ const AddToSetlistDropdown = ({ song }) => {
   };
 
   const disableCheck = (setlist) => {
+    if (!song) return
     if (setlist.songs.find(({ id }) => id === song.id)) {
       return true;
     }

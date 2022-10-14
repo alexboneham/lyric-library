@@ -7,7 +7,7 @@ import Home from './routes/home.component';
 import Library from './routes/library/library.component';
 import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists.component';
-import Setlist from './routes/setlist/setlist.component';
+import Setlist from './routes/setlist.component';
 import Search from './routes/search/search.component';
 import SearchResult from './routes/search-result.component';
 
@@ -41,8 +41,9 @@ const App = () => {
           <Route path="search/:id" element={<SearchResult />} />
           <Route path="library" element={<Library />} />
           <Route path="library/:id" element={<LibraryItem />} />
-          <Route path="setlists" element={<Setlists />} />
-          <Route path="setlists/:id" element={<Setlist />} />
+          <Route path="setlists" element={<Setlists />} >
+            <Route path=":id" element={<Setlist />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

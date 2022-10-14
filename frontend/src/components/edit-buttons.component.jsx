@@ -15,14 +15,14 @@ const EditButtons = ({ buttonProps, song }) => {
   } = buttonProps;
 
   return (
-    <Container className='d-flex justify-content-center'>
+    <Container className="d-flex justify-content-center">
       {inLibrary !== undefined && (
-        <Button disabled={inLibrary ? true : false} onClick={handler} variant={inLibrary ? "success" : "primary"}>
+        <Button disabled={inLibrary ? true : false} onClick={handler} variant={inLibrary ? 'success' : 'primary'}>
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </Button>
       )}
       {editButtonClick && (
-        <Container className='d-flex'>
+        <Container className="d-flex">
           <Stack gap={2} direction="horizontal" className="mx-auto">
             <Button variant="primary" onClick={editButtonClick}>
               Edit
@@ -30,7 +30,7 @@ const EditButtons = ({ buttonProps, song }) => {
             <Button variant="danger" onClick={deleteButtonClick}>
               Delete
             </Button>
-            <AddToSetlistDropdown song={song} />
+            {song && <AddToSetlistDropdown song={song} />}
           </Stack>
         </Container>
       )}
