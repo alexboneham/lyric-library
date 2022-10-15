@@ -11,28 +11,26 @@ const EditButtons = ({ buttonProps, song }) => {
     inLibrary = undefined,
     handler = undefined,
     deleteButtonClick = undefined,
-    editButtonClick = undefined,
+    toggleFormOpen = undefined,
   } = buttonProps;
 
   return (
-    <Container className="d-flex justify-content-center">
+    <Container className="mt-2">
       {inLibrary !== undefined && (
         <Button disabled={inLibrary ? true : false} onClick={handler} variant={inLibrary ? 'success' : 'primary'}>
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </Button>
       )}
-      {editButtonClick && (
-        <Container className="d-flex">
-          <Stack gap={2} direction="horizontal" className="mx-auto">
-            <Button variant="primary" onClick={editButtonClick}>
-              Edit
-            </Button>
-            <Button variant="danger" onClick={deleteButtonClick}>
-              Delete
-            </Button>
-            {song && <AddToSetlistDropdown song={song} />}
-          </Stack>
-        </Container>
+      {deleteButtonClick && (
+        <Stack gap={2} direction="horizontal" className="">
+          <Button variant="primary" onClick={toggleFormOpen}>
+            Edit
+          </Button>
+          <Button variant="danger" onClick={deleteButtonClick}>
+            Delete
+          </Button>
+          {song && <AddToSetlistDropdown song={song} />}
+        </Stack>
       )}
     </Container>
   );

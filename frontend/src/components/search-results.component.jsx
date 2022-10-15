@@ -1,10 +1,9 @@
-import { LinkContainer } from 'react-router-bootstrap';
-
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Nav from 'react-bootstrap/Nav';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
+import { LinkContainer } from 'react-router-bootstrap';
 
 const SearchResults = ({ songs }) => {
   return (

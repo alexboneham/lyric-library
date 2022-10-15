@@ -74,7 +74,7 @@ const Setlists = () => {
     <Container fluid className='mt-3'>
       <Row>
         <Col sm={4}>
-          <Container className="d-flex flex-column align-items-start" fluid>
+          <Container className="d-flex flex-column align-items-center" fluid>
             <h1>Setlists</h1>
 
             <Nav className="flex-column align-items-start">

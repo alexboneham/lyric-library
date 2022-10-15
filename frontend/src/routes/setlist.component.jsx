@@ -8,15 +8,17 @@ import { UserContext } from '../contexts/user.context';
 import { SetlistsContext } from '../contexts/setlists.context';
 
 import EditButtons from '../components/edit-buttons.component';
-import LibraryList from '../components/library-list/library-list.component';
 import SetlistEditForm from '../components/setlist-edit-form.component';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Stack from 'react-bootstrap/Stack';
+import Image from 'react-bootstrap/Image';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Setlist = () => {
-  const [setlist, setSetlist] = useState({songs: []});
+  const [setlist, setSetlist] = useState({ songs: [] });
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [selectSongs, setSelectSongs] = useState([]);
@@ -44,8 +46,6 @@ const Setlist = () => {
       setSelectSongs(setlist['songs'].map((item) => item.id));
     }
   }, [setlist]);
-
-  const editButtonClick = () => setEditOpen(editOpen ? false : true);
 
   const handleFormSubmit = (e) => {
     /* 
@@ -92,25 +92,42 @@ const Setlist = () => {
     }
   };
 
+  const toggleFormOpen = () => setEditOpen(editOpen ? false : true);
+
   return (
-    <Container>
+    <Container className="">
       <h1>{setlist.name}</h1>
       <p>{setlist.timestamp}</p>
 
       {setlist.songs.length >= 1 ? (
-        <Nav className="flex-column">
-        {setlist.songs.map((song) => (
-          <Nav.Item key={song.id}>
-            <LinkContainer to={`/library/${song.id}`}>
-              <Nav.Link>{song.title}</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-        ))}
-      </Nav>
+        <ListGroup variant="flush" className="align-items-start">
+          {setlist.songs.map((song) => {
+            return (
+              <ListGroup.Item key={song.id}>
+                <Nav>
+                  <Nav.Item>
+                    <LinkContainer to={`/library/${song.id}`}>
+                      <Nav.Link>
+                        <Container>
+                          <Stack direction="horizontal" gap={3}>
+                            <Image src={song.thumbnail_url} fluid width={100} height={100} rounded />
+                            <Stack gap={1} className="my-auto">
+                              <span>{song.title}</span>
+                              <span className="text-muted">by {song.artist}</span>
+                            </Stack>
+                          </Stack>
+                        </Container>
+                      </Nav.Link>
+                    </LinkContainer>
+                  </Nav.Item>
+                </Nav>
+              </ListGroup.Item>
+            );
+          })}
+        </ListGroup>
       ) : (
-        <p className='text-muted'>Your setlist is empty</p>
+        <p className="text-muted">Your setlist is empty</p>
       )}
-      
 
       {editOpen && (
         <SetlistEditForm
@@ -121,17 +138,12 @@ const Setlist = () => {
           selectSongs={selectSongs}
           librarySongs={librarySongs}
           buttonMessage={'Save setlist'}
+          toggleFormOpen={toggleFormOpen}
         />
       )}
-      <EditButtons buttonProps={{ editButtonClick, deleteButtonClick }} />
+      {!editOpen && <EditButtons buttonProps={{ toggleFormOpen, deleteButtonClick }} />}
     </Container>
   );
 };
 
 export default Setlist;
-
-
-
-
-
-

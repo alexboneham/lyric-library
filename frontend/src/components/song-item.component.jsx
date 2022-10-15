@@ -39,7 +39,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
                 onChange={handleEditChange}
                 className="text-center"
               />
-              <Stack gap={2} className="col-md-5 mx-auto mt-2">
+              <Stack gap={2} className="col-md-6 mx-auto mt-2">
                 <Button variant="secondary" type="submit">
                   Save changes
                 </Button>
