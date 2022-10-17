@@ -43,7 +43,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
                 <Button variant="secondary" type="submit">
                   Save changes
                 </Button>
-                <Button variant="outline-secondary" onClick={buttonProps.editButtonClick}>
+                <Button variant="outline-secondary" onClick={buttonProps.toggleFormOpen}>
                   Cancel
                 </Button>
               </Stack>

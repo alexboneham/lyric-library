@@ -9,15 +9,15 @@ const EditButtons = ({ buttonProps, song }) => {
   // Each has a defult value to avoid errors when running conditionally logic in render.
   const {
     inLibrary = undefined,
-    handler = undefined,
+    clickAddToLibrary = undefined,
     deleteButtonClick = undefined,
     toggleFormOpen = undefined,
   } = buttonProps;
 
   return (
-    <Container className="mt-2">
+    <Container className="mt-2 d-flex justify-content-center">
       {inLibrary !== undefined && (
-        <Button disabled={inLibrary ? true : false} onClick={handler} variant={inLibrary ? 'success' : 'primary'}>
+        <Button disabled={inLibrary ? true : false} onClick={clickAddToLibrary} variant={inLibrary ? 'success' : 'primary'}>
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </Button>
       )}

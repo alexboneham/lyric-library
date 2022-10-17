@@ -29,8 +29,6 @@
 
 **TODO**
 - consider auth options
-- work on cross-site cookies settings
-
 - pagination for seach results
 - pagination for library songs
 - infinite scroll for pagination
@@ -62,3 +60,4 @@
 - fix message when a setlist is empty
 - fix isResponseOk function not logging error...
 - more error handling, especially for timeouts
+- work on cross-site cookies settings

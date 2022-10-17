@@ -20,7 +20,7 @@ const SearchResults = ({ songs }) => {
                     <Nav.Link>
                       <Container>
                         <Stack direction="horizontal" gap={3}>
-                          <Image src={song.result.song_art_image_url} fluid width={171} height={171} rounded />
+                          <Image src={song.result.song_art_image_url} fluid width={100} height={100} rounded />
                           <Stack gap={1} className="my-auto">
                             <span>{song.result.title}</span>
                             <span className="text-muted">by {song.result.artist_names}</span>

@@ -54,7 +54,7 @@ const SearchResult = () => {
     }
   }, [song, isSongInLibrary]);
 
-  const clickHandler = () => {
+  const clickAddToLibrary = () => {
     // Handles POST request to Django API to save the song to the user's database
     fetch('http://localhost:8000/library', {
       method: 'POST',
@@ -78,7 +78,7 @@ const SearchResult = () => {
 
   const buttonProps = {
     inLibrary: inLibrary,
-    handler: clickHandler,
+    clickAddToLibrary: clickAddToLibrary,
   };
 
   // Send empty object to satisfy destructing at song-item level

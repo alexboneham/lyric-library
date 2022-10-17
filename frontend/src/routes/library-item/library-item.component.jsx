@@ -29,7 +29,6 @@ const LibraryItem = () => {
   const handleEditSubmit = (e) => {
     // Make PUT request to Django API to update the song with new lyrics
     e.preventDefault();
-    console.log(editValue);
     if (!editValue) {
       console.log('No changes detected');
       setEditOpen(false);
@@ -90,7 +89,7 @@ const LibraryItem = () => {
 
   // Props to send relating to button display
   const buttonProps = {
-    editButtonClick: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
+    toggleFormOpen: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
     deleteButtonClick: handleDelete,
   };
 
