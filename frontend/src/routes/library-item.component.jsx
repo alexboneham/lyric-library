@@ -1,16 +1,21 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import SongItem from '../components/song-item.component';
 import { isResponseOk } from '../utils/helper-functions';
 import { LibraryContext } from '../contexts/library.context';
 import { UserContext } from '../contexts/user.context';
+
+import SongItem from '../components/song-item.component';
+
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const LibraryItem = () => {
   const { id } = useParams();
   const [song, setSong] = useState({});
   const [editOpen, setEditOpen] = useState(false);
   const [editValue, setEditValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const { removeSong } = useContext(LibraryContext);
   const { csrfToken } = useContext(UserContext);
@@ -58,24 +63,25 @@ const LibraryItem = () => {
     setEditValue(e.target.value);
   };
 
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this song?')) {
-      fetch(`http://localhost:8000/library/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
-        credentials: 'include',
+    fetch(`http://localhost:8000/library/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+      credentials: 'include',
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log('Song deleted!');
+        console.log(data);
+        removeSong(song);
+        navigate('/library');
       })
-        .then((res) => isResponseOk(res))
-        .then((data) => {
-          console.log('Song deleted!');
-          console.log(data);
-          removeSong(song);
-          navigate('/library');
-        })
-        .catch((e) => console.log(e));
-    }
+      .catch((e) => console.log(e));
   };
 
   // Props to send relating to actions
@@ -88,12 +94,27 @@ const LibraryItem = () => {
   // Props to send relating to button display
   const buttonProps = {
     toggleFormOpen: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
-    deleteButtonClick: handleDelete,
+    deleteButtonClick: handleShowModal,
   };
 
   return (
     <>
       <SongItem song={song} description={song.description} buttonProps={buttonProps} actionProps={actionProps} />
+
+      <Modal show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this song?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="warning" onClick={handleDelete}>
+            Yes!
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
