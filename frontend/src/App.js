@@ -5,7 +5,7 @@ import Layout from './routes/layout.component';
 import Home from './routes/home.component';
 
 import Library from './routes/library.component';
-import LibraryItem from './routes/library-item/library-item.component';
+import LibraryItem from './routes/library-item.component';
 import Setlists from './routes/setlists.component';
 import Setlist from './routes/setlist.component';
 import Search from './routes/search.component';

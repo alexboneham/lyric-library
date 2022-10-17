@@ -1,12 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import SongItem from '../../components/song-item.component';
-import { isResponseOk } from '../../utils/helper-functions';
-import { LibraryContext } from '../../contexts/library.context';
-import { UserContext } from '../../contexts/user.context';
-
-import './library-item.styles.scss';
+import SongItem from '../components/song-item.component';
+import { isResponseOk } from '../utils/helper-functions';
+import { LibraryContext } from '../contexts/library.context';
+import { UserContext } from '../contexts/user.context';
 
 const LibraryItem = () => {
   const { id } = useParams();
