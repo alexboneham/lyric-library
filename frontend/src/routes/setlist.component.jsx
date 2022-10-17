@@ -15,6 +15,8 @@ import Nav from 'react-bootstrap/Nav';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Setlist = () => {
@@ -22,6 +24,7 @@ const Setlist = () => {
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [selectSongs, setSelectSongs] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const { id } = useParams();
   const navivgate = useNavigate();
@@ -84,18 +87,19 @@ const Setlist = () => {
     setSelectSongs(newSelectSongs);
   };
 
-  const deleteButtonClick = () => {
+  const handleDelete = () => {
     // Delete setlist from library
-    if (window.confirm('Are you sure you want to delete this setlist?')) {
-      deleteSetlist(id);
-      navivgate('/setlists');
-    }
+    deleteSetlist(id);
+    navivgate('/setlists');
   };
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const toggleFormOpen = () => setEditOpen(editOpen ? false : true);
 
   return (
-    <Container className="">
+    <Container className="mb-5">
       <h1>{setlist.name}</h1>
       <p>{setlist.timestamp}</p>
 
@@ -141,7 +145,22 @@ const Setlist = () => {
           toggleFormOpen={toggleFormOpen}
         />
       )}
-      {!editOpen && <EditButtons buttonProps={{ toggleFormOpen, deleteButtonClick }} />}
+      {!editOpen && <EditButtons buttonProps={{ toggleFormOpen, handleShowModal }} />}
+
+      <Modal show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this setlist?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="warning" onClick={handleDelete}>
+            Yes!
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

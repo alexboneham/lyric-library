@@ -10,7 +10,7 @@ const EditButtons = ({ buttonProps, song }) => {
   const {
     inLibrary = undefined,
     clickAddToLibrary = undefined,
-    deleteButtonClick = undefined,
+    handleShowModal = undefined,
     toggleFormOpen = undefined,
   } = buttonProps;
 
@@ -21,12 +21,12 @@ const EditButtons = ({ buttonProps, song }) => {
           {inLibrary ? 'Added to library!' : 'Add to library'}
         </Button>
       )}
-      {deleteButtonClick && (
-        <Stack gap={2} direction="horizontal" className="">
+      {handleShowModal && (
+        <Stack gap={2} direction="horizontal" className="me-auto">
           <Button variant="primary" onClick={toggleFormOpen}>
             Edit
           </Button>
-          <Button variant="danger" onClick={deleteButtonClick}>
+          <Button variant="danger" onClick={handleShowModal}>
             Delete
           </Button>
           {song && <AddToSetlistDropdown song={song} />}
