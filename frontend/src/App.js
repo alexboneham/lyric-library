@@ -8,7 +8,7 @@ import Library from './routes/library.component';
 import LibraryItem from './routes/library-item/library-item.component';
 import Setlists from './routes/setlists.component';
 import Setlist from './routes/setlist.component';
-import Search from './routes/search/search.component';
+import Search from './routes/search.component';
 import SearchResult from './routes/search-result.component';
 
 import { isResponseOk } from './utils/helper-functions';

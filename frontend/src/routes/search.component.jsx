@@ -1,16 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
-import SearchResults from '../../components/search-results.component';
-import Loading from '../../components/loading.component';
-import { ReactComponent as Arrow } from '../../assets/right-arrow.svg';
+import SearchResults from '../components/search-results.component';
+import Loading from '../components/loading.component';
+import SearchBar from '../components/search-bar.component';
 
 // Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
-
-import './search.styles.scss';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -84,19 +82,9 @@ const Search = () => {
       <Container className="d-flex flex-column align-items-center mt-5 p-3">
         <h1>Find a song</h1>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="form-group">
-            <Form.Control type="text" placeholder="song title" value={title} onChange={handleTitleChange} />
-            <button type="submit">
-              <Arrow className="arrow" />
-            </button>
-          </Form.Group>
+        <SearchBar handleChange={handleTitleChange} value={title} placeholderValue="song title" />
           {showArtistInput && (
-            <Form.Group className='form-group'>
-              <Form.Control type="text" placeholder="artist name" value={artist} onChange={handleArtistChange} />
-              <button type="submit">
-                <Arrow className="arrow" />
-              </button>
-            </Form.Group>
+            <SearchBar handleChange={handleArtistChange} value={artist} placeholderValue="artist name" />
           )}
         </Form>
         {!showArtistInput && (
