@@ -27,7 +27,7 @@ const Libary = () => {
 
   const changeHandler = (e) => setSearchValue(e.target.value.toLowerCase());
 
-  const imageStyles = { width: '100%', height: '350px', padding: 0, objectFit: 'cover'}
+  const imageStyles = { width: '100%', height: '20rem', padding: 0, objectFit: 'cover'}
 
   return (
     <Container fluid>
