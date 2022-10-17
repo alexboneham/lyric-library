@@ -86,7 +86,7 @@ const SearchResult = () => {
 
   return (
     <>
-      <Container className="text-center">
+      <Container className="text-center mt-5">
         {isError && (
           <>
             <p>Something went wrong...</p>

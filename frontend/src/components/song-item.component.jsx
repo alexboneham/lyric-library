@@ -29,7 +29,11 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
         <Col lg={1} />
         <Col lg={5} className="p-5 border rounded">
           <EditButtons buttonProps={buttonProps} song={song} />
-          {editOpen ? (
+          {!editOpen ? (
+            <p className="mt-3 text-center" style={{ whiteSpace: 'pre-line' }}>
+              {song.lyrics}
+            </p>
+          ) : (
             <Form onSubmit={handleEditSubmit} className="mt-3">
               <Form.Control
                 as={'textarea'}
@@ -48,10 +52,6 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
                 </Button>
               </Stack>
             </Form>
-          ) : (
-            <p className="mt-3 text-center" style={{ whiteSpace: 'pre-line' }}>
-              {song.lyrics}
-            </p>
           )}
         </Col>
       </Row>

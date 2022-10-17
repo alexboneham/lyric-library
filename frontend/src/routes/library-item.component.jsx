@@ -94,7 +94,7 @@ const LibraryItem = () => {
   // Props to send relating to button display
   const buttonProps = {
     toggleFormOpen: () => (editOpen ? setEditOpen(false) : setEditOpen(true)),
-    deleteButtonClick: handleShowModal,
+    handleShowModal: handleShowModal,
   };
 
   return (
