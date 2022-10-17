@@ -7,8 +7,10 @@ import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 import SearchBar from '../components/search-bar.component';
+import RecordsImage from '../assets/images/recordsOld.jpg';
 
 const Libary = () => {
   const { librarySongs } = useContext(LibraryContext);
@@ -25,8 +27,11 @@ const Libary = () => {
 
   const changeHandler = (e) => setSearchValue(e.target.value.toLowerCase());
 
+  const imageStyles = { width: '100%', height: '350px', padding: 0, objectFit: 'cover'}
+
   return (
-    <Container className="">
+    <Container fluid>
+      <Row><Image src={RecordsImage}  alt='record-stack' style={imageStyles} /></Row>
       <Row>
         <Col md={4} className="mx-auto my-2 text-center">
           <Stack direction="vertical" gap={1}>

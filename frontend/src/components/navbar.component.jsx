@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavSearch from '../components/nav-search-bar.component';
 
-import { ReactComponent as Logo } from '../assets/musical-note.svg';
+import { ReactComponent as Logo } from '../assets/logos/musical-note.svg';
 
 function NavBar() {
   return (

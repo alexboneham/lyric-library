@@ -1,4 +1,4 @@
-import { ReactComponent as Arrow } from '../assets/right-arrow.svg';
+import { ReactComponent as Arrow } from '../assets/logos/right-arrow.svg';
 
 import Form from 'react-bootstrap/Form';
 
