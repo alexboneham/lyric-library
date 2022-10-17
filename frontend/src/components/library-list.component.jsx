@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
-import SongCard from '../song-card/song-card.component';
-import './library-list.styles.scss';
+import SongCard from './song-card.component';
+
+import { LinkContainer } from 'react-router-bootstrap';
+
+// React bootstrap components
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const SearchMessage = () => (
   <div>
@@ -25,18 +31,18 @@ const LibraryList = ({ songs, parent }) => {
   }
 
   return (
-    <div className="container">
-      <div className="library-list-container">
+    <Container>
+      <Row xs={2} sm={3} md={4} lg={5}>
         {songs.map((song) => (
-          <div key={song.id} className="link-container">
-            <Link to={`/library/${song.id.toString()}`} className="link-style">
+          <Col key={parseInt(song.id)}>
+            <LinkContainer to={`/library/${song.id.toString()}`}>
               <SongCard song={song} />
-            </Link>
-          </div>
+            </LinkContainer>
+          </Col>
         ))}
-      </div>
-      {songs.length < 1 && <div>{message()}</div>}
-    </div>
+        {songs.length < 1 && <div>{message()}</div>}
+      </Row>
+    </Container>
   );
 };
 

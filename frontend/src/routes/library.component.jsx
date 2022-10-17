@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import { LibraryContext } from '../contexts/library.context';
 
-import LibraryList from '../components/library-list/library-list.component';
+import { LinkContainer } from 'react-router-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +10,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
 import SearchBar from '../components/search-bar.component';
+import SongCard from '../components/song-card.component';
+
 import RecordsImage from '../assets/images/recordsOld.jpg';
 
 const Libary = () => {
@@ -27,23 +29,49 @@ const Libary = () => {
 
   const changeHandler = (e) => setSearchValue(e.target.value.toLowerCase());
 
-  const imageStyles = { width: '100%', height: '20rem', padding: 0, objectFit: 'cover'}
+  const imageStyles = { width: '100%', height: '20rem', padding: 0, objectFit: 'cover' };
 
   return (
-    <Container fluid>
-      <Row><Image src={RecordsImage}  alt='record-stack' style={imageStyles} /></Row>
+    <Container fluid className='mb-5'>
       <Row>
-        <Col md={4} className="mx-auto my-2 text-center">
+        <Image src={RecordsImage} alt="record-stack" style={imageStyles} />
+      </Row>
+
+      <Row>
+        <Col sm={6} md={4} className="mx-auto my-2 text-center">
           <Stack direction="vertical" gap={1}>
             <h1 className="display-5">Your Library</h1>
             <SearchBar handleChange={changeHandler} value={searchValue} placeholderValue="search library" />
           </Stack>
         </Col>
       </Row>
+
+      {filteredSongs && (
+        <Row xs={2} sm={3} md={4} lg={6} className="g-4 mx-3">
+          {filteredSongs.map((song) => (
+            <LinkContainer to={`/library/${song.id.toString()}`} key={song.id}>
+              <Col>
+                <SongCard song={song} />
+              </Col>
+            </LinkContainer>
+          ))}
+        </Row>
+      )}
+
       <Row>
-        <Col md={8} className="mx-auto">
-          {filteredSongs.map((song) => <div key={song.id}>{song.title}</div>)}
-        </Col>
+        {filteredSongs.length < 1 && (
+          <Col className="text-center mt-2">
+            <p>
+              <span>This song is not in your library. Try </span>
+              <span>
+                <LinkContainer to={'/search'} style={{ cursor: 'pointer', color: 'blue' }}>
+                  <span>searching</span>
+                </LinkContainer>
+              </span>
+              <span> for it instead...</span>
+            </p>
+          </Col>
+        )}
       </Row>
     </Container>
   );
