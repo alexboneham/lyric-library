@@ -1,4 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { UserContext } from '../contexts/user.context';
+import { LibraryContext } from '../contexts/library.context';
+import { isResponseOk } from '../utils/helper-functions';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,19 +16,59 @@ const NewSong = () => {
   const [artist, setArtist] = useState('');
   const [lyrics, setLyrics] = useState('');
 
+  const { csrfToken } = useContext(UserContext);
+  const { librarySongs, setLibrarySongs } = useContext(LibraryContext);
+  const navigate = useNavigate();
+
+  const imageUrl =
+    'https://images.unsplash.com/photo-1602848597941-0d3d3a2c1241?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=875&q=80';
+
+  const artistImageUrl =
+    'https://images.unsplash.com/photo-1595971294624-80bcf0d7eb24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80';
+
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleArtistChange = (e) => setArtist(e.target.value);
   const handleLyricsChange = (e) => setLyrics(e.target.value);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(title + '\n' + artist + '\n' + lyrics);
 
+    const song = {
+      title: title,
+      artist: artist,
+      lyrics: lyrics,
+      id: 0,
+      full_title: `${title} by ${artist}`,
+      description: {
+        plain: `A song composed by ${artist}`,
+      },
+      song_art_image_thumbnail_url: imageUrl,
+      primary_artist: {
+        id: 0,
+        image_url: artistImageUrl,
+      },
+      album: {
+        name: 'My songs',
+        full_title: 'My songs by me',
+        id: 0,
+      },
+    };
 
-
-    setTitle('');
-    setArtist('');
-    setLyrics('');
+    fetch('http://localhost:8000/library', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      credentials: 'include',
+      body: JSON.stringify(song),
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        setLibrarySongs([...librarySongs, data.song]);
+        navigate('/library');
+      });
   };
 
   return (
@@ -39,7 +84,7 @@ const NewSong = () => {
                 value={title}
                 onChange={handleTitleChange}
                 placeholder="The greatest song ever"
-                autoComplete='off'
+                autoComplete="off"
                 required
               />
             </Form.Group>
@@ -50,7 +95,7 @@ const NewSong = () => {
                 value={artist}
                 onChange={handleArtistChange}
                 placeholder="Awesome band name"
-                autoComplete='off'
+                autoComplete="off"
                 required
               />
             </Form.Group>
@@ -62,7 +107,7 @@ const NewSong = () => {
                 value={lyrics}
                 onChange={handleLyricsChange}
                 placeholder="La la la la la..."
-                autoComplete='off'
+                autoComplete="off"
                 required
               />
             </Form.Group>

@@ -27,7 +27,6 @@ export const LibraryProvider = ({ children }) => {
     return false;
   };
 
-  // Remove song from library function
   const removeSong = (song) => {
     const newSongs = librarySongs.filter((item) => item.id !== song.id);
     setLibrarySongs(newSongs);

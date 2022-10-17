@@ -54,7 +54,7 @@ def search_genius_by_id(request, id):
     except Exception as e:
         print(f'Exception occurred from lyrics genius: {e}')
         return JsonResponse({'error': f'{e}'}, status=400)
-        
+
     # uses to_dict() method on type Song from lyrics-genius
     return JsonResponse(cleaned_song.to_dict(), status=200)
 
@@ -72,7 +72,7 @@ def library(request):
         except Exception as e:
             return JsonResponse({'error': f'{e}'}, status=e.errno)
 
-        if Song.objects.filter(genius_id=data['id']).exists():
+        if Song.objects.filter(genius_id=data['id']).exclude(genius_id=0).exists():
             return JsonResponse({'error': 'Song already exists in database'}, status=409)
         else:
             try:
@@ -98,9 +98,9 @@ def library(request):
 
                 s.save()
                 return JsonResponse({
-                        'success': f'Successfully added {s.title} to your library!',
-                        'song': s.serialize(),
-                    }, status=201)
+                    'success': f'Successfully added {s.title} to your library!',
+                    'song': s.serialize(),
+                }, status=201)
             except Exception as e:
                 print(e)
                 return JsonResponse({'error': f'{e}'}, status=400)
@@ -128,7 +128,16 @@ def song(request, song_id):
         return JsonResponse(song.serialize(), status=200)
 
     elif request.method == 'DELETE':
+        artist = Artist.objects.get(songs__id=song.id)
         res = song.delete()
+        if artist:
+            print(f'artist is: {artist}')
+            remaining_songs = Song.objects.filter(artist=artist)
+            print(f'remaining songs: {remaining_songs}')
+            if len(remaining_songs) < 1:
+                artist_res = artist.delete()
+                print(f'deleted artist: {artist_res}')
+
         return JsonResponse({'success': 'Song deleted', 'res': res}, status=200)
 
     elif request.method == 'GET':
@@ -180,7 +189,7 @@ def setlist(request, id):
 
     elif request.method == 'DELETE':
         res = setlist.delete()
-        return JsonResponse({'success': 'Setlist deleted', 'res': res}, status=200)        
+        return JsonResponse({'success': 'Setlist deleted', 'res': res}, status=200)
 
     elif request.method == 'GET':
         return JsonResponse(setlist.serialize(), status=200)
@@ -191,13 +200,3 @@ def setlist(request, id):
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
-
-def ping(request):
-    res = ''
-    if request.method == 'POST':
-        res = 'POST request OK!'
-    elif request.method == 'GET':
-        res = 'GET request OK!'
-    else:
-        res = 'Method something other than GET or POST...'
-    return JsonResponse({'result': res})
