@@ -11,8 +11,11 @@ def genius_search_songs(search_term):
 
 
 def genius_search_song_by_id(id):
-    song = genius.search_song(song_id=id)
-    return song
+    try:
+        song = genius.search_song(song_id=id)
+        return song
+    except Exception as e:
+        return e
 
 
 def genius_search_song_and_artist(title, artist):
