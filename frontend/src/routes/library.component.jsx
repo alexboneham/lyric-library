@@ -74,7 +74,7 @@ const Libary = () => {
           </Col>
         )}
       </Row>
-      <Row className="mt-2">
+      <Row className="mt-4">
         <Col md={6} className="mx-auto text-center">
           <LinkContainer to={'/new-song'}>
             <Button variant="outline-secondary">Add your own song!</Button>

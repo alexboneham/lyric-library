@@ -10,6 +10,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Stack from 'react-bootstrap/Stack';
+
+import BackButton from '../components/back-button.component';
 
 const NewSong = () => {
   const [title, setTitle] = useState('');
@@ -111,7 +114,10 @@ const NewSong = () => {
                 required
               />
             </Form.Group>
-            <Button type="submit">Save</Button>
+            <Stack gap={1} className="col-sm-8 col-md-10 mx-auto">
+              <Button type="submit">Save</Button>
+              <BackButton />
+            </Stack>
           </Form>
         </Col>
       </Row>
