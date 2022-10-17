@@ -8,6 +8,7 @@ import Stack from 'react-bootstrap/Stack';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
 
 import SearchBar from '../components/search-bar.component';
 import SongCard from '../components/song-card.component';
@@ -32,7 +33,7 @@ const Libary = () => {
   const imageStyles = { width: '100%', height: '20rem', padding: 0, objectFit: 'cover' };
 
   return (
-    <Container fluid className='mb-5'>
+    <Container fluid className="mb-5">
       <Row>
         <Image src={RecordsImage} alt="record-stack" style={imageStyles} />
       </Row>
@@ -72,6 +73,13 @@ const Libary = () => {
             </p>
           </Col>
         )}
+      </Row>
+      <Row className="mt-2">
+        <Col md={6} className="mx-auto text-center">
+          <LinkContainer to={'/new-song'}>
+            <Button variant="outline-secondary">Add your own song!</Button>
+          </LinkContainer>
+        </Col>
       </Row>
     </Container>
   );

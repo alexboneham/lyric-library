@@ -26,9 +26,8 @@ function NavBar() {
               <Nav.Link>Search</Nav.Link>
             </LinkContainer>
             <LinkContainer to={'/setlists'}>
-              <Nav.Link href="/setlists">Setlists</Nav.Link>
+              <Nav.Link>Setlists</Nav.Link>
             </LinkContainer>
-            
           </Nav>
           <Nav className="me-1">
             <LinkContainer to={'/login'}>

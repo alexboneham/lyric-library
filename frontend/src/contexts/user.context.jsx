@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
   const [csrfToken, setCsrfToken] = useState(null);
 
   useEffect(() => {
+    console.log('User context fetch running on mount...');
     fetch('http://localhost:8000/csrf', {
       credentials: 'include',
     })
