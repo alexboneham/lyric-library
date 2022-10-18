@@ -9,6 +9,7 @@ import Stack from 'react-bootstrap/Stack';
 
 const Login = () => {
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
+  const linkStyles = { textDecoration: 'underline', color: '#0D6EFD', cursor: 'pointer' };
 
   return (
     <Container fluid>
@@ -31,8 +32,8 @@ const Login = () => {
               <div>
                 <p className="text-muted fs-6 text-center mt-1">
                   Don't have an account? Click{' '}
-                  <LinkContainer to={'/sign-up'}>
-                    <a>here</a>
+                  <LinkContainer to={'/sign-up'} style={linkStyles}>
+                    <span>here</span>
                   </LinkContainer>{' '}
                   to sign up.
                 </p>

@@ -9,6 +9,7 @@ import Stack from 'react-bootstrap/Stack';
 
 const SignUp = () => {
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
+  const linkStyles = { textDecoration: 'underline', color: '#0D6EFD', cursor: 'pointer' };
 
   return (
     <Container fluid>
@@ -21,16 +22,21 @@ const SignUp = () => {
           <Form className="px-5">
             <Stack gap={3}>
               <Form.Group controlId="formGridUsername">
-                <Form.Control type="text" placeholder="Username" className={formControlBorderClasses} required/>
+                <Form.Control type="text" placeholder="Username" className={formControlBorderClasses} required />
               </Form.Group>
               <Form.Group controlId="formGridEmail">
-                <Form.Control type="email" placeholder="Email address" className={formControlBorderClasses} required/>
+                <Form.Control type="email" placeholder="Email address" className={formControlBorderClasses} required />
               </Form.Group>
               <Form.Group controlId="formGridPassword">
-                <Form.Control type="password" placeholder="Password" className={formControlBorderClasses} required/>
+                <Form.Control type="password" placeholder="Password" className={formControlBorderClasses} required />
               </Form.Group>
               <Form.Group controlId="formGridConfirmPassword">
-                <Form.Control type="password" placeholder="Confirm Password" className={formControlBorderClasses} required/>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  className={formControlBorderClasses}
+                  required
+                />
               </Form.Group>
               <Button variant="success" type="submit" className="rounded-1">
                 Sign Up
@@ -38,12 +44,12 @@ const SignUp = () => {
               <div>
                 <p className="text-muted fs-6 text-center mt-1">
                   By clicking the Sign Up button, you agree to our{' '}
-                  <LinkContainer to={'#'}>
-                    <a>Terms & Conditions</a>
+                  <LinkContainer to={'#'} style={linkStyles}>
+                    <span>Terms & Conditions</span>
                   </LinkContainer>
                   , and{' '}
-                  <LinkContainer to={'#'}>
-                    <a>Privacy Policy</a>
+                  <LinkContainer to={'#'} style={linkStyles}>
+                    <span>Privacy Policy</span>
                   </LinkContainer>
                 </p>
               </div>
