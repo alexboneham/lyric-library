@@ -114,7 +114,7 @@ const NewSong = () => {
                 required
               />
             </Form.Group>
-            <Stack gap={1} className="col-sm-8 col-md-10 mx-auto">
+            <Stack gap={1} className="col-sm-8 col-md-10 mx-auto mb-3">
               <Button type="submit">Save</Button>
               <BackButton />
             </Stack>

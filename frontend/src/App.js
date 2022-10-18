@@ -11,6 +11,8 @@ import Setlist from './routes/setlist.component';
 import Search from './routes/search.component';
 import SearchResult from './routes/search-result.component';
 import NewSong from './routes/new-song.component';
+import Login from './routes/login.component';
+import SignUp from './routes/sign-up.component';
 
 import { isResponseOk } from './utils/helper-functions';
 import './App.scss';
@@ -28,9 +30,9 @@ const App = () => {
         setMessage(data.message);
       })
       .catch((error) => {
-        setMessage('API is not connected or configured properly')
-        console.log(error)
-      })
+        setMessage('API is not connected or configured properly');
+        console.log(error);
+      });
   }, []);
 
   return (
@@ -42,10 +44,12 @@ const App = () => {
           <Route path="search/:id" element={<SearchResult />} />
           <Route path="library" element={<Library />} />
           <Route path="library/:id" element={<LibraryItem />} />
-          <Route path="setlists" element={<Setlists />} >
+          <Route path="setlists" element={<Setlists />}>
             <Route path=":id" element={<Setlist />} />
           </Route>
-          <Route path='new-song' element={<NewSong />} />
+          <Route path="new-song" element={<NewSong />} />
+          <Route path="login" element={<Login />} />
+          <Route path="sign-up" element={<SignUp />} />
         </Route>
       </Routes>
     </Router>

@@ -33,7 +33,7 @@ function NavBar() {
             <LinkContainer to={'/login'}>
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>
-            <LinkContainer to={'/signup'}>
+            <LinkContainer to={'/sign-up'}>
               <Nav.Link>Sign Up</Nav.Link>
             </LinkContainer>
           </Nav>

@@ -20,21 +20,20 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
     <Container className="my-3">
       <Row>
         <Col lg={5} className="p-5 border rounded text-center">
-          <h1 className="title">{song.title}</h1>
-          <h2 className="artist">by {song.artist}</h2>
-          <Image fluid rounded src={song.thumbnail_url} alt={song.full_title} />
-          <p className="text-muted fst-italic  mt-3">{description}</p>
+          <h1 className="mb-2">{song.title}</h1>
+          <h2 className="mb-3">by {song.artist}</h2>
+          <Image className="mb-4" fluid rounded src={song.thumbnail_url} alt={song.full_title} />
+          <p className="fst-italic">{description}</p>
           <BackButton />
         </Col>
         <Col lg={1} />
         <Col lg={5} className="p-5 border rounded">
-          <EditButtons buttonProps={buttonProps} song={song} />
           {!editOpen ? (
-            <p className="mt-3 text-center" style={{ whiteSpace: 'pre-line' }}>
+            <p className="text-center" style={{ whiteSpace: 'pre-line' }}>
               {song.lyrics}
             </p>
           ) : (
-            <Form onSubmit={handleEditSubmit} className="mt-3">
+            <Form onSubmit={handleEditSubmit}>
               <Form.Control
                 as={'textarea'}
                 defaultValue={song.lyrics}
@@ -53,6 +52,9 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
               </Stack>
             </Form>
           )}
+          <div className="mt-5">
+            <EditButtons buttonProps={buttonProps} song={song} />
+          </div>
         </Col>
       </Row>
     </Container>

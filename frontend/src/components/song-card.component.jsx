@@ -10,9 +10,14 @@ const SongCard = ({ song }) => {
   const handleLeave = () => setIsHovering(false);
 
   return (
-    <Card style={{cursor: 'pointer'}} onMouseEnter={handlerEnter} onMouseLeave={handleLeave}>
+    <Card
+      style={{ cursor: 'pointer' }}
+      className={isHovering && 'opacity-75'}
+      onMouseEnter={handlerEnter}
+      onMouseLeave={handleLeave}
+    >
       <Card.Img src={song.thumbnail_url} alt={song.full_title} />
-      <Collapse in={isHovering}>
+      <Collapse in={isHovering} timeout={300}>
         <div>
           <Card.Body className="text-center">
             <Card.Title>{song.title}</Card.Title>
