@@ -79,10 +79,10 @@ const Search = () => {
 
   return (
     <>
-      <Container className="d-flex flex-column align-items-center mt-5 p-3">
+      <Container className="d-flex flex-column align-items-center p-3" fluid>
         <h1>Find a song</h1>
         <Form onSubmit={handleSubmit}>
-        <SearchBar handleChange={handleTitleChange} value={title} placeholderValue="song title" />
+          <SearchBar handleChange={handleTitleChange} value={title} placeholderValue="song title" />
           {showArtistInput && (
             <SearchBar handleChange={handleArtistChange} value={artist} placeholderValue="artist name" />
           )}
