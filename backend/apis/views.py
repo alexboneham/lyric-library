@@ -2,8 +2,10 @@ import json
 
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from django.contrib.auth import authenticate, login, logout
+from django.db import IntegrityError
 
-from .models import Song, Setlist, Artist, Album
+from .models import Song, Setlist, Artist, Album, User
 from .utils.helper_funcs import clean_lyrics, MESSAGE
 from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_by_id, genius_search_song_and_artist
 
@@ -200,3 +202,54 @@ def setlist(request, id):
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+
+def login(request):
+    if request.method == 'POST':
+
+        # Get user input from request
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Attempt to authenticate user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            #  Log user in
+            login(request, user)
+            return JsonResponse({'success': 'User is logged in!'})
+        else:
+            # Authentication failed
+            return JsonResponse({'error': 'Invalid username or password'})
+
+    else:
+        # Request method must be POST
+        return JsonResponse({'error': 'Request method must be POST'})
+
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+
+        password = request.POST['password']
+        confirmation = request.POST['confirmation']
+
+        if password != confirmation:
+            # Passwords must match!
+            return JsonResponse({'error': 'Passwords must match!'})
+
+        # Attempt to create user
+        try:
+            user = User.objects.create_user(username, email, password)
+
+        except IntegrityError:
+            # Username already exists
+            return JsonResponse({'error': 'Username already exists'})
+
+        login(request, user)
+
+        return JsonResponse({'success': f'Successfully created user: {username}'})
+    else:
+        # Request method must be POST
+        return JsonResponse({'error': 'Request method must be POST'})

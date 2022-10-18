@@ -11,4 +11,6 @@ urlpatterns = [
     path('search', views.search_genius, name='search'),
     path('search/<int:id>', views.search_genius_by_id, name='search_by_id'),
     path('csrf', views.get_csrf_token, name='csrf'),
+    path('login', views.login, name='login'),
+    path('register', views.register, name='register'),
 ]
