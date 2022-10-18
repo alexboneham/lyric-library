@@ -204,12 +204,14 @@ def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
 
+        data = json.loads(request.body)
+
         # Get user input from request
-        username = request.POST['username']
-        password = request.POST['password']
+        username = data.get('username')
+        password = data.get('password')
 
         # Attempt to authenticate user
         user = authenticate(request, username=username, password=password)
@@ -217,27 +219,37 @@ def login(request):
         if user is not None:
             #  Log user in
             login(request, user)
-            return JsonResponse({'success': 'User is logged in!'})
+            return JsonResponse({'success': 'User is logged in!'}, status=200)
         else:
             # Authentication failed
-            return JsonResponse({'error': 'Invalid username or password'})
+            return JsonResponse({'error': 'Invalid username or password'}, status=400)
 
     else:
         # Request method must be POST
-        return JsonResponse({'error': 'Request method must be POST'})
+        return JsonResponse({'error': 'Request method must be POST'}, status=400)
+
+
+def logout_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'You are not logged in'}, status=400)
+
+    logout(request)
+    return JsonResponse({'success': 'Successfully logged out.'}, status=200)
 
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
+        data = json.loads(request.body)
 
-        password = request.POST['password']
-        confirmation = request.POST['confirmation']
+        username = data.get('username')
+        email = data.get('email')
+
+        password = data.get('password')
+        confirmation = data.get('confirmation')
 
         if password != confirmation:
             # Passwords must match!
-            return JsonResponse({'error': 'Passwords must match!'})
+            return JsonResponse({'error': 'Passwords must match!'}, status=400)
 
         # Attempt to create user
         try:
@@ -245,11 +257,25 @@ def register(request):
 
         except IntegrityError:
             # Username already exists
-            return JsonResponse({'error': 'Username already exists'})
+            return JsonResponse({'error': 'Username already exists'}, status=400)
 
         login(request, user)
 
-        return JsonResponse({'success': f'Successfully created user: {username}'})
+        return JsonResponse({'success': f'Successfully created user: {username}'}, status=200)
     else:
         # Request method must be POST
-        return JsonResponse({'error': 'Request method must be POST'})
+        return JsonResponse({'error': 'Request method must be POST'}, status=400)
+
+
+def session_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'isAuthenticated': False})
+
+    return JsonResponse({'isAuthenticated': True})
+
+
+def whoami_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'isAuthenticated': False})
+
+    return JsonResponse({'username': request.user.username})
