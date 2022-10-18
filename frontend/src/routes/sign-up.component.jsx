@@ -1,3 +1,5 @@
+import { LinkContainer } from 'react-router-bootstrap';
+
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -18,25 +20,31 @@ const SignUp = () => {
           </div>
           <Form className="px-5">
             <Stack gap={3}>
-              <Form.Group as={Col} controlId="formGridUsername">
-                <Form.Control type="text" placeholder="Username" className={formControlBorderClasses} />
+              <Form.Group controlId="formGridUsername">
+                <Form.Control type="text" placeholder="Username" className={formControlBorderClasses} required/>
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Control type="email" placeholder="Email address" className={formControlBorderClasses} />
+              <Form.Group controlId="formGridEmail">
+                <Form.Control type="email" placeholder="Email address" className={formControlBorderClasses} required/>
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Control type="password" placeholder="Password" className={formControlBorderClasses} />
+              <Form.Group controlId="formGridPassword">
+                <Form.Control type="password" placeholder="Password" className={formControlBorderClasses} required/>
               </Form.Group>
-              <Form.Group as={Col} controlId="formGridConfirmPassword">
-                <Form.Control type="password" placeholder="Confirm Password" className={formControlBorderClasses} />
+              <Form.Group controlId="formGridConfirmPassword">
+                <Form.Control type="password" placeholder="Confirm Password" className={formControlBorderClasses} required/>
               </Form.Group>
               <Button variant="success" type="submit" className="rounded-1">
                 Sign Up
               </Button>
               <div>
                 <p className="text-muted fs-6 text-center mt-1">
-                  By clicking the Sign Up button, you agree to our <a href="#">Terms & Conditions</a>, and{' '}
-                  <a href="#">Privacy Policy</a>
+                  By clicking the Sign Up button, you agree to our{' '}
+                  <LinkContainer to={'#'}>
+                    <a>Terms & Conditions</a>
+                  </LinkContainer>
+                  , and{' '}
+                  <LinkContainer to={'#'}>
+                    <a>Privacy Policy</a>
+                  </LinkContainer>
                 </p>
               </div>
             </Stack>
