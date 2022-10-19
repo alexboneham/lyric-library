@@ -11,11 +11,18 @@ export const UserContext = createContext({
   isAuthenticated: null,
   setIsAuthenticated: () => null,
   logoutUser: () => null,
+  user: {},
+  setUser: () => null,
 });
 
 export const UserProvider = ({ children }) => {
   const [csrfToken, setCsrfToken] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    console.dir(user);
+  }, [user])
 
   useEffect(() => {
     // Get session info from Django backend
@@ -64,10 +71,11 @@ export const UserProvider = ({ children }) => {
       .then((data) => {
         console.log(data);
         setIsAuthenticated(false);
+        setUser({});
       })
       .catch((e) => console.log(e));
   };
 
-  const value = { csrfToken, isAuthenticated, setIsAuthenticated, logoutUser };
+  const value = { csrfToken, isAuthenticated, setIsAuthenticated, logoutUser, user, setUser };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

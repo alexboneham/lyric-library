@@ -19,7 +19,7 @@ const Login = () => {
   const [showAlert, setShowAlert] = useState(false);
   // const [error, setError] = useState('');
 
-  const { csrfToken, isAuthenticated, setIsAuthenticated } = useContext(UserContext);
+  const { csrfToken, isAuthenticated, setIsAuthenticated, setUser } = useContext(UserContext);
 
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
   const linkStyles = { textDecoration: 'underline', color: '#0D6EFD', cursor: 'pointer' };
@@ -55,7 +55,8 @@ const Login = () => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         if (data.success) {
-          console.log(data.success);
+          console.log(data);
+          setUser(data.user);
           setIsAuthenticated(true);
         } else if (data.error) {
           console.log(data.error);

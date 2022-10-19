@@ -4,8 +4,17 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
+
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.email
+
+    def serialize(self):
+        return {
+            "username": self.username,
+            "id": self.id,
+            "email": self.email,
+        }
 
 
 class Artist(models.Model):
@@ -76,7 +85,7 @@ class Setlist(models.Model):
             "timestamp": self.timestamp.strftime("%c"),
             "songs": [song.serialize() for song in self.songs.all()],
         }
-    
+
     def slim_serialize(self):
         return {
             "id": self.id,

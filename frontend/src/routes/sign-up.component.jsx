@@ -21,7 +21,7 @@ const SignUp = () => {
   const [confirmation, setConfirmation] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
-  const { csrfToken, setIsAuthenticated } = useContext(UserContext);
+  const { csrfToken, setIsAuthenticated, setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -62,6 +62,7 @@ const SignUp = () => {
           console.log(data.error);
         } else if (data.success) {
           console.log(data.success);
+          setUser(data.user);
           setIsAuthenticated(true);
           navigate('/library');
         } else {

@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 from .models import Song, Setlist, Artist, Album, User
@@ -215,7 +216,7 @@ def login_view(request):
         if user is not None:
             #  Log user in
             login(request, user)
-            return JsonResponse({'success': 'User is logged in!'}, status=200)
+            return JsonResponse({'success': 'User is logged in!', 'user': user.serialize()}, status=200)
         else:
             # Authentication failed
             return JsonResponse({'error': 'Invalid username or password'}, status=400)
@@ -257,7 +258,7 @@ def register(request):
 
         login(request, user)
 
-        return JsonResponse({'success': f'Successfully created user: {username}'}, status=200)
+        return JsonResponse({'success': f'Successfully created user: {username}', 'user': user.serialize()}, status=200)
     else:
         # Request method must be POST
         return JsonResponse({'error': 'Request method must be POST'}, status=400)
