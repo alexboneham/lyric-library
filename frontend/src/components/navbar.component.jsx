@@ -35,21 +35,21 @@ function NavBar() {
               </LinkContainer>
             </Nav>
           )}
-          {isAuthenticated ? (
-            <Nav className="me-1">
+          <Nav className="ms-auto">
+            {isAuthenticated ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-            </Nav>
-          ) : (
-            <Nav className="me-1">
-              <LinkContainer to={'/login'}>
-                <Nav.Link>Login</Nav.Link>
-              </LinkContainer>
+            ) : (
+              <>
+                <LinkContainer to={'/login'}>
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
 
-              <LinkContainer to={'/sign-up'}>
-                <Nav.Link>Sign Up</Nav.Link>
-              </LinkContainer>
-            </Nav>
-          )}
+                <LinkContainer to={'/sign-up'}>
+                  <Nav.Link>Sign Up</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+          </Nav>
           <NavSearch />
         </Navbar.Collapse>
       </Container>
