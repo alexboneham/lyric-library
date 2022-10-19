@@ -16,11 +16,32 @@ export const UserContext = createContext({
 
 export const UserProvider = ({ children }) => {
   const [csrfToken, setCsrfToken] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
-  const getCSRF = () => {
-    // GET CSRF-Token from Django backend
-    console.log('Get CSRF function running....');
+  useEffect(() => {
+    // Get session info from Django backend
+    console.log('Get session fetch running on mount...');
+
+    fetch('http://localhost:8000/session', {
+      credentials: 'include',
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        if (data.isAuthenticated) {
+          console.log('User is authenticated');
+          setIsAuthenticated(true);
+        } else {
+          console.log('User is NOT authenticated');
+          setIsAuthenticated(false);
+        }
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  useEffect(() => {
+    // Get CSRF from Django backend each time is authenticated changes
+    console.log('Get CSRF useEffect running....');
+
     fetch('http://localhost:8000/csrf', {
       credentials: 'include',
     })
@@ -31,27 +52,7 @@ export const UserProvider = ({ children }) => {
         setCsrfToken(data.csrfToken);
       })
       .catch((e) => console.log(e));
-  };
-
-  useEffect(() => {
-    // Get session info from Django backend
-    console.log('User context fetch running on mount...');
-    fetch('http://localhost:8000/session', {
-      credentials: 'include',
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        if (data.isAuthenticated) {
-          setIsAuthenticated(true);
-          console.log('User is authenticated');
-        } else {
-          setIsAuthenticated(false);
-          console.log('User is NOT authenticated');
-        }
-        getCSRF();
-      })
-      .catch((e) => console.log(e));
-  }, []);
+  }, [isAuthenticated]);
 
   const loginUser = (username, password) => {
     // Make call to Django backend to log user in
@@ -75,7 +76,6 @@ export const UserProvider = ({ children }) => {
         if (data.success) {
           console.log(data.success);
           setIsAuthenticated(true);
-          getCSRF();
         } else if (data.error) {
           console.log(data.error);
         } else {
@@ -97,7 +97,6 @@ export const UserProvider = ({ children }) => {
       .then((data) => {
         console.log(data);
         setIsAuthenticated(false);
-        getCSRF();
       })
       .catch((e) => console.log(e));
   };
