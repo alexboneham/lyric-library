@@ -200,10 +200,6 @@ def setlist(request, id):
         return JsonResponse({'error': 'Request method must be GET or PUT'}, status=405)
 
 
-def get_csrf_token(request):
-    return JsonResponse({'csrfToken': get_token(request)})
-
-
 def login_view(request):
     if request.method == 'POST':
 
@@ -272,6 +268,10 @@ def session_view(request):
         return JsonResponse({'isAuthenticated': False})
 
     return JsonResponse({'isAuthenticated': True})
+
+
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
 
 
 def whoami_view(request):

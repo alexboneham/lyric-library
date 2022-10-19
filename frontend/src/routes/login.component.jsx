@@ -1,3 +1,7 @@
+import { useState, useContext } from 'react';
+
+import { UserContext } from '../contexts/user.context';
+
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Container from 'react-bootstrap/Container';
@@ -8,8 +12,29 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  // const [error, setError] = useState('');
+
+  const { isAuthenticated, loginUser } = useContext(UserContext);
+
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
   const linkStyles = { textDecoration: 'underline', color: '#0D6EFD', cursor: 'pointer' };
+
+  const handleUsernameChange = (e) => setUsername(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!isAuthenticated) {
+      loginUser(username, password);
+    } else {
+      console.log('User is already authenticated');
+    }
+    setUsername('');
+    setPassword('');
+    return;
+  };
 
   return (
     <Container fluid>
@@ -18,13 +43,27 @@ const Login = () => {
           <div className="text-center mb-4">
             <h1 className="display-6">Login</h1>
           </div>
-          <Form className="px-5">
+          <Form className="px-5" onSubmit={handleFormSubmit}>
             <Stack gap={3}>
               <Form.Group controlId="formUsername">
-                <Form.Control type="text" placeholder="Username" className={formControlBorderClasses} required />
+                <Form.Control
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  className={formControlBorderClasses}
+                  required
+                />
               </Form.Group>
               <Form.Group controlId="formPassword">
-                <Form.Control type="password" placeholder="Password" className={formControlBorderClasses} required />
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  className={formControlBorderClasses}
+                  required
+                />
               </Form.Group>
               <Button variant="success" type="submit" className="rounded-1">
                 Login

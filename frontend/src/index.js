@@ -11,13 +11,13 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <UserProvider>
-    <LibraryProvider>
-      <SetlistsProvider>
-        <App />
-      </SetlistsProvider>
-    </LibraryProvider>
-  </UserProvider>
+    <UserProvider>
+      <LibraryProvider>
+        <SetlistsProvider>
+          <App />
+        </SetlistsProvider>
+      </LibraryProvider>
+    </UserProvider>
   // </React.StrictMode>
 );
 

@@ -21,7 +21,7 @@ const SignUp = () => {
   const [confirmation, setConfirmation] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
-  const { csrfToken } = useContext(UserContext);
+  const { csrfToken, setIsAuthenticated } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -62,12 +62,13 @@ const SignUp = () => {
           console.log(data.error);
         } else if (data.success) {
           console.log(data.success);
-          // update user context
+          setIsAuthenticated(true);
           navigate('/library');
         } else {
           console.log('some other issue');
         }
-      });
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
