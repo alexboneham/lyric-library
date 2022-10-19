@@ -3,7 +3,7 @@ Handle all state regarding a User.
 Are they signed in? Fetch and store CSRF Token, etc.
 */
 
-import { useState, useEffect, createContext, useCallback } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { isResponseOk } from '../utils/helper-functions';
 
 export const UserContext = createContext({
@@ -46,7 +46,6 @@ export const UserProvider = ({ children }) => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(`Old CSRF: ${csrfToken}`);
         console.log(`New CSRF: ${data.csrfToken}`);
         setCsrfToken(data.csrfToken);
       })
