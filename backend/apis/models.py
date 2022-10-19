@@ -14,6 +14,8 @@ class User(AbstractUser):
             "username": self.username,
             "id": self.id,
             "email": self.email,
+            "firstName": self.first_name,
+            "lastName": self.last_name,
         }
 
 
