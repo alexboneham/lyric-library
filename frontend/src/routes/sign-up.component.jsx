@@ -64,7 +64,7 @@ const SignUp = () => {
           console.log(data.success);
           setUser(data.user);
           setIsAuthenticated(true);
-          navigate('/library');
+          navigate('/');
         } else {
           console.log('some other issue');
         }

@@ -1,6 +1,8 @@
 import { useContext } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
+// Bootstrap components
+import { LinkContainer } from 'react-router-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -12,8 +14,12 @@ import { ReactComponent as Logo } from '../assets/logos/musical-note.svg';
 
 function NavBar() {
   const { isAuthenticated, logoutUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const handleLogout = () => logoutUser();
+  const handleLogout = () => {
+    logoutUser();
+    navigate('/');
+  };
 
   return (
     <Navbar bg="light" expand="lg">

@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../contexts/user.context';
 import { isResponseOk } from '../utils/helper-functions';
@@ -18,8 +19,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   // const [error, setError] = useState('');
-
   const { csrfToken, isAuthenticated, setIsAuthenticated, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
   const linkStyles = { textDecoration: 'underline', color: '#0D6EFD', cursor: 'pointer' };
@@ -58,6 +59,7 @@ const Login = () => {
           console.log(data);
           setUser(data.user);
           setIsAuthenticated(true);
+          navigate('/library');
         } else if (data.error) {
           console.log(data.error);
         } else {
