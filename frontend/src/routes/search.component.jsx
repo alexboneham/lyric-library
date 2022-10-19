@@ -20,7 +20,6 @@ const Search = () => {
   const [artist, setArtist] = useState('');
   const [results, setResults] = useState([]);
   const [showArtistInput, setShowArtistInput] = useState(false);
-  // const page = searchParams.get('page') || 0;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -87,13 +86,14 @@ const Search = () => {
             <SearchBar handleChange={handleArtistChange} value={artist} placeholderValue="artist name" />
           )}
         </Form>
-        {!showArtistInput && (
-          <Nav>
-            <Nav.Item>
-              <Nav.Link onClick={() => toggleArtistInput()}>include artist in search...</Nav.Link>
-            </Nav.Item>
-          </Nav>
-        )}
+
+        <Nav>
+          <Nav.Item>
+            <Nav.Link onClick={() => toggleArtistInput()}>
+              {showArtistInput ? 'Search by title only' : 'include artist in search...'}
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
 
         {isError && <div style={{ marginTop: '20px' }}>An Error has occurred. Please try again</div>}
         {isLoading && <Loading />}
