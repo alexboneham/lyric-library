@@ -10,7 +10,6 @@ export const UserContext = createContext({
   csrfToken: null,
   isAuthenticated: null,
   setIsAuthenticated: () => null,
-  loginUser: () => null,
   logoutUser: () => null,
 });
 
@@ -54,37 +53,6 @@ export const UserProvider = ({ children }) => {
       .catch((e) => console.log(e));
   }, [isAuthenticated]);
 
-  const loginUser = (username, password) => {
-    // Make call to Django backend to log user in
-    console.log('User login function running...');
-    console.log(`CSRF token to be used: ${csrfToken}`);
-
-    fetch('http://localhost:8000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        if (data.success) {
-          console.log(data.success);
-          setIsAuthenticated(true);
-        } else if (data.error) {
-          console.log(data.error);
-        } else {
-          console.log('Something else went wrong!');
-        }
-      })
-      .catch((e) => console.log(e));
-  };
-
   const logoutUser = () => {
     // Make call to Django back to log user out
     console.log('Logout fetch function running...');
@@ -101,6 +69,6 @@ export const UserProvider = ({ children }) => {
       .catch((e) => console.log(e));
   };
 
-  const value = { csrfToken, isAuthenticated, setIsAuthenticated, loginUser, logoutUser };
+  const value = { csrfToken, isAuthenticated, setIsAuthenticated, logoutUser };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
