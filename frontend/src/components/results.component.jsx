@@ -7,20 +7,20 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const Results = ({ songs }) => {
   return (
-    <Container className='mt-3'>
+    <Container className="mt-3">
       {songs.slice(0, 5).map((song) => {
         return (
           <Row key={song.result.id} className="mb-3 justify-content-center">
             <Col md={4} className="d-flex flex-column justify-content-center">
-              <LinkContainer to={`/search/${song.result.id}`} style={{ cursor: 'pointer' }}>
-                <Nav>
-                  <Nav.Item>
+              <Nav>
+                <Nav.Item>
+                  <LinkContainer to={`/search/${song.result.id}`} style={{ cursor: 'pointer' }}>
                     <Nav.Link className="p-0">
                       <h3>{song.result.title}</h3>
                     </Nav.Link>
-                  </Nav.Item>
-                </Nav>
-              </LinkContainer>
+                  </LinkContainer>
+                </Nav.Item>
+              </Nav>
               <span className="text-muted">by {song.result.artist_names}</span>
             </Col>
             <Col md={3}>

@@ -57,8 +57,12 @@ const SearchResults = () => {
   return (
     <>
       <Search />
+      {isLoading && (
+        <div className='d-flex justify-content-center'>
+          <Loading />
+        </div>
+      )}
       <hr />
-      {isLoading && <Loading />}
       {isError && <div>An error occurred</div>}
       {hits && (
         <>
