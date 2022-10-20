@@ -7,6 +7,8 @@ import Search from './search.component';
 import Results from '../components/results.component';
 import Loading from '../components/loading.component';
 
+import Container from 'react-bootstrap/Container';
+
 const SearchResults = () => {
   let location = useLocation();
   let [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +43,7 @@ const SearchResults = () => {
             setHits(data.hits);
           } else if (data.id) {
             // Go straight to song
-            navigate(`/search/${data.id}`)
+            navigate(`/search/${data.id}`);
           } else {
             console.log('Something else went wrong');
           }
@@ -56,9 +58,11 @@ const SearchResults = () => {
 
   return (
     <>
-      <Search />
+      <Container fluid className="bg-info bg-gradient rounded">
+        <Search />
+      </Container>
       {isLoading && (
-        <div className='d-flex justify-content-center'>
+        <div className="d-flex justify-content-center">
           <Loading />
         </div>
       )}

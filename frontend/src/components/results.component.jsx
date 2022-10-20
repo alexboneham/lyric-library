@@ -7,10 +7,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const Results = ({ songs }) => {
   return (
-    <Container className="mt-3">
+    <Container className="mt-4">
       {songs.slice(0, 5).map((song) => {
         return (
-          <Row key={song.result.id} className="mb-3 justify-content-center">
+          <Row key={song.result.id} className="my-3 justify-content-center">
             <Col md={4} className="d-flex flex-column justify-content-center">
               <Nav>
                 <Nav.Item>
