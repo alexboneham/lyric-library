@@ -17,9 +17,15 @@ const EditButtons = ({ buttonProps, song }) => {
   return (
     <Container className="mt-2 d-flex justify-content-center">
       {inLibrary !== undefined && (
-        <Button disabled={inLibrary ? true : false} onClick={clickAddToLibrary} variant={inLibrary ? 'success' : 'primary'}>
-          {inLibrary ? 'Added to library!' : 'Add to library'}
-        </Button>
+        <>
+          <Button
+            disabled={inLibrary ? true : false}
+            onClick={clickAddToLibrary}
+            variant={inLibrary ? 'success' : 'primary'}
+          >
+            {inLibrary ? 'Added to library!' : 'Add to library'}
+          </Button>
+        </>
       )}
       {handleShowModal && (
         <Stack gap={2} direction="horizontal" className="me-auto">
