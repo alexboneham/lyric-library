@@ -21,10 +21,6 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    console.dir(user);
-  }, [user])
-
-  useEffect(() => {
     // Get session info from Django backend
     console.log('Get session fetch running on mount...');
 
@@ -53,7 +49,6 @@ export const UserProvider = ({ children }) => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(`New CSRF: ${data.csrfToken}`);
         setCsrfToken(data.csrfToken);
       })
       .catch((e) => console.log(e));
