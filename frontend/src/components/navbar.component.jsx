@@ -23,7 +23,7 @@ function NavBar() {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
+      <Container fluid className='mx-3'>
         <LinkContainer to={'/'}>
           <Navbar.Brand>
             <Logo style={{ height: '50px', width: '50px' }} />

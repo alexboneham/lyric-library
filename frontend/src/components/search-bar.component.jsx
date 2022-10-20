@@ -8,6 +8,7 @@ const SearchBar = ({ handleChange, value, placeholderValue }) => {
   };
   const buttonStyles = {
     all: 'unset',
+    cursor: 'pointer',
   };
   const arrowStyles = {
     height: '25px',

@@ -14,7 +14,7 @@ from .utils.lyrics_genius_utils import genius_search_songs, genius_search_song_b
 def index(request):
     res = {
         'app': 'lyric-library',
-        'heading': 'Welcome to Lyric Library!',
+        'heading': 'Welcome to Lyric Library',
         'message': MESSAGE
     }
     return JsonResponse(res, status=200)

@@ -10,7 +10,7 @@ import Library from './routes/library.component';
 import LibraryItem from './routes/library-item.component';
 import Setlists from './routes/setlists.component';
 import Setlist from './routes/setlist.component';
-import Search from './routes/search.component';
+import SearchResults from './routes/search-results.component';
 import SearchResult from './routes/search-result.component';
 import NewSong from './routes/new-song.component';
 import Login from './routes/login.component';
@@ -45,7 +45,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home title={title} message={message} />} />
-          <Route path="search" element={<Search />} />
+          <Route path="search" element={<SearchResults />} />
           <Route path="search/:id" element={<SearchResult />} />
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<SignUp />} />

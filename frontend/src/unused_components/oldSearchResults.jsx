@@ -5,7 +5,7 @@ import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const SearchResults = ({ songs }) => {
+const SearchResults = ({ songs, hits }) => {
   return (
     <Container className="d-flex flex-column align-items-center">
       <h2>Search Results...</h2>
