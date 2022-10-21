@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useCallback, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { isResponseOk } from '../utils/helper-functions';
 
 import { UserContext } from './user.context';
@@ -11,18 +11,18 @@ export const SetlistsContext = createContext({
 
 export const SetlistsProvider = ({ children }) => {
   const [setlists, setSetlists] = useState([]);
-  const { csrfToken } = useContext(UserContext);
-
-  const getSetlists = useCallback(() => {
-    // Get setlists from database
-    fetch('http://localhost:8000/setlists')
-      .then((res) => isResponseOk(res))
-      .then((data) => setSetlists(data.setlists));
-  }, []);
+  const { csrfToken, isAuthenticated } = useContext(UserContext);
 
   useEffect(() => {
-    getSetlists();
-  }, [getSetlists]);
+    if (isAuthenticated) {
+      // Get setlists from database
+      fetch('http://localhost:8000/setlists', {
+        credentials: 'include',
+      })
+        .then((res) => isResponseOk(res))
+        .then((data) => setSetlists(data.setlists));
+    }
+  }, [isAuthenticated]);
 
   const addSongToSetlist = (setlistId, song) => {
     const setlistToUpdate = setlists.find(({ id }) => id === setlistId);
@@ -44,7 +44,7 @@ export const SetlistsProvider = ({ children }) => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
-        getSetlists();
+        setSetlists([...setlists, data]);
       });
   };
 
@@ -59,7 +59,7 @@ export const SetlistsProvider = ({ children }) => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
-        getSetlists();
+        setSetlists(setlists.filter((setlist) => setlist.id !== id));
       });
   };
 

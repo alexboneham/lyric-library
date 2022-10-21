@@ -20,9 +20,10 @@ const Setlists = () => {
   const [formOpen, setFormOpen] = useState(false);
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [selectSongs, setSelectSongs] = useState([]);
+  const [alertMsg, setAlertMsg] = useState('');
 
   const { librarySongs } = useContext(LibraryContext);
-  const { csrfToken, isAuthenticated } = useContext(UserContext);
+  const { csrfToken } = useContext(UserContext);
   const { setlists, setSetlists } = useContext(SetlistsContext);
 
   const handleFormSubmit = (e) => {
@@ -48,10 +49,14 @@ const Setlists = () => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
-        setSetlists([...setlists, data]);
-        setSetlistNameValue('');
-        setSelectSongs([]);
-        setFormOpen(false);
+        if (data.error) {
+          setAlertMsg(data.error);
+        } else {
+          setSetlists([...setlists, data]);
+          setSetlistNameValue('');
+          setSelectSongs([]);
+          setFormOpen(false);
+        }
       })
       .catch((error) => {
         console.log(error);

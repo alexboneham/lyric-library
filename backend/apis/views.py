@@ -173,25 +173,29 @@ def song(request, song_id):
 
 @login_required
 def setlists(request):
+
+    user = User.objects.get(pk=request.user.id)
+    user_setlists = Setlist.objects.filter(owner=user)
+
     if request.method == 'POST':
         data = json.loads(request.body)
 
-        # Check for existing setlist with same name
-        if not Setlist.objects.filter(name=data['name']).exists():
+        if not user_setlists.filter(name=data['name']).exists():
             try:
-                s = Setlist.objects.create(name=data['name'])
+                s = Setlist.objects.create(name=data['name'], owner=user)
                 songs = Song.objects.filter(
                     pk__in=[int(i) for i in data['new_songs']])
                 s.songs.set(songs)
             except Exception as e:
                 return JsonResponse({'error': f'{e}'}, status=404)
         else:
-            return JsonResponse({'error': 'Name already in use'}, status=403)
+            return JsonResponse({'error': 'Name already in use'})
 
         return JsonResponse(s.serialize(), status=200)
 
     elif request.method == 'GET':
-        setlists = [setlist.serialize() for setlist in Setlist.objects.all()]
+        setlists = [setlist.serialize()
+                    for setlist in user_setlists]
         return JsonResponse({'setlists': setlists}, status=200)
 
     else:
