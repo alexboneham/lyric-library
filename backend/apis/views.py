@@ -204,10 +204,18 @@ def setlists(request):
 
 @login_required
 def setlist(request, id):
+
+    user = User.objects.get(pk=request.user.id)
+
     try:
         setlist = Setlist.objects.get(pk=id)
     except Setlist.DoesNotExist as e:
         return JsonResponse({'error': f'{e}'})
+    
+    if setlist.owner.id != user.id:
+        print(f'setlist owner is: {setlist.owner}')
+        print(f'User is: {user}')
+        return JsonResponse({'error': 'You do not have permission to view this setlist'})
 
     if request.method == 'PUT':
         data = json.loads(request.body)
@@ -225,7 +233,7 @@ def setlist(request, id):
         return JsonResponse(setlist.serialize(), status=200)
 
     else:
-        return JsonResponse({'error': 'Request method must be GET or PUT'}, status=405)
+        return JsonResponse({'error': 'Request method must be GET or PUT'})
 
 
 def login_view(request):

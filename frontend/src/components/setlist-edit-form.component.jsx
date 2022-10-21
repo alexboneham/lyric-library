@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
@@ -16,7 +14,6 @@ const SetlistEditForm = ({
   toggleFormOpen = undefined,
   alertMsg,
 }) => {
-  const [show, setShow] = useState(alertMsg ? true : false);
   return (
     <Form onSubmit={handleFormSubmit}>
       <Form.Group controlId="formGroupName">

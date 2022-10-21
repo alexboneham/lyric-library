@@ -35,11 +35,17 @@ const Setlist = () => {
 
   useEffect(() => {
     // Get the setlist data from database
-    fetch(`http://localhost:8000/setlists/${id}`)
+    fetch(`http://localhost:8000/setlists/${id}`, {
+      credentials: 'include',
+    })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        setSetlist(data);
-        setSetlistNameValue(data.name);
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setSetlist(data);
+          setSetlistNameValue(data.name);
+        }
       });
   }, [id]);
 
