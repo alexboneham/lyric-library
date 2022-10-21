@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
+import Alert from 'react-bootstrap/Alert';
 
 const SetlistEditForm = ({
   handleFormSubmit,
@@ -10,8 +13,10 @@ const SetlistEditForm = ({
   selectSongs,
   librarySongs,
   buttonMessage,
-  toggleFormOpen = undefined
+  toggleFormOpen = undefined,
+  alertMsg,
 }) => {
+  const [show, setShow] = useState(alertMsg ? true : false);
   return (
     <Form onSubmit={handleFormSubmit}>
       <Form.Group controlId="formGroupName">
@@ -36,12 +41,17 @@ const SetlistEditForm = ({
         </Form.Select>
         <Form.Text>Hold down “Control”, or “Command” on a Mac, to select more than one.</Form.Text>
       </Form.Group>
-      <Stack direction='horizontal' className="mt-2">
-        <Button type="submit">
-          {buttonMessage}
+      <Stack direction="horizontal" className="mt-2">
+        <Button type="submit">{buttonMessage}</Button>
+        <Button variant="outline-secondary" className="ms-2" onClick={toggleFormOpen}>
+          Cancel
         </Button>
-        <Button variant='outline-secondary' className='ms-2' onClick={toggleFormOpen}>Cancel</Button>
       </Stack>
+      {alertMsg && (
+        <Alert variant="warning" className='mt-2'>
+          <p>{alertMsg}</p>
+        </Alert>
+      )}
     </Form>
   );
 };

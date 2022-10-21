@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import SetlistEditForm from '../components/setlist-edit-form.component';
 
+// Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
@@ -73,7 +74,14 @@ const Setlists = () => {
     setSelectSongs(newSelectSongs);
   };
 
-  const toggleFormOpen = () => (formOpen ? setFormOpen(false) : setFormOpen(true));
+  const toggleFormOpen = () => {
+    if (formOpen) {
+      setFormOpen(false);
+      setAlertMsg('');
+    } else {
+      setFormOpen(true);
+    }
+  };
 
   return (
     <Container fluid className="mt-3">
@@ -102,6 +110,7 @@ const Setlists = () => {
                 librarySongs={librarySongs}
                 buttonMessage={'Create setlist'}
                 toggleFormOpen={toggleFormOpen}
+                alertMsg={alertMsg}
               />
             ) : (
               <Button onClick={toggleFormOpen} className="mt-2" variant="outline-secondary">
