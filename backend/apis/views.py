@@ -123,6 +123,7 @@ def library(request):
     else:
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
+
 @login_required
 def song(request, song_id):
 
@@ -156,6 +157,7 @@ def song(request, song_id):
         return JsonResponse({'error': 'Request method must be GET, PUT, or DELETE'}, status=405)
 
 
+@login_required
 def setlists(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -182,6 +184,7 @@ def setlists(request):
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
 
+@login_required
 def setlist(request, id):
     try:
         setlist = Setlist.objects.get(pk=id)
@@ -227,9 +230,12 @@ def login_view(request):
             # Authentication failed
             return JsonResponse({'error': 'Invalid username or password'})
 
-    else:
+    elif request.method == 'GET':
         # Request method must be POST
-        return JsonResponse({'error': 'Request method must be POST'}, status=400)
+        return JsonResponse({'detail': 'Request method must be POST', 'query': request.get_full_path()})
+
+    else:
+        return JsonResponse({'error': 'Method must be GET or POST'})
 
 
 def logout_view(request):
@@ -275,7 +281,7 @@ def session_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'isAuthenticated': False})
 
-    return JsonResponse({'isAuthenticated': True})
+    return JsonResponse({'isAuthenticated': True, 'user': request.user.serialize()})
 
 
 def get_csrf_token(request):

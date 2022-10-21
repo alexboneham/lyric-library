@@ -27,7 +27,7 @@ export const LibraryProvider = ({ children }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   const isSongInLibrary = (song) => {
     if (librarySongs.find((element) => element.genius_id === song.id)) {

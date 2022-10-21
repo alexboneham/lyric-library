@@ -22,7 +22,7 @@ const Setlists = () => {
   const [selectSongs, setSelectSongs] = useState([]);
 
   const { librarySongs } = useContext(LibraryContext);
-  const { csrfToken } = useContext(UserContext);
+  const { csrfToken, isAuthenticated } = useContext(UserContext);
   const { setlists, setSetlists } = useContext(SetlistsContext);
 
   const handleFormSubmit = (e) => {
@@ -33,29 +33,31 @@ const Setlists = () => {
     */
     e.preventDefault();
 
-    fetch('http://localhost:8000/setlists', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        name: setlistNameValue,
-        new_songs: selectSongs,
-      }),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        console.log(data);
-        setSetlists([...setlists, data]);
-        setSetlistNameValue('');
-        setSelectSongs([]);
-        setFormOpen(false);
+    if (isAuthenticated) {
+      fetch('http://localhost:8000/setlists', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          name: setlistNameValue,
+          new_songs: selectSongs,
+        }),
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => isResponseOk(res))
+        .then((data) => {
+          console.log(data);
+          setSetlists([...setlists, data]);
+          setSetlistNameValue('');
+          setSelectSongs([]);
+          setFormOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const handleSelectChange = (e) => {
@@ -71,7 +73,7 @@ const Setlists = () => {
   const toggleFormOpen = () => (formOpen ? setFormOpen(false) : setFormOpen(true));
 
   return (
-    <Container fluid className='mt-3'>
+    <Container fluid className="mt-3">
       <Row>
         <Col sm={4}>
           <Container className="d-flex flex-column align-items-center" fluid>
