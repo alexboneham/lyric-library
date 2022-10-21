@@ -33,31 +33,29 @@ const Setlists = () => {
     */
     e.preventDefault();
 
-    if (isAuthenticated) {
-      fetch('http://localhost:8000/setlists', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken,
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          name: setlistNameValue,
-          new_songs: selectSongs,
-        }),
+    fetch('http://localhost:8000/setlists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        name: setlistNameValue,
+        new_songs: selectSongs,
+      }),
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => {
+        console.log(data);
+        setSetlists([...setlists, data]);
+        setSetlistNameValue('');
+        setSelectSongs([]);
+        setFormOpen(false);
       })
-        .then((res) => isResponseOk(res))
-        .then((data) => {
-          console.log(data);
-          setSetlists([...setlists, data]);
-          setSetlistNameValue('');
-          setSelectSongs([]);
-          setFormOpen(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleSelectChange = (e) => {

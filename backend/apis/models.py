@@ -79,6 +79,8 @@ class Setlist(models.Model):
     name = models.CharField(max_length=64)
     timestamp = models.DateTimeField(auto_now_add=True)
     songs = models.ManyToManyField(Song, related_name="setlists")
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="setlists", null=True)
 
     def __str__(self):
         return self.name
