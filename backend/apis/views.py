@@ -114,6 +114,7 @@ def library(request):
                 s.album = alb
 
                 s.save()
+                user.songs.add(s)
                 return JsonResponse({
                     'success': f'Successfully added {s.title} to your library!',
                     'song': s.serialize(),
