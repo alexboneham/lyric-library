@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    library_songs = models.ManyToManyField(
+    songs = models.ManyToManyField(
         "Song", blank=True, related_name="user_owners")
 
     def __str__(self):

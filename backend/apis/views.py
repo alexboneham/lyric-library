@@ -112,7 +112,7 @@ def library(request):
         # Use list comprehension to create list of all songs in library
         if request.user.is_authenticated:
             user_songs = User.objects.get(
-                pk=request.user.id).library_songs.all()
+                pk=request.user.id).songs.all()
 
             songs = [song.serialize()
                     for song in user_songs.order_by('-timestamp')]
