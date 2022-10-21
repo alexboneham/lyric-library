@@ -88,6 +88,7 @@ def library(request):
 
         if song is not None:
             # Song already exists, add to user's library
+            print('Song already in library. Adding to m2m relationship')
             user.songs.add(song)
             return JsonResponse({'success': f'Successfully added {song.title} to your library', 'song': song.serialize(), 'song_status': 'Already existed'}, status=201)
         else:
@@ -141,6 +142,8 @@ def library(request):
 @login_required
 def song(request, song_id):
 
+    user = User.objects.get(pk=request.user.id)
+
     try:
         song = Song.objects.get(pk=song_id)
     except Song.DoesNotExist as e:
@@ -152,15 +155,25 @@ def song(request, song_id):
         return JsonResponse(song.serialize(), status=200)
 
     elif request.method == 'DELETE':
+        # Get artist variable for later use
         artist = Artist.objects.get(songs__id=song.id)
-        res = song.delete()
-        if artist:
-            print(f'artist is: {artist}')
-            remaining_songs = Song.objects.filter(artist=artist)
-            print(f'remaining songs: {remaining_songs}')
-            if len(remaining_songs) < 1:
-                artist_res = artist.delete()
-                print(f'deleted artist: {artist_res}')
+
+        # Remove song from user's songs list
+        user.songs.remove(song)
+
+        # Check if song is in any other user's library
+        if not song.user_owners.all():
+            res = song.delete()
+        else:
+            res = {'detail': 'Deleted only from current user library'}
+            print('Song still exists in other libraries. Only removed from m2m relationship')
+
+        # Check for other songs by artist, if none found delete artist
+
+        remaining_songs = Song.objects.filter(artist=artist)
+        if len(remaining_songs) < 1:
+            artist_res = artist.delete()
+            print(f'deleted artist: {artist_res}')
 
         return JsonResponse({'success': 'Song deleted', 'res': res}, status=200)
 
