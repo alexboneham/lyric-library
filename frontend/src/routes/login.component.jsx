@@ -38,9 +38,6 @@ const Login = () => {
     }
 
     // Make call to Django backend to log user in
-    console.log('User login function running...');
-    console.log(`CSRF token to be used: ${csrfToken}`);
-
     fetch('http://localhost:8000/login', {
       method: 'POST',
       headers: {

@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
+
+import { UserContext } from '../contexts/user.context';
 import { isResponseOk } from '../utils/helper-functions';
 
 export const LibraryContext = createContext({
@@ -10,15 +12,22 @@ export const LibraryContext = createContext({
 
 export const LibraryProvider = ({ children }) => {
   const [librarySongs, setLibrarySongs] = useState([]);
+  const { user, isAuthenticated } = useContext(UserContext);
 
   useEffect(() => {
-    fetch('http://localhost:8000/library')
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        setLibrarySongs(data.songs);
+    console.log('library useEffect running...');
+    if (isAuthenticated) {
+      console.log('Fetching library songs...');
+      fetch('http://localhost:8000/library', {
+        credentials: 'include',
       })
-      .catch((error) => console.log(error));
-  }, []);
+        .then((res) => isResponseOk(res))
+        .then((data) => {
+          setLibrarySongs(data.songs);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [user]);
 
   const isSongInLibrary = (song) => {
     if (librarySongs.find((element) => element.genius_id === song.id)) {

@@ -110,9 +110,15 @@ def library(request):
 
     elif request.method == 'GET':
         # Use list comprehension to create list of all songs in library
-        songs = [song.serialize()
-                 for song in Song.objects.all().order_by('-timestamp')]
-        return JsonResponse({'songs': songs}, status=200)
+        if request.user.is_authenticated:
+            user_songs = User.objects.get(
+                pk=request.user.id).library_songs.all()
+
+            songs = [song.serialize()
+                    for song in user_songs.order_by('-timestamp')]
+            return JsonResponse({'songs': songs}, status=200)
+        else: 
+            return JsonResponse({'error': 'User is not authenticated'}, status=400)
 
     else:
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
