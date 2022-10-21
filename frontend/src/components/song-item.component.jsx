@@ -20,7 +20,7 @@ const SongItem = ({ song, description, thumbnail, buttonProps, actionProps }) =>
     <Container className="my-3">
       <Row className='d-flex justify-content-around'>
 
-        <Col lg={6} className="p-5 border rounded text-center">
+        <Col lg={5} className="p-5 border rounded text-center">
           <h1 className="mb-2">{song.title}</h1>
           <h2 className="mb-3">by {song.artist}</h2>
           <Image className="mb-4" fluid rounded src={song.thumbnail_url} alt={song.full_title} />

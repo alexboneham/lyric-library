@@ -72,14 +72,26 @@ def library(request):
     if request.method == 'POST':
         # adds song to library
         # see Github Gist for explanation of request data structure
+
+        # Get user object
+        user = User.objects.get(pk=request.user.id)
+
+        # Load json data from the request object
         try:
             data = json.loads(request.body)  # returns a python object
         except Exception as e:
             return JsonResponse({'error': f'{e}'}, status=e.errno)
 
-        if Song.objects.filter(genius_id=data['id']).exclude(genius_id=0).exists():
-            return JsonResponse({'error': 'Song already exists in database'}, status=409)
+        # Check if song already exists
+        song = Song.objects.filter(
+            genius_id=data['id']).exclude(genius_id=0).first()
+
+        if song is not None:
+            # Song already exists, add to user's library
+            user.songs.add(song)
+            return JsonResponse({'success': f'Successfully added {song.title} to your library', 'song': song.serialize(), 'song_status': 'Already existed'}, status=201)
         else:
+            # Make a new song and add to user's library
             try:
                 s = Song(title=data['title'], lyrics=data['lyrics'], genius_id=data['id'], full_title=data['full_title'],
                          description=data['description']['plain'], thumbnail_url=data['song_art_image_thumbnail_url'],
@@ -105,6 +117,7 @@ def library(request):
                 return JsonResponse({
                     'success': f'Successfully added {s.title} to your library!',
                     'song': s.serialize(),
+                    'song_status': 'Newly created'
                 }, status=201)
             except Exception as e:
                 print(e)

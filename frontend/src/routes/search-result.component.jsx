@@ -13,16 +13,17 @@ import { UserContext } from '../contexts/user.context';
 const SearchResult = () => {
   const { id } = useParams(); // Get Genius id from the URL route
   const { librarySongs, setLibrarySongs, isSongInLibrary } = useContext(LibraryContext); // Context provider
-  const { csrfToken } = useContext(UserContext);
+  const { csrfToken, isAuthenticated } = useContext(UserContext);
 
   // Set State
   const [song, setSong] = useState(undefined);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [inLibrary, setInLibrary] = useState(false);
+  const [inLibrary, setInLibrary] = useState(isAuthenticated ? false : undefined);
 
   useEffect(() => {
     setIsLoading(true);
+    // Search for song data.
     // Calls Django API, which in turn calls Genius API for song info, lyrics, etc
     fetch(`http://localhost:8000/search/${id}`)
       .then((res) => isResponseOk(res))
@@ -56,24 +57,27 @@ const SearchResult = () => {
 
   const clickAddToLibrary = () => {
     // Handles POST request to Django API to save the song to the user's database
-    fetch('http://localhost:8000/library', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      credentials: 'include',
-      body: JSON.stringify(song),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        setLibrarySongs([data.song, ...librarySongs]);
-        setInLibrary(true);
+    if (isAuthenticated) {
+      fetch('http://localhost:8000/library', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        credentials: 'include',
+        body: JSON.stringify(song),
       })
-      .catch((error) => {
-        console.log(error);
-        setIsError(true);
-      });
+        .then((res) => isResponseOk(res))
+        .then((data) => {
+          console.log(data)
+          setLibrarySongs([data.song, ...librarySongs]);
+          setInLibrary(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsError(true);
+        });
+    }
   };
 
   const buttonProps = {
