@@ -23,7 +23,9 @@ const LibraryItem = () => {
 
   useEffect(() => {
     // Load song from database
-    fetch(`http://localhost:8000/library/${id}`)
+    fetch(`http://localhost:8000/library/${id}`, {
+      credentials: 'include',
+    })
       .then((res) => isResponseOk(res))
       .then((data) => setSong(data))
       .catch((e) => console.log(e));

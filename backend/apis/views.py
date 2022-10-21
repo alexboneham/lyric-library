@@ -123,7 +123,7 @@ def library(request):
     else:
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
 
-
+@login_required
 def song(request, song_id):
 
     try:
@@ -236,8 +236,9 @@ def logout_view(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'You are not logged in'}, status=400)
 
+    name = request.user.username
     logout(request)
-    return JsonResponse({'success': 'Successfully logged out.'}, status=200)
+    return JsonResponse({'success': f'Successfully logged out {name}'}, status=200)
 
 
 def register(request):
