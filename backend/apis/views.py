@@ -211,7 +211,7 @@ def setlist(request, id):
         setlist = Setlist.objects.get(pk=id)
     except Setlist.DoesNotExist as e:
         return JsonResponse({'error': f'{e}'})
-    
+
     if setlist.owner.id != user.id:
         print(f'setlist owner is: {setlist.owner}')
         print(f'User is: {user}')
@@ -312,10 +312,3 @@ def session_view(request):
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
-
-
-def whoami_view(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'isAuthenticated': False})
-
-    return JsonResponse({'username': request.user.username})
