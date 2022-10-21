@@ -59,7 +59,7 @@ export const SetlistsProvider = ({ children }) => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         console.log(data);
-        setSetlists(setlists.filter((setlist) => setlist.id !== id));
+        setSetlists(setlists.filter((setlist) => setlist.id !== parseInt(id)));
       });
   };
 

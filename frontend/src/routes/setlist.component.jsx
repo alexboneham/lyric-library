@@ -77,7 +77,6 @@ const Setlist = () => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(data);
         setSetlist(data);
         setEditOpen(false);
       });
