@@ -49,17 +49,15 @@ const App = () => {
           <Route path="search/:id" element={<SearchResult />} />
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<SignUp />} />
-          {isAuthenticated && (
-            <>
-              <Route path="library" element={<Library />} />
-              <Route path="library/:id" element={<LibraryItem />} />
-              <Route path="setlists" element={<Setlists />}>
-                <Route path=":id" element={<Setlist />} />
-              </Route>
-              <Route path="new-song" element={<NewSong />} />
-            </>
-          )}
-          <Route path='*' element={<NotFound />} />
+
+          <Route path="library" element={isAuthenticated ? <Library /> : <Login />} />
+          <Route path="library/:id" element={isAuthenticated ? <LibraryItem /> : <Login />} />
+          <Route path="setlists" element={isAuthenticated ? <Setlists /> : <Login />}>
+            <Route path=":id" element={<Setlist />} />
+          </Route>
+          <Route path="new-song" element={isAuthenticated ? <NewSong /> : <Login />} />
+
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Router>

@@ -1,4 +1,5 @@
 import json
+from telnetlib import STATUS
 
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
@@ -65,6 +66,7 @@ def search_genius_by_id(request, id):
 """ Django databse CRUD views """
 
 
+@login_required
 def library(request):
 
     if request.method == 'POST':
@@ -110,15 +112,13 @@ def library(request):
 
     elif request.method == 'GET':
         # Use list comprehension to create list of all songs in library
-        if request.user.is_authenticated:
-            user_songs = User.objects.get(
-                pk=request.user.id).songs.all()
 
-            songs = [song.serialize()
-                    for song in user_songs.order_by('-timestamp')]
-            return JsonResponse({'songs': songs}, status=200)
-        else: 
-            return JsonResponse({'error': 'User is not authenticated'}, status=400)
+        user_songs = User.objects.get(
+            pk=request.user.id).songs.all()
+
+        songs = [song.serialize()
+                 for song in user_songs.order_by('-timestamp')]
+        return JsonResponse({'songs': songs}, status=200)
 
     else:
         return JsonResponse({'error': 'Request method must be GET or POST'}, status=405)
@@ -225,7 +225,7 @@ def login_view(request):
             return JsonResponse({'success': 'User is logged in!', 'user': user.serialize()}, status=200)
         else:
             # Authentication failed
-            return JsonResponse({'error': 'Invalid username or password'}, status=400)
+            return JsonResponse({'error': 'Invalid username or password'})
 
     else:
         # Request method must be POST

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { UserContext } from '../contexts/user.context';
 import { isResponseOk } from '../utils/helper-functions';
@@ -18,8 +18,10 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  // const [error, setError] = useState('');
+  const [alertMsg, setAlertMsg] = useState('');
   const { csrfToken, isAuthenticated, setIsAuthenticated, setUser } = useContext(UserContext);
+
+  let location = useLocation();
   const navigate = useNavigate();
 
   const formControlBorderClasses = 'border-top-0 border-start-0 border-end-0 rounded-0';
@@ -33,6 +35,7 @@ const Login = () => {
 
     if (isAuthenticated) {
       console.log('User is already authenticated');
+      setAlertMsg('User is already logged in');
       setShowAlert(true);
       return;
     }
@@ -56,9 +59,15 @@ const Login = () => {
           console.log(data);
           setUser(data.user);
           setIsAuthenticated(true);
-          navigate('/library');
+          if (location.pathname !== '/login') {
+            navigate(location.pathname);
+          } else {
+            navigate('/library');
+          }
         } else if (data.error) {
           console.log(data.error);
+          setAlertMsg(data.error);
+          setShowAlert(true);
         } else {
           console.log('Something else went wrong!');
         }
@@ -103,7 +112,7 @@ const Login = () => {
               </Button>
               {showAlert && (
                 <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>
-                  User is already logged in.
+                  {alertMsg}
                 </Alert>
               )}
               <div>
