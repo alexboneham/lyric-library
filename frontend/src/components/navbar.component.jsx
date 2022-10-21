@@ -13,7 +13,7 @@ import { UserContext } from '../contexts/user.context';
 import { ReactComponent as Logo } from '../assets/logos/musical-note.svg';
 
 function NavBar() {
-  const { isAuthenticated, logoutUser } = useContext(UserContext);
+  const { isAuthenticated, logoutUser, user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,7 +23,7 @@ function NavBar() {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Container fluid className='mx-3'>
+      <Container fluid className="mx-3">
         <LinkContainer to={'/'}>
           <Navbar.Brand>
             <Logo style={{ height: '50px', width: '50px' }} />
@@ -43,7 +43,11 @@ function NavBar() {
           )}
           <Nav className="ms-auto">
             {isAuthenticated ? (
-              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              <>
+                <Navbar.Text>{user.username}</Navbar.Text>
+                <div className='vr ms-2' ></div>
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              </>
             ) : (
               <>
                 <LinkContainer to={'/login'}>
