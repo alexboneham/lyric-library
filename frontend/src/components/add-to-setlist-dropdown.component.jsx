@@ -32,7 +32,6 @@ const AddToSetlistDropdown = ({ song }) => {
       title="Add to setlist"
       id="add-to-setlist-dropdown"
       variant="outline-dark"
-      menuVariant="dark"
       onSelect={handleSelect}
     >
       {setlists &&

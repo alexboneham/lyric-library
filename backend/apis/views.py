@@ -219,6 +219,7 @@ def setlists(request):
 def setlist(request, id):
 
     user = User.objects.get(pk=request.user.id)
+    print(f'User is: {user}')
 
     try:
         setlist = Setlist.objects.get(pk=id)

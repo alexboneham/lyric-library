@@ -41,10 +41,11 @@ export const SetlistsProvider = ({ children }) => {
         songs: [...songsIdsArray, song.id],
       }),
     })
-      .then((res) => isResponseOk(res))
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setSetlists([...setlists, data]);
+        const newArr = setlists.map((setlist) => setlist.id === setlistId ? data : setlist)
+        setSetlists(newArr);
       });
   };
 
