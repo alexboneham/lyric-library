@@ -1,10 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { isResponseOk } from '../utils/helper-functions';
-
 import { LibraryContext } from '../contexts/library.context';
-import { UserContext } from '../contexts/user.context';
 import { SetlistsContext } from '../contexts/setlists.context';
 
 import EditButtons from '../components/edit-buttons.component';
@@ -30,26 +27,10 @@ const Setlist = () => {
   const navivgate = useNavigate();
 
   const { librarySongs } = useContext(LibraryContext);
-  const { csrfToken } = useContext(UserContext);
   const { setlists, bulkAddToSetlist, deleteSetlist } = useContext(SetlistsContext);
 
-  // useEffect(() => {
-  //   // Get the setlist data from database
-  //   fetch(`http://localhost:8000/setlists/${id}`, {
-  //     credentials: 'include',
-  //   })
-  //     .then((res) => isResponseOk(res))
-  //     .then((data) => {
-  //       if (data.error) {
-  //         console.log(data.error);
-  //       } else {
-  //         setSetlist(data);
-  //         setSetlistNameValue(data.name);
-  //       }
-  //     });
-  // }, [id]);
-
   useEffect(() => {
+    // Find the desired setlist in context and set in local state
     const currentSetlist = setlists.find((item) => item.id === parseInt(id));
 
     if (currentSetlist) {
@@ -68,38 +49,15 @@ const Setlist = () => {
   }, [setlist]);
 
   const handleFormSubmit = (e) => {
-    /* 
-      Edit setlist
-      Send PUT request to API with name and an array of song ids for setlist
-      Returns new setlist object
-    */
+    // Bundle form data and call the setlists update function from context
     e.preventDefault();
     bulkAddToSetlist(id, setlistNameValue, selectSongs);
     setEditOpen(false);
-
-    return;
-
-    fetch(`http://localhost:8000/setlists/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        name: setlistNameValue,
-        songs: selectSongs,
-      }),
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        setSetlist(data);
-        setEditOpen(false);
-      });
   };
 
   const handleSelectChange = (e) => {
-    // Updates state from chosen options in edit select menu
+    // Create array from edit form select menu options
+    // Update state to reflect selected values
     const selectOptions = e.target.selectedOptions;
     let newSelectSongs = [];
     for (let i = 0; i < selectOptions.length; i++) {
@@ -109,7 +67,7 @@ const Setlist = () => {
   };
 
   const handleDelete = () => {
-    // Delete setlist from library
+    // Call setlists context delete function
     deleteSetlist(id);
     navivgate('/setlists');
   };
