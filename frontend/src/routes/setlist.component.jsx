@@ -20,7 +20,7 @@ import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Setlist = () => {
-  const [setlist, setSetlist] = useState({ songs: [] });
+  const [setlist, setSetlist] = useState({ songs: [], name: '' });
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [selectSongs, setSelectSongs] = useState([]);
@@ -31,23 +31,34 @@ const Setlist = () => {
 
   const { librarySongs } = useContext(LibraryContext);
   const { csrfToken } = useContext(UserContext);
-  const { deleteSetlist } = useContext(SetlistsContext);
+  const { setlists, bulkAddToSetlist, deleteSetlist } = useContext(SetlistsContext);
+
+  // useEffect(() => {
+  //   // Get the setlist data from database
+  //   fetch(`http://localhost:8000/setlists/${id}`, {
+  //     credentials: 'include',
+  //   })
+  //     .then((res) => isResponseOk(res))
+  //     .then((data) => {
+  //       if (data.error) {
+  //         console.log(data.error);
+  //       } else {
+  //         setSetlist(data);
+  //         setSetlistNameValue(data.name);
+  //       }
+  //     });
+  // }, [id]);
 
   useEffect(() => {
-    // Get the setlist data from database
-    fetch(`http://localhost:8000/setlists/${id}`, {
-      credentials: 'include',
-    })
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          setSetlist(data);
-          setSetlistNameValue(data.name);
-        }
-      });
-  }, [id]);
+    const currentSetlist = setlists.find((item) => item.id === parseInt(id));
+
+    if (currentSetlist) {
+      console.log(`Found setlist: ${currentSetlist.name}`);
+      console.dir(currentSetlist);
+      setSetlist(currentSetlist);
+      setSetlistNameValue(currentSetlist.name);
+    }
+  }, [setlists, id]);
 
   useEffect(() => {
     // Set the default values of the select menu after setlist has loaded
@@ -63,6 +74,11 @@ const Setlist = () => {
       Returns new setlist object
     */
     e.preventDefault();
+    bulkAddToSetlist(id, setlistNameValue, selectSongs);
+    setEditOpen(false);
+
+    return;
+
     fetch(`http://localhost:8000/setlists/${id}`, {
       method: 'PUT',
       headers: {

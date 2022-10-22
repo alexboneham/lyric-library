@@ -6,6 +6,7 @@ import { UserContext } from './user.context';
 export const SetlistsContext = createContext({
   setlists: [],
   addSongToSetlist: () => null,
+  bulkAddToSetlist: () => null,
   deleteSetlist: () => null,
 });
 
@@ -27,9 +28,15 @@ export const SetlistsProvider = ({ children }) => {
   const addSongToSetlist = (setlistId, song) => {
     const setlistToUpdate = setlists.find(({ id }) => id === setlistId);
     if (!setlistToUpdate) return;
-    const songsIdsArray = setlistToUpdate['songs'].map((item) => item.id);
 
-    fetch(`http://localhost:8000/setlists/${setlistToUpdate.id}`, {
+    const currentSongsArr = setlistToUpdate['songs'].map((item) => item.id);
+    const newIdsArray = [...currentSongsArr, song.id];
+
+    bulkAddToSetlist(setlistToUpdate.id, setlistToUpdate.name, newIdsArray)
+  };
+
+  const bulkAddToSetlist = (id, name, idsArray) => {
+    fetch(`http://localhost:8000/setlists/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -37,15 +44,16 @@ export const SetlistsProvider = ({ children }) => {
       },
       credentials: 'include',
       body: JSON.stringify({
-        name: setlistToUpdate.name,
-        songs: [...songsIdsArray, song.id],
+        name: name,
+        songs: idsArray,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => isResponseOk(res))
       .then((data) => {
+        console.log('Updated setlist: ')
         console.log(data);
-        const newArr = setlists.map((setlist) => setlist.id === setlistId ? data : setlist)
-        setSetlists(newArr);
+        const newSetlists = setlists.map((setlist) => (setlist.id === parseInt(id) ? data : setlist));
+        setSetlists(newSetlists);
       });
   };
 
@@ -68,6 +76,7 @@ export const SetlistsProvider = ({ children }) => {
     setlists,
     setSetlists,
     addSongToSetlist,
+    bulkAddToSetlist,
     deleteSetlist,
   };
   return <SetlistsContext.Provider value={value}>{children}</SetlistsContext.Provider>;
