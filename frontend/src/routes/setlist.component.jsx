@@ -17,7 +17,7 @@ import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Setlist = () => {
-  const [setlist, setSetlist] = useState({ songs: [], name: '' });
+  const [setlist, setSetlist] = useState({ songs: [] });
   const [setlistNameValue, setSetlistNameValue] = useState('');
   const [editOpen, setEditOpen] = useState(false);
   const [selectSongs, setSelectSongs] = useState([]);
@@ -34,8 +34,6 @@ const Setlist = () => {
     const currentSetlist = setlists.find((item) => item.id === parseInt(id));
 
     if (currentSetlist) {
-      console.log(`Found setlist: ${currentSetlist.name}`);
-      console.dir(currentSetlist);
       setSetlist(currentSetlist);
       setSetlistNameValue(currentSetlist.name);
     }
