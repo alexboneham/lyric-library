@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import SetlistEditForm from '../components/setlist-edit-form.component';
 
@@ -26,6 +26,8 @@ const Setlists = () => {
   const { librarySongs } = useContext(LibraryContext);
   const { csrfToken } = useContext(UserContext);
   const { setlists, setSetlists } = useContext(SetlistsContext);
+
+  const navigate = useNavigate();
 
   const handleFormSubmit = (e) => {
     /* 
@@ -57,6 +59,7 @@ const Setlists = () => {
           setSetlistNameValue('');
           setSelectSongs([]);
           setFormOpen(false);
+          navigate(`${data.id}`)
         }
       })
       .catch((error) => {
