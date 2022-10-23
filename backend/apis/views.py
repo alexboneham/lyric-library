@@ -1,5 +1,4 @@
 import json
-from telnetlib import STATUS
 
 from django.http import JsonResponse
 from django.middleware.csrf import get_token

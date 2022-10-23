@@ -21,23 +21,35 @@
 - edit/remove from setlist 
 - Add foreign key links to Artist and Album when creating a Song in the database.
 - convert edit functions to PUT routes, using json.loads to access data from request.body
+- Add user session based auth
+- Create session check on load route
+- Create get_csrf route and hit whenever a change to auth for new token
+- Adjust sessions and re-migrate database accordingly
+- Rewrite backend logic to handle user libraries
+- 
 
 **TODO**
-- add user auth!
 
 ## Frontend
 
 **TODO**
-- consider auth options
-- pagination for seach results
-- pagination for library songs
-- infinite scroll for pagination
 
+- Pagination:
+    - for seach results
+    - for library songs
+    - infinite scroll for pagination
 
-### UI/UX
-- Build out SPA nav style architecture
-- add bootstrap
+- Responsive layout:
+    - Check and fix responsive layout for each page/component
 
+- Bugs:
+    - Search component: timeout error, button disappears
+    - On refresh, losing some user state.
+
+- Setlist edit/new form:
+    - larger select area, or
+    - checkbox song-cards or similar...
+    - 
 
 
 
@@ -61,3 +73,7 @@
 - fix isResponseOk function not logging error...
 - more error handling, especially for timeouts
 - work on cross-site cookies settings
+- consider auth options
+- Add session based user auth
+- Build out SPA nav style architecture
+- add bootstrap
