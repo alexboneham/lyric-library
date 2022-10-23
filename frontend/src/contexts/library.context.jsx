@@ -15,9 +15,11 @@ export const LibraryProvider = ({ children }) => {
   const { user, isAuthenticated } = useContext(UserContext);
 
   useEffect(() => {
-    console.log('library useEffect running...');
+    // console.log('library useEffect running...');
+
     if (isAuthenticated) {
       console.log('Fetching library songs...');
+
       fetch('http://localhost:8000/library', {
         credentials: 'include',
       })

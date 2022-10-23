@@ -22,7 +22,8 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     // Get session info from Django backend
-    console.log('Get session fetch running on mount...');
+
+    // console.log('Get session fetch running on mount...');
 
     fetch('http://localhost:8000/session', {
       credentials: 'include',
@@ -30,11 +31,13 @@ export const UserProvider = ({ children }) => {
       .then((res) => isResponseOk(res))
       .then((data) => {
         if (data.isAuthenticated) {
-          console.log('User is authenticated');
+          // console.log('User is authenticated');
+
           setIsAuthenticated(true);
           setUser(data.user);
         } else {
-          console.log('User is NOT authenticated');
+          // console.log('User is NOT authenticated');
+
           setIsAuthenticated(false);
         }
       })
@@ -43,7 +46,8 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     // Get CSRF from Django backend each time is authenticated changes
-    console.log('Get CSRF useEffect running....');
+
+    // console.log('Get CSRF useEffect running....');
 
     fetch('http://localhost:8000/csrf', {
       credentials: 'include',
@@ -57,7 +61,8 @@ export const UserProvider = ({ children }) => {
 
   const logoutUser = () => {
     // Make call to Django back to log user out
-    console.log('Logout fetch function running...');
+
+    // console.log('Logout fetch function running...');
 
     fetch('http://localhost:8000/logout', {
       method: 'GET',
@@ -65,7 +70,8 @@ export const UserProvider = ({ children }) => {
     })
       .then((res) => isResponseOk(res))
       .then((data) => {
-        console.log(data);
+        // console.log(data);
+
         setIsAuthenticated(false);
         setUser({});
       })
