@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -10,16 +10,12 @@ const AddToSetlistDropdown = ({ song }) => {
   const { setlists, addSongToSetlist } = useContext(SetlistsContext);
 
   const handleSelect = (e) => {
-    /* 
-      Edit setlist
-      Send PUT request to API with name and an array of song ids for setlist
-      Returns new setlist object
-    */
+    // Call setlists context add song function
     addSongToSetlist(parseInt(e), song);
   };
 
   const disableCheck = (setlist) => {
-    if (!song) return
+    if (!song) return;
     if (setlist.songs.find(({ id }) => id === song.id)) {
       return true;
     }
@@ -34,7 +30,9 @@ const AddToSetlistDropdown = ({ song }) => {
       variant="outline-dark"
       onSelect={handleSelect}
     >
-      {setlists &&
+      {!setlists.length ? (
+        <Dropdown.ItemText>No setlists</Dropdown.ItemText>
+      ) : (
         setlists.map((setlist) => {
           // Check if song already in list, if so disable item
           let check = disableCheck(setlist);
@@ -43,7 +41,8 @@ const AddToSetlistDropdown = ({ song }) => {
               {setlist.name}
             </Dropdown.Item>
           );
-        })}
+        })
+      )}
     </DropdownButton>
   );
 };
