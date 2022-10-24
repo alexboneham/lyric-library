@@ -150,10 +150,11 @@ const Setlist = () => {
         </Col>
         <Col md={7}>
           {song.id && (
-            <Container className="mt-3">
-              <p className="text-center" style={{ whiteSpace: 'pre-line' }}>
-                {song.lyrics}
-              </p>
+            <Container className="mt-3 text-center">
+              <p style={{ whiteSpace: 'pre-line' }}>{song.lyrics}</p>
+              <LinkContainer to={`/library/${song.id}`}>
+                <Button variant="outline-secondary">See in library</Button>
+              </LinkContainer>
             </Container>
           )}
         </Col>
