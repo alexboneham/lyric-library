@@ -331,6 +331,9 @@ def profile_view(request, userId):
     if request.method != 'PUT':
         return JsonResponse({'error': 'Request method must be PUT'})
 
+    if request.user.id != userId:
+        return JsonResponse({'error': 'Invalid user'})
+
     user = User.objects.get(pk=userId)
 
     # Update user's profile with json data
