@@ -74,7 +74,7 @@ const Profile = () => {
       <Row className="pt-4">
         <Col sm={11} md={10} lg={7} className="mx-auto border rounded shadow-lg p-3">
           <div className="text-center mb-4">
-            <h1 className="display-6">Profile</h1>
+            <h1 className="display-6">Welcome, {user.username.charAt(0).toUpperCase() + user.username.slice(1)}</h1>
             <p className="text-muted">Edit your personal details</p>
           </div>
           <Form className="px-3" onSubmit={handleFormSubmit}>
@@ -89,6 +89,7 @@ const Profile = () => {
                   value={username}
                   onChange={handleUsernameChange}
                   required
+                  autoComplete="off"
                 />
               </Col>
             </Form.Group>
@@ -97,7 +98,14 @@ const Profile = () => {
                 Email
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="email" placeholder="Email" value={email} onChange={handleEmailChange} required />
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                  autoComplete="off"
+                />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formGridFirstName">
@@ -105,7 +113,13 @@ const Profile = () => {
                 First name
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" placeholder="First name" value={firstName} onChange={handleFirstNameChange} />
+                <Form.Control
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={handleFirstNameChange}
+                  autoComplete="off"
+                />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formGridLastName">
@@ -113,7 +127,13 @@ const Profile = () => {
                 Last name
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" placeholder="Last name" value={lastName} onChange={handleLastNameChange} />
+                <Form.Control
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={handleLastNameChange}
+                  autoComplete="off"
+                />
               </Col>
             </Form.Group>
             <Form.Text muted className="d-flex justify-content-center">

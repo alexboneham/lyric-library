@@ -21,9 +21,9 @@ const UserDropdown = () => {
   return (
     <Container className="user_dropdown">
       <Nav className="flex-column">
-        <Nav.Link>
+        <Nav.Item className="p-2">
           <b>{user.username}</b>
-        </Nav.Link>
+        </Nav.Item>
         <LinkContainer to={`/profile/${user.id}`}>
           <Nav.Link>Edit profile</Nav.Link>
         </LinkContainer>
