@@ -1,5 +1,6 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState, useEffect } from 'react';
+
+import UserDropdown from './user-dropdown/user-dropdown.component';
 
 // Bootstrap components
 import { LinkContainer } from 'react-router-bootstrap';
@@ -13,13 +14,15 @@ import { UserContext } from '../contexts/user.context';
 import { ReactComponent as Logo } from '../assets/logos/musical-note.svg';
 
 function NavBar() {
-  const { isAuthenticated, logoutUser, user } = useContext(UserContext);
-  const navigate = useNavigate();
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const { isAuthenticated, user } = useContext(UserContext);
 
-  const handleLogout = () => {
-    logoutUser();
-    navigate('/');
-  };
+  useEffect(() => {
+    // Make sure dropdown is closed after logging out
+    setShowUserDropdown(false);
+  }, [user]);
+
+  const handleUserClick = () => setShowUserDropdown(showUserDropdown ? false : true);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -47,9 +50,8 @@ function NavBar() {
             </div>
             {isAuthenticated ? (
               <>
-                <Navbar.Text style={{ padding: '8px' }}>{user.username}</Navbar.Text>
-                <div className="vr"></div>
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <Nav.Link onClick={handleUserClick}>{user.username}</Nav.Link>
+                {showUserDropdown && <UserDropdown />}
               </>
             ) : (
               <>
