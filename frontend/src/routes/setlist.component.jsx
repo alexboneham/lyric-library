@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { LibraryContext } from '../contexts/library.context';
 import { SetlistsContext } from '../contexts/setlists.context';
 
+import { isResponseOk } from '../utils/helper-functions';
+
 import EditButtons from '../components/edit-buttons.component';
 import SetlistEditForm from '../components/setlist-edit-form.component';
 
@@ -80,17 +82,18 @@ const Setlist = () => {
   const toggleFormOpen = () => setEditOpen(editOpen ? false : true);
 
   const handleSongClick = (clickId) => {
-    // Find song in library and update local state
-    if (librarySongs) {
-      const song = librarySongs.find((song) => song.id === clickId);
-      setSong(song);
-    }
+    fetch(`http://localhost:8000/library/${clickId}`, {
+      credentials: 'include',
+    })
+      .then((res) => isResponseOk(res))
+      .then((data) => setSong(data))
+      .catch((e) => console.log(e));
   };
 
   return (
     <Container className="mb-5" fluid>
       <Row>
-        <Col md={5}>
+        <Col md={3}>
           <h1>{setlist.name}</h1>
           <p>{setlist.timestamp}</p>
 
@@ -152,6 +155,7 @@ const Setlist = () => {
         <Col md={7}>
           {song.id && (
             <Container className="mt-3 text-center">
+              <h1 className='display-6'>{song.title}</h1>
               <p style={{ whiteSpace: 'pre-line' }}>{song.lyrics}</p>
               <LinkContainer to={`/library/${song.id}`}>
                 <Button variant="outline-success">See in library</Button>
