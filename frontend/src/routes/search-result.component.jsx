@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import Loading from '../components/loading.component';
 import SongItem from '../components/song-item.component';
+import ErrorLoad from './error-load.component';
 
 import Container from 'react-bootstrap/Container';
 
@@ -69,7 +70,7 @@ const SearchResult = () => {
       })
         .then((res) => isResponseOk(res))
         .then((data) => {
-          console.log(data)
+          console.log(data);
           setLibrarySongs([data.song, ...librarySongs]);
           setInLibrary(true);
         })
@@ -93,10 +94,7 @@ const SearchResult = () => {
       <Container className="text-center mt-5">
         {isError && (
           <>
-            <p>Something went wrong...</p>
-            <p>
-              Please <a href={`/search/${id}`}>try again</a>
-            </p>
+            <ErrorLoad id={id} />
           </>
         )}
         {isLoading && <Loading />}
