@@ -39,6 +39,7 @@ const Setlist = () => {
     if (currentSetlist) {
       setSetlist(currentSetlist);
       setSetlistNameValue(currentSetlist.name);
+      setSong({})
     }
   }, [setlists, id]);
 
@@ -153,7 +154,7 @@ const Setlist = () => {
             <Container className="mt-3 text-center">
               <p style={{ whiteSpace: 'pre-line' }}>{song.lyrics}</p>
               <LinkContainer to={`/library/${song.id}`}>
-                <Button variant="outline-secondary">See in library</Button>
+                <Button variant="outline-success">See in library</Button>
               </LinkContainer>
             </Container>
           )}
