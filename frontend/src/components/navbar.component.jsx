@@ -41,11 +41,16 @@ function NavBar() {
               </LinkContainer>
             </Nav>
           )}
+          <Nav className={isAuthenticated ? 'mx-auto' : 'ms-auto'}>
+            <Nav.Item>
+              <NavSearch />
+            </Nav.Item>
+          </Nav>
           <Nav className="ms-auto">
             {isAuthenticated ? (
               <>
-                <Navbar.Text>{user.username}</Navbar.Text>
-                <div className='vr ms-2' ></div>
+                <Navbar.Text style={{ padding: '8px' }}>{user.username}</Navbar.Text>
+                <div className="vr"></div>
                 <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
               </>
             ) : (
@@ -60,7 +65,6 @@ function NavBar() {
               </>
             )}
           </Nav>
-          <NavSearch />
         </Navbar.Collapse>
       </Container>
     </Navbar>
