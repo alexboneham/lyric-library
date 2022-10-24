@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import UserDropdown from './user-dropdown/user-dropdown.component';
 import UserIcon from './user-icon.component';
@@ -18,10 +19,12 @@ function NavBar() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const { isAuthenticated, user } = useContext(UserContext);
 
+  let location = useLocation()
+
   useEffect(() => {
-    // Make sure dropdown is closed after logging out
+    // Make sure dropdown is closed when redirecting
     setShowUserDropdown(false);
-  }, [user]);
+  }, [location]);
 
   const handleUserClick = () => setShowUserDropdown(showUserDropdown ? false : true);
 

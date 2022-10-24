@@ -11,6 +11,7 @@ urlpatterns = [
     path('setlists/<int:id>', views.setlist, name='setlist'),
     path('search', views.search_genius, name='search'),
     path('search/<int:id>', views.search_genius_by_id, name='search_by_id'),
+    path('profile/<int:userId>', views.profile_view, name='profile'),
     # Auth routes
     path('session', views.session_view, name='session'),
     path('csrf', views.get_csrf_token, name='csrf'),

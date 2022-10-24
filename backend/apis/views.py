@@ -165,7 +165,8 @@ def song(request, song_id):
             res = song.delete()
         else:
             res = {'detail': 'Deleted only from current user library'}
-            print('Song still exists in other libraries. Only removed from m2m relationship')
+            print(
+                'Song still exists in other libraries. Only removed from m2m relationship')
 
         # Check for other songs by artist, if none found delete artist
 
@@ -324,3 +325,22 @@ def session_view(request):
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+
+def profile_view(request, userId):
+    if request.method != 'PUT':
+        return JsonResponse({'error': 'Request method must be PUT'})
+
+    user = User.objects.get(pk=userId)
+
+    # Update user's profile with json data
+    data = json.loads(request.body)
+
+    user.username = data.get('username')
+    user.email = data.get('email')
+    user.first_name = data.get('firstName')
+    user.last_name = data.get('lastName')
+
+    user.save()
+
+    return JsonResponse({'detail': 'User profile updated', 'user': user.serialize()})

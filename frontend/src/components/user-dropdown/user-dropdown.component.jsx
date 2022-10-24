@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { useNavigate } from 'react-router-dom';
 
+import { LinkContainer } from 'react-router-bootstrap';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 
@@ -22,7 +24,9 @@ const UserDropdown = () => {
         <Nav.Link>
           <b>{user.username}</b>
         </Nav.Link>
-        <Nav.Link>Edit profile</Nav.Link>
+        <LinkContainer to={`/profile/${user.id}`}>
+          <Nav.Link>Edit profile</Nav.Link>
+        </LinkContainer>
         <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
       </Nav>
     </Container>

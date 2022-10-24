@@ -16,6 +16,7 @@ import NewSong from './routes/new-song.component';
 import Login from './routes/login.component';
 import SignUp from './routes/sign-up.component';
 import NotFound from './routes/not-found.component';
+import Profile from './routes/profile.component';
 
 import './App.scss';
 
@@ -40,6 +41,7 @@ const App = () => {
             <Route path=":id" element={<Setlist />} />
           </Route>
           <Route path="new-song" element={isAuthenticated ? <NewSong /> : <Login />} />
+          <Route path="profile/:userId" element={<Profile />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

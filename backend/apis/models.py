@@ -19,6 +19,7 @@ class User(AbstractUser):
             "email": self.email,
             "firstName": self.first_name,
             "lastName": self.last_name,
+            "lastLogin": self.last_login.strftime("%c"),
         }
 
 
