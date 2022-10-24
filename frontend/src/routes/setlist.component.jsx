@@ -8,6 +8,8 @@ import EditButtons from '../components/edit-buttons.component';
 import SetlistEditForm from '../components/setlist-edit-form.component';
 
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Stack from 'react-bootstrap/Stack';
@@ -22,6 +24,7 @@ const Setlist = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectSongs, setSelectSongs] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [song, setSong] = useState({});
 
   const { id } = useParams();
   const navivgate = useNavigate();
@@ -75,21 +78,29 @@ const Setlist = () => {
 
   const toggleFormOpen = () => setEditOpen(editOpen ? false : true);
 
-  return (
-    <Container className="mb-5">
-      <h1>{setlist.name}</h1>
-      <p>{setlist.timestamp}</p>
+  const handleSongClick = (clickId) => {
+    // Find song in library and update local state
+    if (librarySongs) {
+      const song = librarySongs.find((song) => song.id === clickId);
+      setSong(song);
+    }
+  };
 
-      {setlist.songs.length >= 1 ? (
-        <ListGroup variant="flush" className="align-items-start">
-          {setlist.songs.map((song) => {
-            return (
-              <ListGroup.Item key={song.id}>
-                <Nav>
-                  <Nav.Item>
-                    <LinkContainer to={`/library/${song.id}`}>
-                      <Nav.Link>
-                        <Container>
+  return (
+    <Container className="mb-5" fluid>
+      <Row>
+        <Col md={5}>
+          <h1>{setlist.name}</h1>
+          <p>{setlist.timestamp}</p>
+
+          {setlist.songs.length >= 1 ? (
+            <ListGroup variant="flush" className="align-items-start">
+              {setlist.songs.map((song) => {
+                return (
+                  <ListGroup.Item key={song.id} onClick={() => handleSongClick(song.id)}>
+                    <Nav>
+                      <Nav.Item>
+                        <Nav.Link>
                           <Stack direction="horizontal" gap={3}>
                             <Image src={song.thumbnail_url} fluid width={100} height={100} rounded />
                             <Stack gap={1} className="my-auto">
@@ -97,47 +108,56 @@ const Setlist = () => {
                               <span className="text-muted">by {song.artist}</span>
                             </Stack>
                           </Stack>
-                        </Container>
-                      </Nav.Link>
-                    </LinkContainer>
-                  </Nav.Item>
-                </Nav>
-              </ListGroup.Item>
-            );
-          })}
-        </ListGroup>
-      ) : (
-        <p className="text-muted">Your setlist is empty</p>
-      )}
+                        </Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+          ) : (
+            <p className="text-muted">Your setlist is empty</p>
+          )}
 
-      {editOpen && (
-        <SetlistEditForm
-          handleFormSubmit={handleFormSubmit}
-          handleSelectChange={handleSelectChange}
-          setlistNameValue={setlistNameValue}
-          setSetlistNameValue={setSetlistNameValue}
-          selectSongs={selectSongs}
-          librarySongs={librarySongs}
-          buttonMessage={'Save setlist'}
-          toggleFormOpen={toggleFormOpen}
-        />
-      )}
-      {!editOpen && <EditButtons buttonProps={{ toggleFormOpen, handleShowModal }} />}
+          {editOpen && (
+            <SetlistEditForm
+              handleFormSubmit={handleFormSubmit}
+              handleSelectChange={handleSelectChange}
+              setlistNameValue={setlistNameValue}
+              setSetlistNameValue={setSetlistNameValue}
+              selectSongs={selectSongs}
+              librarySongs={librarySongs}
+              buttonMessage={'Save setlist'}
+              toggleFormOpen={toggleFormOpen}
+            />
+          )}
+          {!editOpen && <EditButtons buttonProps={{ toggleFormOpen, handleShowModal }} />}
 
-      <Modal show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
-        <Modal.Header>
-          <Modal.Title>Warning!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this setlist?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cancel
-          </Button>
-          <Button variant="warning" onClick={handleDelete}>
-            Yes!
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          <Modal show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
+            <Modal.Header>
+              <Modal.Title>Warning!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete this setlist?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Cancel
+              </Button>
+              <Button variant="warning" onClick={handleDelete}>
+                Yes!
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Col>
+        <Col md={7}>
+          {song.id && (
+            <Container className="mt-3">
+              <p className="text-center" style={{ whiteSpace: 'pre-line' }}>
+                {song.lyrics}
+              </p>
+            </Container>
+          )}
+        </Col>
+      </Row>
     </Container>
   );
 };

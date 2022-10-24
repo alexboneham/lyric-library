@@ -89,7 +89,7 @@ const Setlists = () => {
   return (
     <Container fluid className="mt-3">
       <Row>
-        <Col sm={4}>
+        <Col sm={3}>
           <Container className="d-flex flex-column align-items-center" fluid>
             <h1>Setlists</h1>
 
@@ -123,7 +123,7 @@ const Setlists = () => {
           </Container>
         </Col>
 
-        <Col sm={8}>
+        <Col sm={9}>
           <Outlet />
         </Col>
       </Row>

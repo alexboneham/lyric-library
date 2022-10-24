@@ -41,12 +41,10 @@ function NavBar() {
               </LinkContainer>
             </Nav>
           )}
-          <Nav className={isAuthenticated ? 'mx-auto' : 'ms-auto'}>
-            <Nav.Item>
-              <NavSearch />
-            </Nav.Item>
-          </Nav>
           <Nav className="ms-auto">
+            <div className="me-4">
+              <NavSearch />
+            </div>
             {isAuthenticated ? (
               <>
                 <Navbar.Text style={{ padding: '8px' }}>{user.username}</Navbar.Text>
