@@ -1,10 +1,7 @@
-import { useLocation } from 'react-router-dom';
-
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 const ErrorLoad = ({ id }) => {
-  
   return (
     <Container fluid>
       <Container className="d-flex flex-column align-items-center mt-5">
