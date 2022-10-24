@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 
 import UserDropdown from './user-dropdown/user-dropdown.component';
+import UserIcon from './user-icon.component';
 
 // Bootstrap components
 import { LinkContainer } from 'react-router-bootstrap';
@@ -51,6 +52,10 @@ function NavBar() {
             {isAuthenticated ? (
               <>
                 <Nav.Link onClick={handleUserClick}>{user.username}</Nav.Link>
+                
+                <Nav.Link className="p-0" onClick={handleUserClick}>
+                  <UserIcon />
+                </Nav.Link>
                 {showUserDropdown && <UserDropdown />}
               </>
             ) : (
