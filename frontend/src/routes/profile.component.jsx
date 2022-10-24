@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../contexts/user.context';
 
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // Bootstrap components
 import Container from 'react-bootstrap/Container';
@@ -19,15 +19,24 @@ const Profile = () => {
   const [lastName, setLastName] = useState('');
 
   const { userId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Get the user and relevant data
+    console.log('Profile use effect running...');
     if (user.id) {
-      setUsername(user.username);
-      setEmail(user.email);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      // Check against url params
+      if (user.id === parseInt(userId)) {
+        setUsername(user.username);
+        setEmail(user.email);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+      } else {
+        // Access denied
+        navigate('/404');
+      }
     }
-  }, [user]);
+  }, [user, userId, navigate]);
 
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
@@ -42,6 +51,7 @@ const Profile = () => {
       firstName,
       lastName,
     };
+
     fetch(`http://localhost:8000/profile/${user.id}`, {
       method: 'PUT',
       headers: {

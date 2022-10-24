@@ -41,7 +41,7 @@ const App = () => {
             <Route path=":id" element={<Setlist />} />
           </Route>
           <Route path="new-song" element={isAuthenticated ? <NewSong /> : <Login />} />
-          <Route path="profile/:userId" element={<Profile />} />
+          <Route path="profile/:userId" element={isAuthenticated ? <Profile /> : <Login />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
