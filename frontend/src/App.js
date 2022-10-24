@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { UserContext } from './contexts/user.context';
@@ -17,34 +17,18 @@ import Login from './routes/login.component';
 import SignUp from './routes/sign-up.component';
 import NotFound from './routes/not-found.component';
 
-import { isResponseOk } from './utils/helper-functions';
 import './App.scss';
 
 const App = () => {
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
-
   const { isAuthenticated } = useContext(UserContext);
 
-  useEffect(() => {
-    fetch('http://localhost:8000')
-      .then((res) => isResponseOk(res))
-      .then((data) => {
-        document.title = data.app;
-        setTitle(data.heading);
-        setMessage(data.message);
-      })
-      .catch((error) => {
-        setMessage('API is not connected or configured properly');
-        console.log(error);
-      });
-  }, []);
+  document.title = 'lyric-library';
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home title={title} message={message} />} />
+          <Route index element={<Home />} />
           <Route path="search" element={<SearchResults />} />
           <Route path="search/:id" element={<SearchResult />} />
           <Route path="login" element={<Login />} />
