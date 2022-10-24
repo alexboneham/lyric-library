@@ -19,7 +19,7 @@ function NavBar() {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const { isAuthenticated, user } = useContext(UserContext);
 
-  let location = useLocation()
+  let location = useLocation();
 
   useEffect(() => {
     // Make sure dropdown is closed when redirecting
@@ -55,8 +55,8 @@ function NavBar() {
             {isAuthenticated ? (
               <>
                 <Nav.Link onClick={handleUserClick}>{user.username}</Nav.Link>
-                
-                <Nav.Link className="p-0" onClick={handleUserClick}>
+
+                <Nav.Link className="p-0 d-none d-lg-block" onClick={handleUserClick}>
                   <UserIcon />
                 </Nav.Link>
                 {showUserDropdown && <UserDropdown />}

@@ -8,6 +8,12 @@
   border: 1px solid black;
   border-radius: 5px;
   background-color: white;
-  top: 75px;
-  right: 10px;
+  top: 230px;
+  left: 30px;
+
+  @media (min-width: 992px) {
+    top: 75px;
+    left: initial;
+    right: 10px;
+  }
 }

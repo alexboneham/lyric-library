@@ -41,7 +41,7 @@ const Setlist = () => {
     if (currentSetlist) {
       setSetlist(currentSetlist);
       setSetlistNameValue(currentSetlist.name);
-      setSong({})
+      setSong({});
     }
   }, [setlists, id]);
 
@@ -93,7 +93,7 @@ const Setlist = () => {
   return (
     <Container className="mb-5" fluid>
       <Row>
-        <Col md={3}>
+        <Col md={6} lg={5} xl={4}>
           <h1>{setlist.name}</h1>
           <p>{setlist.timestamp}</p>
 
@@ -152,10 +152,11 @@ const Setlist = () => {
             </Modal.Footer>
           </Modal>
         </Col>
-        <Col md={7}>
+
+        <Col md={6} lg={6} xl={7}>
           {song.id && (
             <Container className="mt-3 text-center">
-              <h1 className='display-6'>{song.title}</h1>
+              <h1 className="display-6">{song.title}</h1>
               <p style={{ whiteSpace: 'pre-line' }}>{song.lyrics}</p>
               <LinkContainer to={`/library/${song.id}`}>
                 <Button variant="outline-success">See in library</Button>
