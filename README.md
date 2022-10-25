@@ -139,9 +139,6 @@ Navigate to [localhost:3000/](http://localhost:3000/) in your browser to begin u
 
 # Distinctiveness and Complexity
 
-<!-- How is it distinct from other projects in course?
-How is it more complex? -->
-
 Although sharing some common characteristics of any CRUD application, this project is **distinct** from the other projects in _CS50's Web Programming with Python and Javascript_ course in a number of major ways:
 
 - The creation of new database model instances (ie. songs) is achieved through a call to an external API, awaiting the response, parsing the returned data and finally creating the instance. (Songs can be created manually too)
@@ -207,8 +204,6 @@ All React components are built as **functional components** with hooks. Componen
 
 **User profile** - user profile dropdown menu improves UI/UX to allow access to profile and logout navs outside navbar.
 
-# File structure
-
 # Examples
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/images/homepage-with-border.png 'Lyric Library Homepage')
@@ -216,6 +211,12 @@ _Homepage_
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/library-demo.gif 'Library demo')
 _Demo of a song in user's library_
+
+![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/add-to-setlist.gif 'Add to setlist')
+_Add a song to a setlist_
+
+![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/filter-songs.gif 'Filter songs')
+_Filter library songs_
 
 # Acknowledgements
 

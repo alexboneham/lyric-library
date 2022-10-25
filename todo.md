@@ -3,6 +3,7 @@
 ## Backend
 
 **Done**
+
 - set up django backend
 - create song and setlist models
 - set up index view function with JSON response
@@ -18,7 +19,7 @@
 - change genius api endpoiint responses to Json
 - change database endpoints responses to json
 - add to setlists function
-- edit/remove from setlist 
+- edit/remove from setlist
 - Add foreign key links to Artist and Album when creating a Song in the database.
 - convert edit functions to PUT routes, using json.loads to access data from request.body
 - Add user session based auth
@@ -26,7 +27,7 @@
 - Create get_csrf route and hit whenever a change to auth for new token
 - Adjust sessions and re-migrate database accordingly
 - Rewrite backend logic to handle user libraries
-- 
+-
 
 **TODO**
 
@@ -35,25 +36,21 @@
 **TODO**
 
 - Pagination:
-    - for seach results
-    - for library songs
-    - infinite scroll for pagination
-
-- Responsive layout:
-    - Check and fix responsive layout for each page/component
-
+  - for seach results
+  - for library songs
+  - infinite scroll for pagination
 - Bugs:
-    - Search component: timeout error, button disappears
-    - On refresh, losing some user state.
+
+  - Search component: timeout error, button disappears
+  - On refresh, losing some user state.
 
 - Setlist edit/new form:
-    - larger select area, or
-    - checkbox song-cards or similar...
-    - 
-
-
+  - larger select area, or
+  - checkbox song-cards or similar...
+  -
 
 **DONE**
+
 - consider which method to connect Django and React
 - create-react-app
 - plan site architecture
@@ -77,3 +74,5 @@
 - Add session based user auth
 - Build out SPA nav style architecture
 - add bootstrap
+- Responsive layout:
+  - Check and fix responsive layout for each page/component
