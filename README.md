@@ -1,3 +1,3 @@
 # Lyric Library
 
-![alt text](https://github.com/alexboneham/lyric-library/tree/main/frontend/src/assets/images/homepage.png "Lyric Library Homepage")
+![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/images/homepage.png "Lyric Library Homepage")
