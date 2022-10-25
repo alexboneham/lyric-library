@@ -130,3 +130,6 @@ dmypy.json
 
 # Genius API
 /backend/apis/keys.py
+
+# Todo list
+todo.md
