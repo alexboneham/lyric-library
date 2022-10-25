@@ -207,15 +207,19 @@ All React components are built as **functional components** with hooks. Componen
 # Examples
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/images/homepage-with-border.png 'Lyric Library Homepage')
+
 _Homepage_
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/library-demo.gif 'Library demo')
+
 _Demo of a song in user's library_
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/add-to-setlist.gif 'Add to setlist')
+
 _Add a song to a setlist_
 
 ![alt text](https://github.com/alexboneham/lyric-library/raw/main/frontend/src/assets/gifs/filter-songs.gif 'Filter songs')
+
 _Filter library songs_
 
 # Acknowledgements
