@@ -19,7 +19,7 @@ Lyric library is a web application for searching, storing, editing, and organizi
 
 ## About
 
-The Lyric library application was born out of a personal struggle to organize and remember songs I enjoy singing and playing. As a music enthusiast, how often do you find yourself sitting at the piano or picking up a guitar to bash through a tune, only for your mind to go blank when coming up with a song to play.
+The Lyric library application was born out of a personal struggle to organize and remember songs I enjoy singing and playing. As a music enthusiast, how often do you find yourself sitting at the piano or picking up a guitar to bash through a tune, only for your mind to go blank when coming up with a song to play? Maybe you open a tab on your browser and search for the song lyrics, then another, and another. After a short practice session you have a complete mess of tabs and still no way of organizing those songs for another session later. This is where Lyric Library comes in.
 
 
 
